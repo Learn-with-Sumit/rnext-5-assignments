@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 32" fill="currentColor">
+  <circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="2.5" fill="none" />
+  <ellipse cx="16" cy="16" rx="10" ry="4" stroke="currentColor" stroke-width="2" fill="none" transform="rotate(-30 16 16)" />
+  <text x="36" y="22" font-family="system-ui, sans-serif" font-size="14" font-weight="800" letter-spacing="1.5">NOVASPHERE</text>
+</svg>

@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusFlow — Develop. Automate. Ship.</title>
+  <meta name="description" content="NexusFlow gives developers and product teams the unified workflow engine to automate sprints, ship code, and scale effortlessly." />
+
+  <!-- Google Fonts: Geist Sans & Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: 'Geist', sans-serif;
+      --font-mono: 'Geist Mono', monospace;
+
+      --color-geist-background: #000000;
+      --color-geist-surface: #0a0a0a;
+      --color-geist-card: #111111;
+      --color-geist-border: #222222;
+      --color-geist-border-subtle: #1a1a1a;
+      --color-geist-border-hover: #333333;
+      --color-geist-foreground: #ededed;
+      --color-geist-muted: #888888;
+      --color-geist-accent: #0070f3;
+      --color-geist-cyan: #50e3c2;
+      --color-geist-purple: #7928ca;
+      --color-geist-pink: #ff0080;
+    }
+
+    /* Vercel-style custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #222222;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333333;
+    }
+
+    /* Vercel Grid Background with Crosshairs */
+    .vercel-grid {
+      background-size: 40px 40px;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    }
+
+    /* Vercel Conic Ambient Glow */
+    .vercel-glow {
+      background: radial-gradient(circle 400px at 50% 0%, rgba(120, 119, 198, 0.12), transparent 70%);
+    }
+  </style>
+</head>
+
+<body class="bg-black text-[#ededed] font-sans antialiased selection:bg-white selection:text-black overflow-x-hidden">
+
+
+  <!-- 1. HEADER / NAVBAR COMPONENT                                             -->
+
+  <header class="sticky top-0 z-50 w-full border-b border-[#1f1f1f] bg-black/80 backdrop-blur-md transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Brand Logo (Vercel style delta triangle) -->
+        <a href="#hero" class="flex items-center gap-3 group">
+          <div class="w-6 h-6 flex items-center justify-center text-white group-hover:opacity-80 transition-opacity">
+            <img src="assets/icons/logo.svg" alt="NexusFlow Logo" class="w-5 h-5 invert" />
+          </div>
+          <span class="text-base font-semibold tracking-tight text-white">NexusFlow</span>
+          <span class="hidden sm:inline-flex items-center px-2 py-0.5 text-[11px] font-mono font-medium text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-md">
+            v2.4.0
+          </span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#features" class="text-neutral-400 hover:text-white transition-colors">Features</a>
+          <a href="#solutions" class="text-neutral-400 hover:text-white transition-colors">Solutions</a>
+          <a href="#testimonials" class="text-neutral-400 hover:text-white transition-colors">Customers</a>
+          <a href="#pricing" class="text-neutral-400 hover:text-white transition-colors">Pricing</a>
+          <a href="#faq" class="text-neutral-400 hover:text-white transition-colors">Faq</a>
+        </nav>
+
+        <!-- Right CTA Actions -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="#login" class="text-sm text-neutral-400 hover:text-white px-3 py-1.5 transition-colors">Log In</a>
+          <a href="#pricing" class="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 text-sm font-medium text-black bg-white hover:bg-neutral-200 rounded-lg transition-colors">
+            <span>Deploy Free</span>
+            <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert" />
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="flex md:hidden">
+          <button id="mobile-menu-btn" type="button" aria-label="Toggle Navigation" class="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900 border border-neutral-800">
+            <img id="menu-icon-open" src="assets/icons/menu.svg" alt="Menu" class="w-5 h-5 invert" />
+            <img id="menu-icon-close" src="assets/icons/close.svg" alt="Close" class="w-5 h-5 invert hidden" />
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-neutral-800 bg-black/95 px-4 pt-3 pb-6 space-y-3 font-sans text-sm">
+      <a href="#features" class="block px-3 py-2 rounded-md text-neutral-300 hover:bg-neutral-900 hover:text-white">Features</a>
+      <a href="#solutions" class="block px-3 py-2 rounded-md text-neutral-300 hover:bg-neutral-900 hover:text-white">Solutions</a>
+      <a href="#testimonials" class="block px-3 py-2 rounded-md text-neutral-300 hover:bg-neutral-900 hover:text-white">Customers</a>
+      <a href="#pricing" class="block px-3 py-2 rounded-md text-neutral-300 hover:bg-neutral-900 hover:text-white">Pricing</a>
+      <a href="#faq" class="block px-3 py-2 rounded-md text-neutral-300 hover:bg-neutral-900 hover:text-white">Documentation</a>
+      <div class="pt-4 border-t border-neutral-800 flex flex-col gap-2">
+        <a href="#login" class="text-center py-2 text-sm text-neutral-300 bg-neutral-900 border border-neutral-800 rounded-lg">Log In</a>
+        <a href="#pricing" class="inline-flex items-center justify-center gap-1.5 text-center py-2 text-sm font-medium text-black bg-white rounded-lg">
+          <span>Deploy Free</span>
+          <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert" />
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- 2. HERO SECTION                                                          -->
+
+  <section id="hero" class="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden vercel-glow">
+    <!-- Grid pattern background -->
+    <div class="absolute inset-0 vercel-grid opacity-30 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+      <!-- Announcement Pill Badge -->
+      <div class="flex justify-center">
+        <a href="#features" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-950 border border-neutral-800 text-xs font-mono text-neutral-300 hover:border-neutral-700 transition-colors shadow-sm">
+          <span class="text-white">▲</span>
+          <span class="font-semibold text-white">NexusFlow 2.4</span>
+          <span class="text-neutral-600">/</span>
+          <span class="text-neutral-400">Next-gen AI Workflows</span>
+          <img src="assets/icons/arrow-right.svg" alt="" class="w-3 h-3 invert" />
+        </a>
+      </div>
+
+      <!-- Main Headline -->
+      <div class="text-center max-w-4xl mx-auto mt-8 space-y-5">
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08]">
+          Develop with velocity. <br />
+          <span class="bg-gradient-to-b from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
+            Automate with intelligence.
+          </span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto">
+          The unified developer platform for sprint orchestration, instant preview pipelines, and autonomous AI agents.
+        </p>
+
+        <!-- CLI Command & Actions Bar -->
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+
+          <!-- Copy CLI Box -->
+          <div class="w-full sm:w-auto flex-1 flex items-center justify-between gap-3 px-3.5 py-2.5 bg-[#0a0a0a] border border-neutral-800 rounded-lg text-xs font-mono text-neutral-300 shadow-inner">
+            <div class="flex items-center gap-2 overflow-hidden">
+              <span class="text-neutral-500 select-none">~</span>
+              <span id="cli-command" class="truncate">npx create-nexusflow-app@latest</span>
+            </div>
+            <button id="copy-btn" type="button" aria-label="Copy Command" class="p-1 hover:text-white text-neutral-400 transition-colors">
+              <img src="assets/icons/copy.svg" alt="Copy" class="w-4 h-4 invert" />
+            </button>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <a href="#pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-medium text-black bg-white hover:bg-neutral-200 rounded-lg transition-colors font-mono whitespace-nowrap">
+            <span>Start Free Trial</span>
+            <img src="assets/icons/arrow-right.svg" alt="" class="w-3 h-3 invert" />
+          </a>
+        </div>
+
+        <!-- Social Proof Stats Mini Strip -->
+        <div class="pt-6 flex items-center justify-center gap-4 text-xs font-mono text-neutral-500">
+          <div class="flex -space-x-1.5">
+            <img class="w-6 h-6 rounded-full border border-black" src="assets/images/avatar-1.svg" alt="User 1" />
+            <img class="w-6 h-6 rounded-full border border-black" src="assets/images/avatar-2.svg" alt="User 2" />
+            <img class="w-6 h-6 rounded-full border border-black" src="assets/images/avatar-3.svg" alt="User 3" />
+          </div>
+          <span>Trusted by 10,000+ teams shipping to production</span>
+        </div>
+
+      </div>
+
+      <!-- Vercel-Style Terminal & Deployment Preview Mockup -->
+      <div class="mt-14 max-w-4xl mx-auto">
+        <div class="rounded-xl border border-neutral-800 bg-[#0a0a0a] shadow-2xl overflow-hidden font-mono">
+
+          <!-- Terminal Header Bar -->
+          <div class="flex items-center justify-between px-4 py-3 border-b border-neutral-800 bg-[#050505] text-xs text-neutral-400">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
+              <span class="ml-2 text-neutral-400 font-mono text-[11px]">nexusflow deploy --prod</span>
+            </div>
+
+            <div class="flex items-center gap-2 text-[11px]">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-neutral-300">Ready in 420ms</span>
+            </div>
+          </div>
+
+          <!-- Terminal Content Stream -->
+          <div class="p-5 text-xs text-neutral-300 space-y-3 bg-[#0a0a0a] leading-relaxed">
+            <div class="flex items-center gap-2 text-neutral-500">
+              <span class="text-white">▲</span>
+              <span>NexusFlow CLI v2.4.0</span>
+            </div>
+
+            <div class="space-y-1.5 text-neutral-400 pl-4 border-l border-neutral-800">
+              <div class="text-neutral-300"><span class="text-neutral-500">•</span> Building preview for branch <span class="text-white font-semibold">feat/ai-sprint-engine</span>...</div>
+              <div><span class="text-emerald-400">✓</span> Compiled 48 edge lambdas in 184ms</div>
+              <div><span class="text-emerald-400">✓</span> Automated PR analysis: 0 regression risks detected</div>
+              <div><span class="text-emerald-400">✓</span> Deployed to 32 global edge regions</div>
+            </div>
+
+            <!-- Preview Card Box Inside Terminal -->
+            <div class="mt-4 p-4 rounded-lg border border-neutral-800 bg-[#111111] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div class="space-y-1">
+                <div class="text-xs text-neutral-400">Preview URL</div>
+                <div class="text-sm font-semibold text-white flex items-center gap-2">
+                  <span>nexusflow-feat-ai-sprint.internal.app</span>
+                  <img src="assets/icons/globe.svg" alt="" class="w-3.5 h-3.5 invert opacity-60" />
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="px-2 py-1 bg-emerald-950/80 border border-emerald-800 text-[11px] font-mono text-emerald-400 rounded">
+                  Status: 200 OK
+                </span>
+                <span class="text-xs text-neutral-500 font-mono">P99: 14ms</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 3. LOGO CLOUD / TRUSTED BY BRANDS SECTION                                -->
+
+  <section class="py-12 border-y border-neutral-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs font-mono tracking-widest text-neutral-500 uppercase">
+        POWERS THE WORLD'S BEST ENGINEERING TEAMS
+      </p>
+
+      <!-- Brand Logos Grid (Array of Objects target) -->
+      <div class="mt-8 grid grid-cols-2 md:grid-cols-6 gap-8 items-center justify-items-center opacity-60 hover:opacity-100 transition-opacity">
+        <img src="assets/logos/acme.svg" alt="Acme" class="h-6 invert" />
+        <img src="assets/logos/linear.svg" alt="Linearify" class="h-6 invert" />
+        <img src="assets/logos/pulse.svg" alt="PulseScale" class="h-6 invert" />
+        <img src="assets/logos/novasphere.svg" alt="NovaSphere" class="h-6 invert" />
+        <img src="assets/logos/cloudforge.svg" alt="CloudForge" class="h-6 invert" />
+        <img src="assets/logos/devmatrix.svg" alt="DevMatrix" class="h-6 invert" />
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 4. FEATURES GRID SECTION (RE-USABLE CARDS CANDIDATE)                     -->
+
+  <section id="features" class="py-24 border-b border-neutral-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Heading -->
+      <div class="text-left max-w-2xl space-y-2 mb-16">
+        <div class="text-xs font-mono text-neutral-400 uppercase tracking-widest">[ 01 ] CAPABILITIES</div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          Engineered for velocity, reliability, and scale.
+        </h2>
+        <p class="text-sm sm:text-base text-neutral-400">
+          Everything required to build, orchestrate, and automate mission-critical software workflows.
+        </p>
+      </div>
+
+      <!-- Feature Cards Grid (Re-usable Component via Array of Objects) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-800 border border-neutral-800 rounded-xl overflow-hidden">
+
+        <!-- Card 1 -->
+        <div class="p-8 bg-[#0a0a0a] hover:bg-[#111111] transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-6">
+            <img src="assets/icons/sparkles.svg" alt="" class="w-5 h-5 invert" />
+          </div>
+          <div class="text-xs font-mono text-neutral-500 mb-1">01 / AUTOMATIONS</div>
+          <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors">AI-Driven Sprints</h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            Auto-generate PR summaries, triage incoming bug tickets, and balance developer capacity with natural language prompts.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-8 bg-[#0a0a0a] hover:bg-[#111111] transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-6">
+            <img src="assets/icons/zap.svg" alt="" class="w-5 h-5 invert" />
+          </div>
+          <div class="text-xs font-mono text-neutral-500 mb-1">02 / CANVAS</div>
+          <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors">Real-time Architecture Canvas</h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            Co-design system architectures, map dependencies, and link live GitHub repositories directly into visual planning boards.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-8 bg-[#0a0a0a] hover:bg-[#111111] transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-6">
+            <img src="assets/icons/sparkles.svg" alt="" class="w-5 h-5 invert" />
+          </div>
+          <div class="text-xs font-mono text-neutral-500 mb-1">03 / ANALYTICS</div>
+          <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors">Predictive Cycle Time</h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            Machine learning forecasts on deployment bottlenecks, PR review lag times, and sprint velocity trends.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-8 bg-[#0a0a0a] hover:bg-[#111111] transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-6">
+            <img src="assets/icons/shield.svg" alt="" class="w-5 h-5 invert" />
+          </div>
+          <div class="text-xs font-mono text-neutral-500 mb-1">04 / COMPLIANCE</div>
+          <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors">SOC2 Type II Security</h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            End-to-end 256-bit encryption, role-based access control, custom SAML SSO, and complete audit logging by default.
+          </p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="p-8 bg-[#0a0a0a] hover:bg-[#111111] transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-6">
+            <img src="assets/icons/shield.svg" alt="" class="w-5 h-5 invert" />
+          </div>
+          <div class="text-xs font-mono text-neutral-500 mb-1">05 / ECOSYSTEM</div>
+          <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors">100+ Integrations</h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            Bi-directional webhooks and sync with GitHub, GitLab, Jira, Figma, Linear, Slack, Notion, and Datadog.
+          </p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="p-8 bg-[#0a0a0a] hover:bg-[#111111] transition-colors group">
+          <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white mb-6">
+            <img src="assets/icons/zap.svg" alt="" class="w-5 h-5 invert" />
+          </div>
+          <div class="text-xs font-mono text-neutral-500 mb-1">06 / PIPELINES</div>
+          <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors">Serverless CI/CD Triggers</h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            Instant execution of build, test, and release gates across isolated edge environments with zero cold starts.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 5. DEEP DIVE / FEATURE SPOTLIGHT SECTION (2-COLUMN SHOWCASE)              -->
+
+  <section id="solutions" class="py-24 border-b border-neutral-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28">
+
+      <!-- Spotlight 1: Automated Release Pipeline -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+        <div class="lg:col-span-6 space-y-6">
+          <div class="text-xs font-mono text-neutral-400 uppercase tracking-widest">[ 02 ] AUTOMATED WORKFLOWS</div>
+          <h3 class="text-3xl font-bold tracking-tight text-white leading-tight">
+            Connect your codebase. Automate every branch lifecycle.
+          </h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            From the moment a pull request opens to production deployment, NexusFlow coordinates code reviews, tests, stakeholder sign-offs, and changelog creation automatically.
+          </p>
+
+          <div class="space-y-3 pt-2 font-mono text-xs text-neutral-300">
+            <div class="flex items-center gap-3">
+              <img src="assets/icons/check.svg" alt="Check" class="w-4 h-4 invert" />
+              <span>Automated PR code quality & security scanning</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <img src="assets/icons/check.svg" alt="Check" class="w-4 h-4 invert" />
+              <span>Instant preview environments per Git commit</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <img src="assets/icons/check.svg" alt="Check" class="w-4 h-4 invert" />
+              <span>Zero-downtime canary releases & rollbacks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow Visual Card -->
+        <div class="lg:col-span-6">
+          <div class="p-6 rounded-xl border border-neutral-800 bg-[#0a0a0a] font-mono text-xs space-y-3">
+
+            <div class="flex items-center justify-between text-neutral-500 pb-2 border-b border-neutral-800">
+              <span>PIPELINE: PROD-DEPLOY-442</span>
+              <span class="text-emerald-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ONLINE</span>
+            </div>
+
+            <!-- Pipeline Step 1 -->
+            <div class="p-3 rounded-lg border border-neutral-800 bg-[#111111] flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img src="assets/icons/zap.svg" alt="" class="w-4 h-4 invert" />
+                <span class="text-neutral-200">git push origin main</span>
+              </div>
+              <span class="text-neutral-500">Triggered</span>
+            </div>
+
+            <!-- Pipeline Step 2 -->
+            <div class="p-3 rounded-lg border border-neutral-700 bg-[#141414] flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img src="assets/icons/sparkles.svg" alt="" class="w-4 h-4 invert" />
+                <span class="text-white">AI Agent: Generate Release Specs</span>
+              </div>
+              <span class="text-emerald-400">Completed (0.8s)</span>
+            </div>
+
+            <!-- Pipeline Step 3 -->
+            <div class="p-3 rounded-lg border border-neutral-800 bg-[#111111] flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img src="assets/icons/globe.svg" alt="" class="w-4 h-4 invert" />
+                <span class="text-neutral-200">Deploy Global Edge Network</span>
+              </div>
+              <span class="text-emerald-400">200 OK (14ms)</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Spotlight 2: Velocity & Capacity -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+        <div class="lg:col-span-6 order-2 lg:order-1">
+          <div class="p-6 rounded-xl border border-neutral-800 bg-[#0a0a0a] font-mono text-xs space-y-4">
+            <div class="text-neutral-400 flex items-center justify-between">
+              <span>TEAM SPRINT VELOCITY</span>
+              <span class="text-white">Q3-CYCLE-12</span>
+            </div>
+
+            <div class="space-y-3 pt-2">
+              <div>
+                <div class="flex justify-between text-neutral-300 text-[11px] mb-1">
+                  <span>Sprint Completion Rate</span>
+                  <span class="text-white font-semibold">98.4%</span>
+                </div>
+                <div class="w-full bg-neutral-900 h-2 rounded-full overflow-hidden">
+                  <div class="bg-white h-full rounded-full w-[98.4%]"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-neutral-300 text-[11px] mb-1">
+                  <span>PR Cycle Latency</span>
+                  <span class="text-emerald-400 font-semibold">-64% (Fast)</span>
+                </div>
+                <div class="w-full bg-neutral-900 h-2 rounded-full overflow-hidden">
+                  <div class="bg-emerald-400 h-full rounded-full w-[82%]"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="p-3 bg-[#111111] rounded border border-neutral-800">
+                <div class="text-neutral-500 text-[10px]">TIME TO MERGE</div>
+                <div class="text-base font-bold text-white mt-0.5">38m avg</div>
+              </div>
+              <div class="p-3 bg-[#111111] rounded border border-neutral-800">
+                <div class="text-neutral-500 text-[10px]">AI AGENT RUNS</div>
+                <div class="text-base font-bold text-white mt-0.5">14,290 / wk</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 order-1 lg:order-2 space-y-6">
+          <div class="text-xs font-mono text-neutral-400 uppercase tracking-widest">[ 03 ] OBSERVABILITY</div>
+          <h3 class="text-3xl font-bold tracking-tight text-white leading-tight">
+            Total engineering clarity across distributed squads.
+          </h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            Eliminate manual status reports and endless sync meetings. NexusFlow synthesizes live activity across Git, task boards, and deployment feeds into actionable velocity metrics.
+          </p>
+
+          <div class="pt-2">
+            <a href="#pricing" class="inline-flex items-center gap-2 text-xs font-mono text-white hover:text-neutral-300 border-b border-neutral-700 pb-0.5 transition-colors">
+              <span>Read the Velocity Benchmark Report</span>
+              <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert" />
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 6. STATS / METRICS SECTION (RE-USABLE STATS CARDS)                        -->
+
+  <section class="py-20 border-b border-neutral-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Stat Cards Grid (Re-usable Component via Array of Objects) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <div class="space-y-1">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-mono">99.99%</div>
+          <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">UPTIME SLA</div>
+          <p class="text-xs text-neutral-400">Enterprise grade availability</p>
+        </div>
+
+        <div class="space-y-1">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-mono">250K+</div>
+          <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">DEVELOPERS</div>
+          <p class="text-xs text-neutral-400">Building across 140+ countries</p>
+        </div>
+
+        <div class="space-y-1">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-mono">15M+</div>
+          <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">BUILDS / MO</div>
+          <p class="text-xs text-neutral-400">Automated with zero failures</p>
+        </div>
+
+        <div class="space-y-1">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white font-mono">4.9 / 5</div>
+          <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider">SATISFACTION</div>
+          <p class="text-xs text-neutral-400">From over 3,000+ verified teams</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 7. TESTIMONIALS SECTION (RE-USABLE TESTIMONIAL CARDS)                    -->
+
+  <section id="testimonials" class="py-24 border-b border-neutral-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Heading -->
+      <div class="text-left max-w-2xl space-y-2 mb-16">
+        <div class="text-xs font-mono text-neutral-400 uppercase tracking-widest">[ 04 ] CUSTOMERS</div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          Loved by engineers. Trusted by founders.
+        </h2>
+        <p class="text-sm sm:text-base text-neutral-400">
+          How leading technology organizations leverage NexusFlow every single day.
+        </p>
+      </div>
+
+      <!-- Testimonials Grid (Re-usable Component via Array of Objects) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Testimonial 1 -->
+        <div class="p-6 rounded-xl border border-neutral-800 bg-[#0a0a0a] flex flex-col justify-between space-y-6">
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            "NexusFlow transformed our sprint cycles. The automatic PR summaries and real-time canvas eliminated 40% of our daily sync overhead."
+          </p>
+          <div class="flex items-center gap-3 pt-4 border-t border-neutral-900">
+            <img src="assets/images/avatar-1.svg" alt="Sarah Chen" class="w-8 h-8 rounded-full border border-neutral-800" />
+            <div>
+              <div class="text-xs font-semibold text-white">Sarah Chen</div>
+              <div class="text-[11px] font-mono text-neutral-500">VP Eng @ CloudNova</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="p-6 rounded-xl border border-neutral-800 bg-[#0a0a0a] flex flex-col justify-between space-y-6">
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            "We migrated 60+ engineers from fragmented legacy tools to NexusFlow in one afternoon. The developer experience is world-class."
+          </p>
+          <div class="flex items-center gap-3 pt-4 border-t border-neutral-900">
+            <img src="assets/images/avatar-2.svg" alt="Marcus Vance" class="w-8 h-8 rounded-full border border-neutral-800" />
+            <div>
+              <div class="text-xs font-semibold text-white">Marcus Vance</div>
+              <div class="text-[11px] font-mono text-neutral-500">CTO @ HyperScale</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="p-6 rounded-xl border border-neutral-800 bg-[#0a0a0a] flex flex-col justify-between space-y-6">
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            "The edge preview pipelines and branch triggers feel magical. NexusFlow makes shipping software as fast as thinking about it."
+          </p>
+          <div class="flex items-center gap-3 pt-4 border-t border-neutral-900">
+            <img src="assets/images/avatar-3.svg" alt="Elena Rostova" class="w-8 h-8 rounded-full border border-neutral-800" />
+            <div>
+              <div class="text-xs font-semibold text-white">Elena Rostova</div>
+              <div class="text-[11px] font-mono text-neutral-500">Lead Architect @ Pulse</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 8. PRICING SECTION (RE-USABLE PRICING CARDS)                             -->
+
+  <section id="pricing" class="py-24 border-b border-neutral-800 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Heading -->
+      <div class="text-center max-w-2xl mx-auto space-y-4 mb-16">
+        <div class="text-xs font-mono text-neutral-400 uppercase tracking-widest">[ 05 ] PRICING</div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          Predictable pricing. No hidden fees.
+        </h2>
+        <p class="text-sm text-neutral-400">
+          Start for free on Hobby, or scale to Pro as your engineering squad grows.
+        </p>
+
+        <!-- Monthly / Annual Toggle -->
+        <div class="pt-4 flex items-center justify-center gap-3 font-mono text-xs">
+          <span id="monthly-label" class="text-white">Monthly</span>
+          <button id="billing-toggle" type="button" role="switch" aria-checked="false" class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border border-neutral-700 bg-neutral-900 transition-colors focus:outline-none">
+            <span id="toggle-indicator" class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow transition translate-x-0.5 mt-0.5"></span>
+          </button>
+          <span id="annual-label" class="text-neutral-500 flex items-center gap-1">
+            Annual
+            <span class="px-1.5 py-0.5 text-[10px] text-emerald-400 bg-emerald-950 border border-emerald-800 rounded">Save 20%</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Pricing Cards Grid (Re-usable Component via Array of Objects) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+
+        <!-- Hobby -->
+        <div class="p-8 rounded-xl border border-neutral-800 bg-[#0a0a0a] flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white">Hobby</h3>
+              <p class="text-xs text-neutral-400">For individual builders and personal projects</p>
+            </div>
+
+            <div class="flex items-baseline gap-1 font-mono">
+              <span class="text-4xl font-bold text-white pricing-value" data-monthly="$0" data-annual="$0">$0</span>
+              <span class="text-xs text-neutral-500">/ month</span>
+            </div>
+
+            <div class="pt-4 border-t border-neutral-900 space-y-2.5 text-xs text-neutral-300 font-mono">
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Up to 3 Projects</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Unlimited Kanban Boards</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Standard GitHub Sync</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Community Support</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="#deploy" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 text-xs font-mono font-medium text-neutral-300 bg-neutral-900 hover:bg-neutral-800 hover:text-white border border-neutral-800 rounded-lg transition-colors">
+            <span>Start Free</span>
+            <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert opacity-70" />
+          </a>
+        </div>
+
+        <!-- Pro (Featured) -->
+        <div class="p-8 rounded-xl border-2 border-white bg-[#0a0a0a] flex flex-col justify-between space-y-6 relative shadow-2xl">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold text-white">Pro</h3>
+              <span class="px-2 py-0.5 text-[10px] font-mono font-bold text-black bg-white rounded">POPULAR</span>
+            </div>
+            <p class="text-xs text-neutral-400">For fast-moving engineering teams and scaleups</p>
+
+            <div class="flex items-baseline gap-1 font-mono">
+              <span class="text-4xl font-bold text-white pricing-value" data-monthly="$20" data-annual="$16">$20</span>
+              <span class="text-xs text-neutral-500">/ user / month</span>
+            </div>
+
+            <div class="pt-4 border-t border-neutral-800 space-y-2.5 text-xs text-neutral-200 font-mono">
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Unlimited Projects & Sprints</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>10,000 AI Agent Executions / mo</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Predictive Sprint Analytics</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Full Ecosystem Integrations</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Priority 24/7 SLA Support</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="#deploy" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 text-xs font-mono font-medium text-black bg-white hover:bg-neutral-200 rounded-lg transition-colors">
+            <span>Upgrade to Pro</span>
+            <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert" />
+          </a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="p-8 rounded-xl border border-neutral-800 bg-[#0a0a0a] flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white">Enterprise</h3>
+              <p class="text-xs text-neutral-400">For mission-critical compliance & security</p>
+            </div>
+
+            <div class="flex items-baseline gap-1 font-mono">
+              <span class="text-4xl font-bold text-white pricing-value" data-monthly="Custom" data-annual="Custom">Custom</span>
+            </div>
+
+            <div class="pt-4 border-t border-neutral-900 space-y-2.5 text-xs text-neutral-300 font-mono">
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Dedicated SAML SSO & SCIM</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Custom Data Residency</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>99.99% Uptime Guarantee SLA</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/check.svg" alt="" class="w-3.5 h-3.5 invert" />
+                <span>Dedicated Technical Architect</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="#contact" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 text-xs font-mono font-medium text-neutral-300 bg-neutral-900 hover:bg-neutral-800 hover:text-white border border-neutral-800 rounded-lg transition-colors">
+            <span>Contact Sales</span>
+            <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert opacity-70" />
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 9. FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION COMPONENT)                   -->
+
+  <section id="faq" class="py-24 border-b border-neutral-800 bg-black">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section Heading -->
+      <div class="text-left space-y-2 mb-16">
+        <div class="text-xs font-mono text-neutral-400 uppercase tracking-widest">[ 06 ] FAQ</div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          Frequently Asked Questions
+        </h2>
+      </div>
+
+      <!-- FAQ Accordion List (Re-usable Component via Array of Objects) -->
+      <div class="divide-y divide-neutral-800 border-y border-neutral-800" id="faq-accordion">
+
+        <!-- Item 1 -->
+        <div class="faq-item py-6 px-3">
+          <button class="faq-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-base font-semibold text-white">How does the 14-day free trial work?</span>
+            <img src="assets/icons/chevron-down.svg" alt="Expand" class="faq-icon w-4 h-4 invert opacity-60 transition-transform" />
+          </button>
+          <div class="faq-content hidden pt-4 text-sm text-neutral-400 leading-relaxed">
+            You get complete access to all Pro tier capabilities for 14 days without inputting credit card details. When your trial completes, you can choose to remain on Pro or continue on the free Hobby tier.
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="faq-item py-6 px-3">
+          <button class="faq-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-base font-semibold text-white">Can I change or cancel my plan at any time?</span>
+            <img src="assets/icons/chevron-down.svg" alt="Expand" class="faq-icon w-4 h-4 invert opacity-60 transition-transform" />
+          </button>
+          <div class="faq-content hidden pt-4 text-sm text-neutral-400 leading-relaxed">
+            Yes. Subscriptions can be upgraded, downgraded, or canceled directly from your workspace dashboard anytime without long-term commitments.
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="faq-item py-6 px-3">
+          <button class="faq-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-base font-semibold text-white">What developer tools and integrations are supported?</span>
+            <img src="assets/icons/chevron-down.svg" alt="Expand" class="faq-icon w-4 h-4 invert opacity-60 transition-transform" />
+          </button>
+          <div class="faq-content hidden pt-4 text-sm text-neutral-400 leading-relaxed">
+            We provide native two-way sync for GitHub, GitLab, Jira, Figma, Linear, Slack, Notion, and customizable webhooks via our standard REST API.
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="faq-item py-6 px-3">
+          <button class="faq-trigger w-full flex items-center justify-between text-left focus:outline-none" aria-expanded="false">
+            <span class="text-base font-semibold text-white">How is our source code and private data protected?</span>
+            <img src="assets/icons/chevron-down.svg" alt="Expand" class="faq-icon w-4 h-4 invert opacity-60 transition-transform" />
+          </button>
+          <div class="faq-content hidden pt-4 text-sm text-neutral-400 leading-relaxed">
+            We are SOC2 Type II certified. All customer code and repository data are encrypted at rest with AES-256 and in transit with TLS 1.3. We never train public foundation models on private customer repositories.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 10. CALL TO ACTION (CTA) BANNER SECTION                                  -->
+
+  <section class="py-24 bg-black relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="rounded-2xl border border-neutral-800 bg-[#0a0a0a] p-8 sm:p-16 text-center space-y-6 relative overflow-hidden">
+
+        <!-- Vercel Subtle Gradient Beam -->
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto space-y-6">
+          <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+            Start building at the speed of thought.
+          </h2>
+
+          <p class="text-sm sm:text-base text-neutral-400">
+            Join over 250,000+ developers shipping modern applications with NexusFlow.
+          </p>
+
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="#pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-mono font-medium text-black bg-white hover:bg-neutral-200 rounded-lg transition-colors">
+              <span>Deploy Free Now</span>
+              <img src="assets/icons/arrow-right.svg" alt="" class="w-3.5 h-3.5 invert" />
+            </a>
+            <a href="#contact" class="w-full sm:w-auto px-6 py-2.5 text-xs font-mono font-medium text-neutral-300 bg-black hover:bg-neutral-900 border border-neutral-800 rounded-lg transition-colors">
+              Talk to Enterprise Team
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- 11. FOOTER COMPONENT                                                     -->
+
+  <footer class="border-t border-neutral-800 bg-black text-neutral-400 text-xs font-sans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+
+        <!-- Column 1: Brand & Socials -->
+        <div class="col-span-2 space-y-4">
+          <div class="flex items-center gap-2 text-white">
+            <img src="assets/icons/logo.svg" alt="NexusFlow" class="w-5 h-5 invert" />
+            <span class="text-sm font-semibold">NexusFlow</span>
+          </div>
+          <p class="text-xs text-neutral-500 max-w-xs leading-relaxed">
+            The unified developer platform for AI-orchestrated sprints, instant edge previews, and automated delivery pipelines.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <a href="#github" aria-label="GitHub" class="text-neutral-500 hover:text-white transition-colors">
+              <img src="assets/icons/github.svg" alt="GitHub" class="w-4 h-4 invert opacity-60 hover:opacity-100" />
+            </a>
+            <a href="#twitter" aria-label="Twitter" class="text-neutral-500 hover:text-white transition-colors">
+              <img src="assets/icons/twitter.svg" alt="Twitter" class="w-4 h-4 invert opacity-60 hover:opacity-100" />
+            </a>
+            <a href="#discord" aria-label="Discord" class="text-neutral-500 hover:text-white transition-colors">
+              <img src="assets/icons/discord.svg" alt="Discord" class="w-4 h-4 invert opacity-60 hover:opacity-100" />
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: Product -->
+        <div class="space-y-3 font-mono">
+          <div class="text-[11px] font-bold text-white uppercase tracking-wider">Product</div>
+          <ul class="space-y-2 text-neutral-400">
+            <li><a href="#features" class="hover:text-white transition-colors">AI Sprints</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Edge Previews</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Architecture Canvas</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Solutions -->
+        <div class="space-y-3 font-mono">
+          <div class="text-[11px] font-bold text-white uppercase tracking-wider">Solutions</div>
+          <ul class="space-y-2 text-neutral-400">
+            <li><a href="#solutions" class="hover:text-white transition-colors">Engineering Squads</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Startups & Scaleups</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Enterprise Security</a></li>
+            <li><a href="#solutions" class="hover:text-white transition-colors">Remote Teams</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Company -->
+        <div class="space-y-3 font-mono">
+          <div class="text-[11px] font-bold text-white uppercase tracking-wider">Company</div>
+          <ul class="space-y-2 text-neutral-400">
+            <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#careers" class="hover:text-white transition-colors">Careers</a></li>
+            <li><a href="#security" class="hover:text-white transition-colors">Security & Trust</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Status & Copyright Bar -->
+      <div class="mt-12 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-neutral-500">
+        <div>
+          © 2026 NexusFlow Inc. All rights reserved.
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-1.5 text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>All systems nominal</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+</body>
+</html>

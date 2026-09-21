@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" fill="none" class="w-56 h-44 mx-auto">
+  <defs>
+    <linearGradient id="emptyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.03" />
+    </linearGradient>
+    <linearGradient id="blueAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#60a5fa" />
+    </linearGradient>
+  </defs>
+  <circle cx="160" cy="120" r="85" fill="url(#emptyBg)" />
+  
+  <rect x="90" y="70" width="140" height="100" rx="16" fill="#1e293b" stroke="#334155" stroke-width="2" stroke-dasharray="4 4" />
+  
+  <path d="M100 70V60C100 56.6863 102.686 54 106 54H134C136.122 54 138.083 55.1166 139.155 56.9424L143.5 64.3333C144.215 65.5505 145.522 66.2947 146.937 66.2947H214C217.314 66.2947 220 68.9809 220 72.2947V70" stroke="#334155" stroke-width="2" stroke-linecap="round" fill="none"/>
+  
+  <circle cx="152" cy="116" r="28" fill="#0f172a" stroke="url(#blueAccent)" stroke-width="3" />
+  <path d="M172 136L196 160" stroke="url(#blueAccent)" stroke-width="3.5" stroke-linecap="round" />
+  
+  <path d="M125 95L127 100L132 102L127 104L125 109L123 104L118 102L123 100Z" fill="#38bdf8" opacity="0.8"/>
+  <path d="M195 85L196.5 89L200.5 90.5L196.5 92L195 96L193.5 92L189.5 90.5L193.5 89Z" fill="#10b981" opacity="0.8"/>
+  
+  <path d="M147 113C147 110.2 149.2 108 152 108C154.8 108 157 110.2 157 113C157 115 155.8 116.2 154.2 117.5C153 118.4 152 119.5 152 121.5" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="152" cy="125" r="1.25" fill="#94a3b8"/>
+</svg>

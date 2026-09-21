@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" class="w-10 h-10">
+  <defs>
+    <linearGradient id="logoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+    <linearGradient id="glowBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="innerGrid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Container with subtle glow border -->
+  <rect x="0.5" y="0.5" width="39" height="39" rx="10" fill="url(#logoBg)" stroke="url(#glowBorder)" stroke-width="1.5" />
+  
+  <!-- Modern Geometric Planner Layout Icon -->
+  <rect x="9" y="10" width="9" height="9" rx="2.5" fill="url(#innerGrid)" />
+  <rect x="22" y="10" width="9" height="5" rx="2" fill="#3b82f6" fill-opacity="0.4" />
+  <rect x="22" y="18" width="9" height="12" rx="2.5" fill="url(#innerGrid)" />
+  <rect x="9" y="22" width="9" height="8" rx="2" fill="#38bdf8" fill-opacity="0.35" />
+</svg>

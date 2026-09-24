@@ -1,988 +1,1593 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Project Hub — Modern Workspace</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Project Hub — Modern Workspace</title>
 
-  <!-- Tailwind CSS v4 Browser CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Tailwind CSS v4 Browser CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <!-- Google Fonts: Inter & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .font-mono-code {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    /* Minimalist Dark Scrollbars */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #09090b;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #27272a;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #3f3f46;
-    }
-  </style>
-</head>
-<body class="bg-[#09090b] text-zinc-100 min-h-screen antialiased flex flex-col selection:bg-zinc-100 selection:text-zinc-900">
-
-  <!-- ================= SLEEK MINIMAL HEADER ================= -->
-  <header class="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-[#09090b]/80 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 gap-4">
-
-        <!-- Logo & Title -->
-        <a href="index.html" class="flex items-center gap-3 group shrink-0">
-          <img src="assets/logo.svg" alt="Project Hub" class="w-8 h-8 sm:w-9 sm:h-9 transition-transform group-hover:scale-105" />
-          <div class="flex items-center gap-2">
-            <span class="text-base sm:text-lg font-bold tracking-tight text-white">Project<span class="text-blue-500 font-extrabold">Hub</span></span>
-            <span class="hidden sm:inline-block text-[10px] font-medium tracking-wide uppercase px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700">Studio</span>
-          </div>
-        </a>
-
-        <!-- Right Side Actions -->
-        <div class="flex items-center gap-2.5 sm:gap-3">
-
-
-
-          <!-- Modern User Profile Avatar -->
-          <div class="flex items-center pl-2 border-l border-zinc-800">
-            <img src="assets/avatar.svg" alt="User Profile" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full ring-1 ring-zinc-700 hover:ring-blue-500/50 transition-all object-cover cursor-pointer" />
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </header>
-
-  <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
-
-    <!-- ================= SUMMARY METRICS ROW ================= -->
-    <section aria-labelledby="summary-heading" class="space-y-3 sm:space-y-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 id="summary-heading" class="text-base sm:text-lg font-bold text-white tracking-tight">Project Summary</h2>
-          <p class="text-xs text-zinc-400">Live operational overview across active clients, deliveries & budget.</p>
-        </div>
-      </div>
-
-      <!-- 4 Cards Grid: 2 cols on mobile, 4 cols on lg -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-
-        <!-- Total Projects -->
-        <div class="bg-[#121215] border border-zinc-800/90 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-medium text-zinc-400">Total Projects</span>
-            <div class="p-1.5 sm:p-2 rounded-xl bg-zinc-800/80 text-zinc-300 border border-zinc-700/50">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
-            <span id="summaryTotalProjects" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono-code">4</span>
-            <span class="text-[11px] text-zinc-500 font-medium">projects</span>
-          </div>
-        </div>
-
-        <!-- Pending Projects -->
-        <div class="bg-[#121215] border border-zinc-800/90 hover:border-amber-500/40 rounded-2xl p-4 sm:p-5 transition-all shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-medium text-zinc-400">Pending</span>
-            <div class="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
-            <span id="summaryPendingProjects" class="text-2xl sm:text-3xl font-extrabold text-amber-400 tracking-tight font-mono-code">2</span>
-            <span class="text-[11px] text-zinc-500 font-medium">in queue</span>
-          </div>
-        </div>
-
-        <!-- Completed Projects -->
-        <div class="bg-[#121215] border border-zinc-800/90 hover:border-emerald-500/40 rounded-2xl p-4 sm:p-5 transition-all shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-medium text-zinc-400">Completed</span>
-            <div class="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
-            <span id="summaryCompletedProjects" class="text-2xl sm:text-3xl font-extrabold text-emerald-400 tracking-tight font-mono-code">2</span>
-            <span class="text-[11px] text-zinc-500 font-medium">delivered</span>
-          </div>
-        </div>
-
-        <!-- Total Budget -->
-        <div class="bg-[#121215] border border-zinc-800/90 hover:border-blue-500/40 rounded-2xl p-4 sm:p-5 transition-all shadow-sm">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-medium text-zinc-400">Total Budget</span>
-            <div class="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
-            <span id="summaryTotalBudget" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono-code">$118,500</span>
-            <span class="text-[11px] text-zinc-500 font-medium">USD</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= MAIN 2-COLUMN WORKSPACE ================= -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-
-      <!-- ================= LEFT COLUMN: CREATE / EDIT PROJECT FORM ================= -->
-      <aside class="lg:col-span-4 w-full lg:sticky lg:top-20">
-        <div class="bg-[#121215] border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-xl">
-
-          <!-- Form Header -->
-          <div class="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                <h3 id="formTitle" class="text-sm sm:text-base font-bold text-white uppercase tracking-tight">Create Project</h3>
-              </div>
-              <p id="formSubtitle" class="text-xs text-zinc-400 mt-0.5">Enter details to add a new project</p>
-            </div>
-
-            <span id="formModeBadge" class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700">
-              New Entry
-            </span>
-          </div>
-
-          <!-- Form Fields -->
-          <form id="projectForm" onsubmit="handleFormSubmit(event)" class="space-y-3.5 sm:space-y-4">
-
-            <input type="hidden" id="editProjectId" value="">
-
-            <!-- 1. Project Name -->
-            <div>
-              <label for="projectName" class="block text-xs font-medium text-zinc-300 mb-1">
-                Project Name <span class="text-rose-400">*</span>
-              </label>
-              <input
-                type="text"
-                id="projectName"
-                placeholder="e.g. NextGen SaaS Dashboard"
-                class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
-                required
-              />
-              <p id="errorProjectName" class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>Project name is required.</span>
-              </p>
-            </div>
-
-            <!-- 2. Client Name -->
-            <div>
-              <label for="clientName" class="block text-xs font-medium text-zinc-300 mb-1">
-                Client Name <span class="text-rose-400">*</span>
-              </label>
-              <input
-                type="text"
-                id="clientName"
-                placeholder="e.g. Acme Global Tech"
-                class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
-                required
-              />
-              <p id="errorClientName" class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>Client name is required.</span>
-              </p>
-            </div>
-
-            <!-- 3. Project URL -->
-            <div>
-              <label for="projectUrl" class="block text-xs font-medium text-zinc-300 mb-1">
-                Project URL <span class="text-rose-400">*</span>
-              </label>
-              <input
-                type="url"
-                id="projectUrl"
-                placeholder="https://client-project.com"
-                class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all font-mono-code"
-                required
-              />
-              <p id="errorProjectUrl" class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>Please enter a valid URL.</span>
-              </p>
-            </div>
-
-            <!-- 4. Category -->
-            <div>
-              <label for="category" class="block text-xs font-medium text-zinc-300 mb-1">
-                Category <span class="text-rose-400">*</span>
-              </label>
-              <div class="relative">
-                <select
-                  id="category"
-                  class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all appearance-none cursor-pointer"
-                  required
-                >
-                  <option value="" disabled selected>Select category...</option>
-                  <option value="Web Development">Web Development</option>
-                  <option value="Mobile App">Mobile App</option>
-                  <option value="UI/UX Design">UI/UX Design</option>
-                  <option value="Cloud / DevOps">Cloud / DevOps</option>
-                  <option value="AI & ML">AI & Machine Learning</option>
-                  <option value="Branding & Growth">Branding & Growth</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-zinc-400">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-              <p id="errorCategory" class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>Please select a category.</span>
-              </p>
-            </div>
-
-            <!-- 5. Budget -->
-            <div>
-              <label for="budget" class="block text-xs font-medium text-zinc-300 mb-1">
-                Unit Budget ($ USD) <span class="text-rose-400">*</span>
-              </label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-500 font-mono-code text-xs">$</span>
-                <input
-                  type="number"
-                  id="budget"
-                  step="any"
-                  placeholder="5000"
-                  class="w-full pl-7 pr-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all font-mono-code"
-                  required
-                />
-              </div>
-              <p id="errorBudget" class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span>Budget must be a positive number.</span>
-              </p>
-            </div>
-
-            <!-- Buttons -->
-            <div class="pt-3 flex items-center gap-2.5">
-              <button
-                type="submit"
-                id="submitBtn"
-                class="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:py-2.5 text-xs font-semibold rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 shadow-sm active:scale-98 transition-all cursor-pointer"
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-mono-code {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      /* Minimalist Dark Scrollbars */
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #09090b;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #27272a;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #3f3f46;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[#09090b] text-zinc-100 min-h-screen antialiased flex flex-col selection:bg-zinc-100 selection:text-zinc-900"
+  >
+    <!-- ================= SLEEK MINIMAL HEADER ================= -->
+    <header
+      class="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-[#09090b]/80 backdrop-blur-xl"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 gap-4">
+          <!-- Logo & Title -->
+          <a href="index.html" class="flex items-center gap-3 group shrink-0">
+            <img
+              src="assets/logo.svg"
+              alt="Project Hub"
+              class="w-8 h-8 sm:w-9 sm:h-9 transition-transform group-hover:scale-105"
+            />
+            <div class="flex items-center gap-2">
+              <span
+                class="text-base sm:text-lg font-bold tracking-tight text-white"
+                >Project<span class="text-blue-500 font-extrabold"
+                  >Hub</span
+                ></span
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
-                </svg>
-                <span id="submitBtnText">Add Project</span>
-              </button>
-
-              <button
-                type="button"
-                onclick="clearForm()"
-                id="clearBtn"
-                class="px-3.5 py-2 sm:py-2.5 text-xs font-medium rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all cursor-pointer"
+              <span
+                class="hidden sm:inline-block text-[10px] font-medium tracking-wide uppercase px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700"
+                >Studio</span
               >
-                Clear
-              </button>
             </div>
+          </a>
 
-            <!-- Cancel Edit Mode Button -->
-            <button
-              type="button"
-              id="cancelEditBtn"
-              onclick="cancelEditMode()"
-              class="hidden w-full text-center text-xs text-zinc-400 hover:text-zinc-200 py-1 transition-colors"
+          <!-- Right Side Actions -->
+          <div class="flex items-center gap-2.5 sm:gap-3">
+            <!-- Modern User Profile Avatar -->
+            <div class="flex items-center pl-2 border-l border-zinc-800">
+              <img
+                src="assets/avatar.svg"
+                alt="User Profile"
+                class="w-8 h-8 sm:w-9 sm:h-9 rounded-full ring-1 ring-zinc-700 hover:ring-blue-500/50 transition-all object-cover cursor-pointer"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
+    <main
+      class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8"
+    >
+      <!-- ================= SUMMARY METRICS ROW ================= -->
+      <section aria-labelledby="summary-heading" class="space-y-3 sm:space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2
+              id="summary-heading"
+              class="text-base sm:text-lg font-bold text-white tracking-tight"
             >
-              Cancel Edit Mode
-            </button>
-
-          </form>
-
-        </div>
-      </aside>
-
-      <!-- ================= RIGHT COLUMN: PROJECT CONTROLS & CARDS ================= -->
-      <section class="lg:col-span-8 w-full space-y-4 sm:space-y-6">
-
-        <!-- Controls Bar -->
-        <div class="bg-[#121215] border border-zinc-800 rounded-2xl p-4 space-y-3 shadow-sm">
-
-          <!-- Search Bar & Count -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
-            <div class="relative flex-1">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-500">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-              </span>
-              <input
-                type="text"
-                id="searchProjects"
-                placeholder="Search by project name or domain..."
-                class="w-full pl-9 pr-8 py-2 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
-                oninput="handleSearch(this.value)"
-              />
-              <button
-                id="clearSearchBtn"
-                onclick="clearSearchInput()"
-                class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-500 hover:text-zinc-300"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </button>
-            </div>
-
-            <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0">
-              <span class="text-xs text-zinc-400">Count:</span>
-              <span id="displayedCount" class="text-xs font-bold font-mono-code px-2.5 py-1 bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-lg">4 of 4</span>
-            </div>
-          </div>
-
-          <!-- Filters Row: Responsive 2-cols on mobile, 4-cols on sm+ -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2.5 border-t border-zinc-800/80">
-
-            <!-- Category Filter -->
-            <div>
-              <label for="filterCategory" class="block text-[10px] font-medium text-zinc-400 mb-1">Category</label>
-              <div class="relative">
-                <select
-                  id="filterCategory"
-                  onchange="applyFilters()"
-                  class="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
-                >
-                  <option value="ALL">All Categories</option>
-                  <option value="Web Development">Web Development</option>
-                  <option value="Mobile App">Mobile App</option>
-                  <option value="UI/UX Design">UI/UX Design</option>
-                  <option value="Cloud / DevOps">Cloud / DevOps</option>
-                  <option value="AI & ML">AI & Machine Learning</option>
-                  <option value="Branding & Growth">Branding & Growth</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Status Filter -->
-            <div>
-              <label for="filterStatus" class="block text-[10px] font-medium text-zinc-400 mb-1">Status</label>
-              <div class="relative">
-                <select
-                  id="filterStatus"
-                  onchange="applyFilters()"
-                  class="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
-                >
-                  <option value="ALL">All Status</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Completed">Completed</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sort By -->
-            <div>
-              <label for="sortBy" class="block text-[10px] font-medium text-zinc-400 mb-1">Sort</label>
-              <div class="relative">
-                <select
-                  id="sortBy"
-                  onchange="applyFilters()"
-                  class="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
-                >
-                  <option value="default">Default</option>
-                  <option value="name-asc">Name: A-Z</option>
-                  <option value="name-desc">Name: Z-A</option>
-                  <option value="budget-asc">Budget: Low-High</option>
-                  <option value="budget-desc">Budget: High-Low</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Starred Toggle & Reset -->
-            <div class="flex items-end gap-1.5">
-              <button
-                id="filterFavoriteBtn"
-                onclick="toggleFavoriteFilter()"
-                class="flex-1 py-1.5 px-2 rounded-xl border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-amber-400 text-xs font-medium inline-flex items-center justify-center gap-1 transition-all cursor-pointer"
-                title="Filter Starred"
-              >
-                <svg id="filterStarIcon" class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                </svg>
-                <span>Starred</span>
-              </button>
-
-              <button
-                onclick="resetAllFilters()"
-                class="py-1.5 px-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white text-xs font-medium transition-all cursor-pointer"
-                title="Reset Filters"
-              >
-                Reset
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- ================= PROJECT CARDS CONTAINER ================= -->
-        <div id="projectsGrid" class="space-y-3.5 sm:space-y-4">
-
-          <!-- ================= PROJECT CARD 1 ================= -->
-          <article class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
-            data-id="1"
-            data-name="E-Commerce Platform Redesign"
-            data-client="Apex Retailers Ltd"
-            data-url="https://apexretail.shop"
-            data-category="Web Development"
-            data-unit-budget="12500"
-            data-qty="3"
-            data-status="Completed"
-            data-favorite="true"
-          >
-            <!-- Top Card Row: Category Badge + Favorite + Actions -->
-            <div class="flex items-center justify-between gap-2 mb-2.5">
-              <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                <span class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                  Web Development
-                </span>
-                <span class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 inline-flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  <span>Completed</span>
-                </span>
-              </div>
-
-              <div class="flex items-center gap-1">
-                <!-- Star Favorite Button -->
-                <button
-                  onclick="toggleFavorite(1)"
-                  class="favorite-btn p-1.5 rounded-lg text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Favorite"
-                >
-                  <svg class="w-4 h-4 fill-amber-400" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                  </svg>
-                </button>
-
-                <!-- Edit Button -->
-                <button
-                  onclick="editProject(1)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Edit"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                  </svg>
-                </button>
-
-                <!-- Delete Button -->
-                <button
-                  onclick="deleteProject(1)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Delete"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Middle Card Row: Project Title & Client & URL -->
-            <div class="space-y-1 mb-3.5">
-              <h4 class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors">
-                E-Commerce Platform Redesign
-              </h4>
-              <div class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400">
-                <span class="inline-flex items-center gap-1 text-zinc-300">
-                  Client: <strong class="text-zinc-200 font-semibold">Apex Retailers Ltd</strong>
-                </span>
-                <span class="text-zinc-700 hidden sm:inline">•</span>
-                <a href="https://apexretail.shop" target="_blank" class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code">
-                  <span>apexretail.shop</span>
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Bottom Card Row -->
-            <div class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4">
-
-              <!-- Quantity Controller -->
-              <div class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
-                <span class="text-[11px] text-zinc-400">Qty:</span>
-                <div class="flex items-center gap-1">
-                  <button
-                    onclick="changeQuantity(1, -1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    -
-                  </button>
-                  <span class="qty-display text-xs font-mono-code font-bold text-white px-1.5">3</span>
-                  <button
-                    onclick="changeQuantity(1, 1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <!-- Budget Calculations -->
-              <div class="text-right">
-                <div class="text-[10px] text-zinc-500 font-mono-code">Unit: $12,500 × 3</div>
-                <div class="text-xs sm:text-sm font-bold text-emerald-400 font-mono-code total-card-budget">$37,500.00</div>
-              </div>
-
-              <!-- Status Toggle Action Switch -->
-              <button
-                onclick="toggleStatus(1)"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-white transition-all cursor-pointer"
-                title="Toggle status"
-              >
-                <span>Mark Pending</span>
-                <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                </svg>
-              </button>
-
-            </div>
-          </article>
-
-          <!-- ================= PROJECT CARD 2 ================= -->
-          <article class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
-            data-id="2"
-            data-name="AI Workflow Automation Bot"
-            data-client="NovaGen AI Labs"
-            data-url="https://novagen-flow.io"
-            data-category="AI & ML"
-            data-unit-budget="18000"
-            data-qty="1"
-            data-status="Pending"
-            data-favorite="false"
-          >
-            <!-- Top Card Row -->
-            <div class="flex items-center justify-between gap-2 mb-2.5">
-              <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                <span class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-violet-500/10 text-violet-400 border border-violet-500/20">
-                  AI & ML
-                </span>
-                <span class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 inline-flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                  <span>Pending</span>
-                </span>
-              </div>
-
-              <div class="flex items-center gap-1">
-                <button
-                  onclick="toggleFavorite(2)"
-                  class="favorite-btn p-1.5 rounded-lg text-zinc-500 hover:text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Favorite"
-                >
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  onclick="editProject(2)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Edit"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  onclick="deleteProject(2)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Delete"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Middle Card Row -->
-            <div class="space-y-1 mb-3.5">
-              <h4 class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors">
-                AI Workflow Automation Bot
-              </h4>
-              <div class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400">
-                <span class="inline-flex items-center gap-1 text-zinc-300">
-                  Client: <strong class="text-zinc-200 font-semibold">NovaGen AI Labs</strong>
-                </span>
-                <span class="text-zinc-700 hidden sm:inline">•</span>
-                <a href="https://novagen-flow.io" target="_blank" class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code">
-                  <span>novagen-flow.io</span>
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Bottom Card Row -->
-            <div class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4">
-
-              <div class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
-                <span class="text-[11px] text-zinc-400">Qty:</span>
-                <div class="flex items-center gap-1">
-                  <button
-                    onclick="changeQuantity(2, -1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    -
-                  </button>
-                  <span class="qty-display text-xs font-mono-code font-bold text-white px-1.5">1</span>
-                  <button
-                    onclick="changeQuantity(2, 1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div class="text-right">
-                <div class="text-[10px] text-zinc-500 font-mono-code">Unit: $18,000 × 1</div>
-                <div class="text-xs sm:text-sm font-bold text-white font-mono-code total-card-budget">$18,000.00</div>
-              </div>
-
-              <button
-                onclick="toggleStatus(2)"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition-all cursor-pointer"
-                title="Toggle status"
-              >
-                <span>Mark Completed</span>
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </button>
-
-            </div>
-          </article>
-
-          <!-- ================= PROJECT CARD 3 ================= -->
-          <article class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
-            data-id="3"
-            data-name="Fintech Mobile Banking App"
-            data-client="Zenith Capital"
-            data-url="https://zenithpay.finance"
-            data-category="Mobile App"
-            data-unit-budget="24000"
-            data-qty="2"
-            data-status="Pending"
-            data-favorite="true"
-          >
-            <!-- Top Card Row -->
-            <div class="flex items-center justify-between gap-2 mb-2.5">
-              <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                <span class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20">
-                  Mobile App
-                </span>
-                <span class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 inline-flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                  <span>Pending</span>
-                </span>
-              </div>
-
-              <div class="flex items-center gap-1">
-                <button
-                  onclick="toggleFavorite(3)"
-                  class="favorite-btn p-1.5 rounded-lg text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Favorite"
-                >
-                  <svg class="w-4 h-4 fill-amber-400" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  onclick="editProject(3)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Edit"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  onclick="deleteProject(3)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Delete"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Middle Card Row -->
-            <div class="space-y-1 mb-3.5">
-              <h4 class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors">
-                Fintech Mobile Banking App
-              </h4>
-              <div class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400">
-                <span class="inline-flex items-center gap-1 text-zinc-300">
-                  Client: <strong class="text-zinc-200 font-semibold">Zenith Capital</strong>
-                </span>
-                <span class="text-zinc-700 hidden sm:inline">•</span>
-                <a href="https://zenithpay.finance" target="_blank" class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code">
-                  <span>zenithpay.finance</span>
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Bottom Card Row -->
-            <div class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4">
-
-              <div class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
-                <span class="text-[11px] text-zinc-400">Qty:</span>
-                <div class="flex items-center gap-1">
-                  <button
-                    onclick="changeQuantity(3, -1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    -
-                  </button>
-                  <span class="qty-display text-xs font-mono-code font-bold text-white px-1.5">2</span>
-                  <button
-                    onclick="changeQuantity(3, 1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div class="text-right">
-                <div class="text-[10px] text-zinc-500 font-mono-code">Unit: $24,000 × 2</div>
-                <div class="text-xs sm:text-sm font-bold text-white font-mono-code total-card-budget">$48,000.00</div>
-              </div>
-
-              <button
-                onclick="toggleStatus(3)"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition-all cursor-pointer"
-                title="Toggle status"
-              >
-                <span>Mark Completed</span>
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </button>
-
-            </div>
-          </article>
-
-          <!-- ================= PROJECT CARD 4 ================= -->
-          <article class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
-            data-id="4"
-            data-name="Cloud Infrastructure Migration"
-            data-client="HyperScale Networks"
-            data-url="https://hyperscale.cloud"
-            data-category="Cloud / DevOps"
-            data-unit-budget="15000"
-            data-qty="1"
-            data-status="Completed"
-            data-favorite="false"
-          >
-            <!-- Top Card Row -->
-            <div class="flex items-center justify-between gap-2 mb-2.5">
-              <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                <span class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20">
-                  Cloud / DevOps
-                </span>
-                <span class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 inline-flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  <span>Completed</span>
-                </span>
-              </div>
-
-              <div class="flex items-center gap-1">
-                <button
-                  onclick="toggleFavorite(4)"
-                  class="favorite-btn p-1.5 rounded-lg text-zinc-500 hover:text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Favorite"
-                >
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  onclick="editProject(4)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Edit"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  onclick="deleteProject(4)"
-                  class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
-                  title="Delete"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Middle Card Row -->
-            <div class="space-y-1 mb-3.5">
-              <h4 class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors">
-                Cloud Infrastructure Migration
-              </h4>
-              <div class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400">
-                <span class="inline-flex items-center gap-1 text-zinc-300">
-                  Client: <strong class="text-zinc-200 font-semibold">HyperScale Networks</strong>
-                </span>
-                <span class="text-zinc-700 hidden sm:inline">•</span>
-                <a href="https://hyperscale.cloud" target="_blank" class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code">
-                  <span>hyperscale.cloud</span>
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <!-- Bottom Card Row -->
-            <div class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4">
-
-              <div class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
-                <span class="text-[11px] text-zinc-400">Qty:</span>
-                <div class="flex items-center gap-1">
-                  <button
-                    onclick="changeQuantity(4, -1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    -
-                  </button>
-                  <span class="qty-display text-xs font-mono-code font-bold text-white px-1.5">1</span>
-                  <button
-                    onclick="changeQuantity(4, 1)"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div class="text-right">
-                <div class="text-[10px] text-zinc-500 font-mono-code">Unit: $15,000 × 1</div>
-                <div class="text-xs sm:text-sm font-bold text-emerald-400 font-mono-code total-card-budget">$15,000.00</div>
-              </div>
-
-              <button
-                onclick="toggleStatus(4)"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-white transition-all cursor-pointer"
-                title="Toggle status"
-              >
-                <span>Mark Pending</span>
-                <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                </svg>
-              </button>
-
-            </div>
-          </article>
-
-        </div>
-
-        <!-- ================= EMPTY / NOT FOUND STATE ================= -->
-        <div id="notFoundState" class="hidden bg-[#121215] border border-zinc-800 border-dashed rounded-2xl p-8 sm:p-12 text-center space-y-3">
-          <img src="assets/empty-state.svg" alt="No Projects Found" class="w-36 sm:w-48 h-auto mx-auto opacity-90" />
-          <div class="max-w-md mx-auto space-y-1">
-            <h4 class="text-sm sm:text-base font-bold text-white tracking-tight">No Matching Projects</h4>
+              Project Summary
+            </h2>
             <p class="text-xs text-zinc-400">
-              No projects match your current search or filter. Try adjusting terms or resetting.
+              Live operational overview across active clients, deliveries &
+              budget.
             </p>
           </div>
-          <div class="pt-2 flex items-center justify-center gap-2">
-            <button
-              onclick="resetAllFilters()"
-              class="px-3.5 py-2 text-xs font-medium rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 shadow-sm transition-all cursor-pointer font-semibold"
-            >
-              Reset Filters
-            </button>
-          </div>
         </div>
 
+        <!-- 4 Cards Grid: 2 cols on mobile, 4 cols on lg -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Total Projects -->
+          <div
+            class="bg-[#121215] border border-zinc-800/90 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-zinc-400"
+                >Total Projects</span
+              >
+              <div
+                class="p-1.5 sm:p-2 rounded-xl bg-zinc-800/80 text-zinc-300 border border-zinc-700/50"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
+              <span
+                id="summaryTotalProjects"
+                class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono-code"
+                >4</span
+              >
+              <span class="text-[11px] text-zinc-500 font-medium"
+                >projects</span
+              >
+            </div>
+          </div>
+
+          <!-- Pending Projects -->
+          <div
+            class="bg-[#121215] border border-zinc-800/90 hover:border-amber-500/40 rounded-2xl p-4 sm:p-5 transition-all shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-zinc-400">Pending</span>
+              <div
+                class="p-1.5 sm:p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
+              <span
+                id="summaryPendingProjects"
+                class="text-2xl sm:text-3xl font-extrabold text-amber-400 tracking-tight font-mono-code"
+                >2</span
+              >
+              <span class="text-[11px] text-zinc-500 font-medium"
+                >in queue</span
+              >
+            </div>
+          </div>
+
+          <!-- Completed Projects -->
+          <div
+            class="bg-[#121215] border border-zinc-800/90 hover:border-emerald-500/40 rounded-2xl p-4 sm:p-5 transition-all shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-zinc-400">Completed</span>
+              <div
+                class="p-1.5 sm:p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
+              <span
+                id="summaryCompletedProjects"
+                class="text-2xl sm:text-3xl font-extrabold text-emerald-400 tracking-tight font-mono-code"
+                >2</span
+              >
+              <span class="text-[11px] text-zinc-500 font-medium"
+                >delivered</span
+              >
+            </div>
+          </div>
+
+          <!-- Total Budget -->
+          <div
+            class="bg-[#121215] border border-zinc-800/90 hover:border-blue-500/40 rounded-2xl p-4 sm:p-5 transition-all shadow-sm"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-zinc-400"
+                >Total Budget</span
+              >
+              <div
+                class="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-2 sm:mt-3 flex items-baseline gap-1.5">
+              <span
+                id="summaryTotalBudget"
+                class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono-code"
+                >$118,500</span
+              >
+              <span class="text-[11px] text-zinc-500 font-medium">USD</span>
+            </div>
+          </div>
+        </div>
       </section>
 
-    </div>
-  </main>
+      <!-- ================= MAIN 2-COLUMN WORKSPACE ================= -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        <!-- ================= LEFT COLUMN: CREATE / EDIT PROJECT FORM ================= -->
+        <aside class="lg:col-span-4 w-full lg:sticky lg:top-20">
+          <div
+            class="bg-[#121215] border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-xl"
+          >
+            <!-- Form Header -->
+            <div
+              class="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5"
+            >
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                  <h3
+                    id="formTitle"
+                    class="text-sm sm:text-base font-bold text-white uppercase tracking-tight"
+                  >
+                    Create Project
+                  </h3>
+                </div>
+                <p id="formSubtitle" class="text-xs text-zinc-400 mt-0.5">
+                  Enter details to add a new project
+                </p>
+              </div>
 
-  <!-- ================= CLEAN MINIMAL FOOTER ================= -->
-  <footer class="border-t border-zinc-800/80 bg-[#09090b] py-5 text-center text-xs text-zinc-500">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-2">
-        <img src="assets/logo.svg" alt="Project Hub" class="w-4 h-4 opacity-70" />
-        <span class="font-medium text-zinc-400">Batch 5 — Project Hub</span>
+              <span
+                id="formModeBadge"
+                class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700"
+              >
+                New Entry
+              </span>
+            </div>
+
+            <!-- Form Fields -->
+            <form
+              id="projectForm"
+              onsubmit="handleFormSubmit(event)"
+              class="space-y-3.5 sm:space-y-4"
+            >
+              <input type="hidden" id="editProjectId" value="" />
+
+              <!-- 1. Project Name -->
+              <div>
+                <label
+                  for="projectName"
+                  class="block text-xs font-medium text-zinc-300 mb-1"
+                >
+                  Project Name <span class="text-rose-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="projectName"
+                  placeholder="e.g. NextGen SaaS Dashboard"
+                  class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
+                  required
+                />
+                <p
+                  id="errorProjectName"
+                  class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                >
+                  <svg
+                    class="w-3.5 h-3.5 shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>Project name is required.</span>
+                </p>
+              </div>
+
+              <!-- 2. Client Name -->
+              <div>
+                <label
+                  for="clientName"
+                  class="block text-xs font-medium text-zinc-300 mb-1"
+                >
+                  Client Name <span class="text-rose-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="clientName"
+                  placeholder="e.g. Acme Global Tech"
+                  class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
+                  required
+                />
+                <p
+                  id="errorClientName"
+                  class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                >
+                  <svg
+                    class="w-3.5 h-3.5 shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>Client name is required.</span>
+                </p>
+              </div>
+
+              <!-- 3. Project URL -->
+              <div>
+                <label
+                  for="projectUrl"
+                  class="block text-xs font-medium text-zinc-300 mb-1"
+                >
+                  Project URL <span class="text-rose-400">*</span>
+                </label>
+                <input
+                  type="url"
+                  id="projectUrl"
+                  placeholder="https://client-project.com"
+                  class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all font-mono-code"
+                  required
+                />
+                <p
+                  id="errorProjectUrl"
+                  class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                >
+                  <svg
+                    class="w-3.5 h-3.5 shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>Please enter a valid URL.</span>
+                </p>
+              </div>
+
+              <!-- 4. Category -->
+              <div>
+                <label
+                  for="category"
+                  class="block text-xs font-medium text-zinc-300 mb-1"
+                >
+                  Category <span class="text-rose-400">*</span>
+                </label>
+                <div class="relative">
+                  <select
+                    id="category"
+                    class="w-full px-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all appearance-none cursor-pointer"
+                    required
+                  >
+                    <option value="" disabled selected>
+                      Select category...
+                    </option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile App">Mobile App</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Cloud / DevOps">Cloud / DevOps</option>
+                    <option value="AI & ML">AI & Machine Learning</option>
+                    <option value="Branding & Growth">Branding & Growth</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-zinc-400"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <p
+                  id="errorCategory"
+                  class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                >
+                  <svg
+                    class="w-3.5 h-3.5 shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>Please select a category.</span>
+                </p>
+              </div>
+
+              <!-- 5. Budget -->
+              <div>
+                <label
+                  for="budget"
+                  class="block text-xs font-medium text-zinc-300 mb-1"
+                >
+                  Unit Budget ($ USD) <span class="text-rose-400">*</span>
+                </label>
+                <div class="relative">
+                  <span
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-500 font-mono-code text-xs"
+                    >$</span
+                  >
+                  <input
+                    type="number"
+                    id="budget"
+                    step="any"
+                    placeholder="5000"
+                    class="w-full pl-7 pr-3 py-2 sm:py-2.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all font-mono-code"
+                    required
+                  />
+                </div>
+                <p
+                  id="errorBudget"
+                  class="hidden text-[11px] text-rose-400 mt-1 flex items-center gap-1"
+                >
+                  <svg
+                    class="w-3.5 h-3.5 shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>Budget must be a positive number.</span>
+                </p>
+              </div>
+
+              <!-- Buttons -->
+              <div class="pt-3 flex items-center gap-2.5">
+                <button
+                  type="submit"
+                  id="submitBtn"
+                  class="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:py-2.5 text-xs font-semibold rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 shadow-sm active:scale-98 transition-all cursor-pointer"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2.5"
+                      d="M12 4v16m8-8H4"
+                    ></path>
+                  </svg>
+                  <span id="submitBtnText">Add Project</span>
+                </button>
+
+                <button
+                  type="button"
+                  onclick="clearForm()"
+                  id="clearBtn"
+                  class="px-3.5 py-2 sm:py-2.5 text-xs font-medium rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all cursor-pointer"
+                >
+                  Clear
+                </button>
+              </div>
+
+              <!-- Cancel Edit Mode Button -->
+              <button
+                type="button"
+                id="cancelEditBtn"
+                onclick="cancelEditMode()"
+                class="hidden w-full text-center text-xs text-zinc-400 hover:text-zinc-200 py-1 transition-colors"
+              >
+                Cancel Edit Mode
+              </button>
+            </form>
+          </div>
+        </aside>
+
+        <!-- ================= RIGHT COLUMN: PROJECT CONTROLS & CARDS ================= -->
+        <section class="lg:col-span-8 w-full space-y-4 sm:space-y-6">
+          <!-- Controls Bar -->
+          <div
+            class="bg-[#121215] border border-zinc-800 rounded-2xl p-4 space-y-3 shadow-sm"
+          >
+            <!-- Search Bar & Count -->
+            <div
+              class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5"
+            >
+              <div class="relative flex-1">
+                <span
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-500"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  id="searchProjects"
+                  placeholder="Search by project name or domain..."
+                  class="w-full pl-9 pr-8 py-2 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-400/20 transition-all"
+                  oninput="handleSearch(this.value)"
+                />
+                <button
+                  id="clearSearchBtn"
+                  onclick="clearSearchInput()"
+                  class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-500 hover:text-zinc-300"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+
+              <div
+                class="flex items-center justify-between sm:justify-end gap-2 shrink-0"
+              >
+                <span class="text-xs text-zinc-400">Count:</span>
+                <span
+                  id="displayedCount"
+                  class="text-xs font-bold font-mono-code px-2.5 py-1 bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-lg"
+                  >4 of 4</span
+                >
+              </div>
+            </div>
+
+            <!-- Filters Row: Responsive 2-cols on mobile, 4-cols on sm+ -->
+            <div
+              class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2.5 border-t border-zinc-800/80"
+            >
+              <!-- Category Filter -->
+              <div>
+                <label
+                  for="filterCategory"
+                  class="block text-[10px] font-medium text-zinc-400 mb-1"
+                  >Category</label
+                >
+                <div class="relative">
+                  <select
+                    id="filterCategory"
+                    onchange="applyFilters()"
+                    class="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="ALL">All Categories</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile App">Mobile App</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Cloud / DevOps">Cloud / DevOps</option>
+                    <option value="AI & ML">AI & Machine Learning</option>
+                    <option value="Branding & Growth">Branding & Growth</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500"
+                  >
+                    <svg
+                      class="w-3.5 h-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Status Filter -->
+              <div>
+                <label
+                  for="filterStatus"
+                  class="block text-[10px] font-medium text-zinc-400 mb-1"
+                  >Status</label
+                >
+                <div class="relative">
+                  <select
+                    id="filterStatus"
+                    onchange="applyFilters()"
+                    class="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="ALL">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500"
+                  >
+                    <svg
+                      class="w-3.5 h-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sort By -->
+              <div>
+                <label
+                  for="sortBy"
+                  class="block text-[10px] font-medium text-zinc-400 mb-1"
+                  >Sort</label
+                >
+                <div class="relative">
+                  <select
+                    id="sortBy"
+                    onchange="applyFilters()"
+                    class="w-full px-2.5 py-1.5 text-xs bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-200 focus:outline-none focus:border-zinc-500 transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="default">Default</option>
+                    <option value="name-asc">Name: A-Z</option>
+                    <option value="name-desc">Name: Z-A</option>
+                    <option value="budget-asc">Budget: Low-High</option>
+                    <option value="budget-desc">Budget: High-Low</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500"
+                  >
+                    <svg
+                      class="w-3.5 h-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Starred Toggle & Reset -->
+              <div class="flex items-end gap-1.5">
+                <button
+                  id="filterFavoriteBtn"
+                  onclick="toggleFavoriteFilter()"
+                  class="flex-1 py-1.5 px-2 rounded-xl border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-amber-400 text-xs font-medium inline-flex items-center justify-center gap-1 transition-all cursor-pointer"
+                  title="Filter Starred"
+                >
+                  <svg
+                    id="filterStarIcon"
+                    class="w-3.5 h-3.5 text-zinc-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                    ></path>
+                  </svg>
+                  <span>Starred</span>
+                </button>
+
+                <button
+                  onclick="resetAllFilters()"
+                  class="py-1.5 px-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white text-xs font-medium transition-all cursor-pointer"
+                  title="Reset Filters"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= PROJECT CARDS CONTAINER ================= -->
+          <div id="projectsGrid" class="space-y-3.5 sm:space-y-4">
+            <!-- ================= PROJECT CARD 1 ================= -->
+            <article
+              class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
+            >
+              <!-- Top Card Row: Category Badge + Favorite + Actions -->
+              <div class="flex items-center justify-between gap-2 mb-2.5">
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <span
+                    class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                  >
+                    Web Development
+                  </span>
+                  <span
+                    class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 inline-flex items-center gap-1"
+                  >
+                    <span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                    ></span>
+                    <span>Completed</span>
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <!-- Star Favorite Button -->
+                  <button
+                    onclick="toggleFavorite(1)"
+                    class="favorite-btn p-1.5 rounded-lg text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Favorite"
+                  >
+                    <svg
+                      class="w-4 h-4 fill-amber-400"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <!-- Edit Button -->
+                  <button
+                    onclick="editProject(1)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Edit"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <!-- Delete Button -->
+                  <button
+                    onclick="deleteProject(1)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Delete"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Middle Card Row: Project Title & Client & URL -->
+              <div class="space-y-1 mb-3.5">
+                <h4
+                  class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors"
+                >
+                  E-Commerce Platform Redesign
+                </h4>
+                <div
+                  class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400"
+                >
+                  <span class="inline-flex items-center gap-1 text-zinc-300">
+                    Client:
+                    <strong class="text-zinc-200 font-semibold"
+                      >Apex Retailers Ltd</strong
+                    >
+                  </span>
+                  <span class="text-zinc-700 hidden sm:inline">•</span>
+                  <a
+                    href="https://apexretail.shop"
+                    target="_blank"
+                    class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code"
+                  >
+                    <span>apexretail.shop</span>
+                    <svg
+                      class="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Card Row -->
+              <div
+                class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4"
+              >
+                <!-- Quantity Controller -->
+                <div
+                  class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800"
+                >
+                  <span class="text-[11px] text-zinc-400">Qty:</span>
+                  <div class="flex items-center gap-1">
+                    <button
+                      onclick="changeQuantity(1, -1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span
+                      class="qty-display text-xs font-mono-code font-bold text-white px-1.5"
+                      >3</span
+                    >
+                    <button
+                      onclick="changeQuantity(1, 1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Budget Calculations -->
+                <div class="text-right">
+                  <div class="text-[10px] text-zinc-500 font-mono-code">
+                    Unit: $12,500 × 3
+                  </div>
+                  <div
+                    class="text-xs sm:text-sm font-bold text-emerald-400 font-mono-code total-card-budget"
+                  >
+                    $37,500.00
+                  </div>
+                </div>
+
+                <!-- Status Toggle Action Switch -->
+                <button
+                  onclick="toggleStatus(1)"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-white transition-all cursor-pointer"
+                  title="Toggle status"
+                >
+                  <span>Mark Pending</span>
+                  <svg
+                    class="w-3.5 h-3.5 text-zinc-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- ================= PROJECT CARD 2 ================= -->
+            <article
+              class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
+            >
+              <!-- Top Card Row -->
+              <div class="flex items-center justify-between gap-2 mb-2.5">
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <span
+                    class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-violet-500/10 text-violet-400 border border-violet-500/20"
+                  >
+                    AI & ML
+                  </span>
+                  <span
+                    class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 inline-flex items-center gap-1"
+                  >
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                    <span>Pending</span>
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <button
+                    onclick="toggleFavorite(2)"
+                    class="favorite-btn p-1.5 rounded-lg text-zinc-500 hover:text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Favorite"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    onclick="editProject(2)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Edit"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    onclick="deleteProject(2)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Delete"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Middle Card Row -->
+              <div class="space-y-1 mb-3.5">
+                <h4
+                  class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors"
+                >
+                  AI Workflow Automation Bot
+                </h4>
+                <div
+                  class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400"
+                >
+                  <span class="inline-flex items-center gap-1 text-zinc-300">
+                    Client:
+                    <strong class="text-zinc-200 font-semibold"
+                      >NovaGen AI Labs</strong
+                    >
+                  </span>
+                  <span class="text-zinc-700 hidden sm:inline">•</span>
+                  <a
+                    href="https://novagen-flow.io"
+                    target="_blank"
+                    class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code"
+                  >
+                    <span>novagen-flow.io</span>
+                    <svg
+                      class="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Card Row -->
+              <div
+                class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4"
+              >
+                <div
+                  class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800"
+                >
+                  <span class="text-[11px] text-zinc-400">Qty:</span>
+                  <div class="flex items-center gap-1">
+                    <button
+                      onclick="changeQuantity(2, -1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span
+                      class="qty-display text-xs font-mono-code font-bold text-white px-1.5"
+                      >1</span
+                    >
+                    <button
+                      onclick="changeQuantity(2, 1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[10px] text-zinc-500 font-mono-code">
+                    Unit: $18,000 × 1
+                  </div>
+                  <div
+                    class="text-xs sm:text-sm font-bold text-white font-mono-code total-card-budget"
+                  >
+                    $18,000.00
+                  </div>
+                </div>
+
+                <button
+                  onclick="toggleStatus(2)"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition-all cursor-pointer"
+                  title="Toggle status"
+                >
+                  <span>Mark Completed</span>
+                  <svg
+                    class="w-3.5 h-3.5 text-emerald-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2.5"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- ================= PROJECT CARD 3 ================= -->
+            <article
+              class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
+            >
+              <!-- Top Card Row -->
+              <div class="flex items-center justify-between gap-2 mb-2.5">
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <span
+                    class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20"
+                  >
+                    Mobile App
+                  </span>
+                  <span
+                    class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 inline-flex items-center gap-1"
+                  >
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                    <span>Pending</span>
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <button
+                    onclick="toggleFavorite(3)"
+                    class="favorite-btn p-1.5 rounded-lg text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Favorite"
+                  >
+                    <svg
+                      class="w-4 h-4 fill-amber-400"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    onclick="editProject(3)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Edit"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    onclick="deleteProject(3)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Delete"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Middle Card Row -->
+              <div class="space-y-1 mb-3.5">
+                <h4
+                  class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors"
+                >
+                  Fintech Mobile Banking App
+                </h4>
+                <div
+                  class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400"
+                >
+                  <span class="inline-flex items-center gap-1 text-zinc-300">
+                    Client:
+                    <strong class="text-zinc-200 font-semibold"
+                      >Zenith Capital</strong
+                    >
+                  </span>
+                  <span class="text-zinc-700 hidden sm:inline">•</span>
+                  <a
+                    href="https://zenithpay.finance"
+                    target="_blank"
+                    class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code"
+                  >
+                    <span>zenithpay.finance</span>
+                    <svg
+                      class="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Card Row -->
+              <div
+                class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4"
+              >
+                <div
+                  class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800"
+                >
+                  <span class="text-[11px] text-zinc-400">Qty:</span>
+                  <div class="flex items-center gap-1">
+                    <button
+                      onclick="changeQuantity(3, -1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span
+                      class="qty-display text-xs font-mono-code font-bold text-white px-1.5"
+                      >2</span
+                    >
+                    <button
+                      onclick="changeQuantity(3, 1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[10px] text-zinc-500 font-mono-code">
+                    Unit: $24,000 × 2
+                  </div>
+                  <div
+                    class="text-xs sm:text-sm font-bold text-white font-mono-code total-card-budget"
+                  >
+                    $48,000.00
+                  </div>
+                </div>
+
+                <button
+                  onclick="toggleStatus(3)"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition-all cursor-pointer"
+                  title="Toggle status"
+                >
+                  <span>Mark Completed</span>
+                  <svg
+                    class="w-3.5 h-3.5 text-emerald-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2.5"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- ================= PROJECT CARD 4 ================= -->
+            <article
+              class="project-card bg-[#121215] border border-zinc-800 hover:border-zinc-700 rounded-2xl p-4 sm:p-5 transition-all relative group shadow-sm"
+            >
+              <!-- Top Card Row -->
+              <div class="flex items-center justify-between gap-2 mb-2.5">
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <span
+                    class="px-2 py-0.5 text-[11px] font-medium rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20"
+                  >
+                    Cloud / DevOps
+                  </span>
+                  <span
+                    class="status-indicator px-2 py-0.5 text-[11px] font-medium rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 inline-flex items-center gap-1"
+                  >
+                    <span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                    ></span>
+                    <span>Completed</span>
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  <button
+                    onclick="toggleFavorite(4)"
+                    class="favorite-btn p-1.5 rounded-lg text-zinc-500 hover:text-amber-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Favorite"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    onclick="editProject(4)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Edit"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      ></path>
+                    </svg>
+                  </button>
+
+                  <button
+                    onclick="deleteProject(4)"
+                    class="p-1.5 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-zinc-800 transition-colors cursor-pointer"
+                    title="Delete"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Middle Card Row -->
+              <div class="space-y-1 mb-3.5">
+                <h4
+                  class="text-sm sm:text-base font-bold text-white tracking-tight group-hover:text-zinc-200 transition-colors"
+                >
+                  Cloud Infrastructure Migration
+                </h4>
+                <div
+                  class="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-zinc-400"
+                >
+                  <span class="inline-flex items-center gap-1 text-zinc-300">
+                    Client:
+                    <strong class="text-zinc-200 font-semibold"
+                      >HyperScale Networks</strong
+                    >
+                  </span>
+                  <span class="text-zinc-700 hidden sm:inline">•</span>
+                  <a
+                    href="https://hyperscale.cloud"
+                    target="_blank"
+                    class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 hover:underline font-mono-code"
+                  >
+                    <span>hyperscale.cloud</span>
+                    <svg
+                      class="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Card Row -->
+              <div
+                class="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4"
+              >
+                <div
+                  class="flex items-center gap-1.5 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800"
+                >
+                  <span class="text-[11px] text-zinc-400">Qty:</span>
+                  <div class="flex items-center gap-1">
+                    <button
+                      onclick="changeQuantity(4, -1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span
+                      class="qty-display text-xs font-mono-code font-bold text-white px-1.5"
+                      >1</span
+                    >
+                    <button
+                      onclick="changeQuantity(4, 1)"
+                      class="w-5 h-5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-bold transition-all active:scale-90 cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div class="text-right">
+                  <div class="text-[10px] text-zinc-500 font-mono-code">
+                    Unit: $15,000 × 1
+                  </div>
+                  <div
+                    class="text-xs sm:text-sm font-bold text-emerald-400 font-mono-code total-card-budget"
+                  >
+                    $15,000.00
+                  </div>
+                </div>
+
+                <button
+                  onclick="toggleStatus(4)"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-white transition-all cursor-pointer"
+                  title="Toggle status"
+                >
+                  <span>Mark Pending</span>
+                  <svg
+                    class="w-3.5 h-3.5 text-zinc-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- ================= EMPTY / NOT FOUND STATE ================= -->
+          <div
+            id="notFoundState"
+            class="hidden bg-[#121215] border border-zinc-800 border-dashed rounded-2xl p-8 sm:p-12 text-center space-y-3"
+          >
+            <img
+              src="assets/empty-state.svg"
+              alt="No Projects Found"
+              class="w-36 sm:w-48 h-auto mx-auto opacity-90"
+            />
+            <div class="max-w-md mx-auto space-y-1">
+              <h4
+                class="text-sm sm:text-base font-bold text-white tracking-tight"
+              >
+                No Matching Projects
+              </h4>
+              <p class="text-xs text-zinc-400">
+                No projects match your current search or filter. Try adjusting
+                terms or resetting.
+              </p>
+            </div>
+            <div class="pt-2 flex items-center justify-center gap-2">
+              <button
+                onclick="resetAllFilters()"
+                class="px-3.5 py-2 text-xs font-medium rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 shadow-sm transition-all cursor-pointer font-semibold"
+              >
+                Reset Filters
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
-      <p>Copyright ©2026 Learn with Sumit • All rights reserved.</p>
-    </div>
-  </footer>
+    </main>
 
-</body>
+    <!-- ================= CLEAN MINIMAL FOOTER ================= -->
+    <footer
+      class="border-t border-zinc-800/80 bg-[#09090b] py-5 text-center text-xs text-zinc-500"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3"
+      >
+        <div class="flex items-center gap-2">
+          <img
+            src="assets/logo.svg"
+            alt="Project Hub"
+            class="w-4 h-4 opacity-70"
+          />
+          <span class="font-medium text-zinc-400">Batch 5 — Project Hub</span>
+        </div>
+        <p>Copyright ©2026 Learn with Sumit • All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
 </html>

@@ -1,0 +1,53 @@
+<!-- BookShelf Automated SVG Cover - ID 31: The Lean Startup -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-31" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1E3A8A" />
+    </linearGradient>
+    
+        <pattern id="pat-31" width="32" height="32" patternUnits="userSpaceOnUse">
+          <circle cx="16" cy="16" r="12" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        </pattern>
+  </defs>
+
+  <!-- Background Base & Pattern -->
+  <rect width="300" height="420" fill="url(#bg-31)" rx="8"/>
+  <rect width="300" height="420" fill="url(#pat-31)" rx="8"/>
+
+  <!-- Geometric Emblem / Art Motif -->
+  <circle cx="215" cy="140" r="30" fill="none" stroke="#93C5FD" stroke-width="2" opacity="0.3"/>
+
+  <!-- Book Spine 3D Texture Effect -->
+  <rect x="0" y="0" width="16" height="420" fill="rgba(0,0,0,0.42)" rx="8"/>
+  <rect x="16" y="0" width="3" height="420" fill="rgba(255,255,255,0.2)"/>
+  <rect x="19" y="0" width="6" height="420" fill="rgba(0,0,0,0.15)"/>
+
+  <!-- Top Genre Badge with accurate numeric width -->
+  <rect x="36" y="36" width="84" height="24" rx="4" fill="rgba(0,0,0,0.4)" stroke="#93C5FD" stroke-width="1.2"/>
+  <text x="78" y="52" fill="#93C5FD" font-size="10.5" font-family="'JetBrains Mono', monospace" font-weight="800" letter-spacing="1" text-anchor="middle">BUSINESS</text>
+
+  <!-- Star Rating Watermark -->
+  <g transform="translate(230, 42)">
+    <circle cx="12" cy="10" r="14" fill="rgba(0,0,0,0.3)"/>
+    <text x="12" y="14" fill="#FBBF24" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="bold" text-anchor="middle">★</text>
+  </g>
+
+  <!-- Title Section -->
+  <g>
+    <text x="36" y="135" fill="#FFFFFF" font-size="26" font-family="'Archivo Black', 'Inter', sans-serif" font-weight="900" letter-spacing="-0.5">THE LEAN</text>
+    <text x="36" y="168" fill="#FFFFFF" font-size="26" font-family="'Archivo Black', 'Inter', sans-serif" font-weight="900" letter-spacing="-0.5">STARTUP</text>
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="36" y1="213" x2="260" y2="213" stroke="#93C5FD" stroke-width="2" opacity="0.6"/>
+
+  <!-- Subtitle -->
+  <text x="36" y="235" fill="rgba(255,255,255,0.85)" font-size="12" font-family="'Inter', sans-serif" font-weight="500">Continuous Innovation</text>
+
+  <!-- Bottom Section: Author & Year -->
+  <g transform="translate(0, 360)">
+    <text x="36" y="10" fill="#FFFFFF" font-size="14" font-family="'Inter', sans-serif" font-weight="700">Akash Ahmed</text>
+    <text x="36" y="30" fill="rgba(255,255,255,0.6)" font-size="11" font-family="'JetBrains Mono', monospace">Edition 2020 • BookShelf</text>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#78350F" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#g4)" rx="8"/>
+  <circle cx="150" cy="190" r="55" fill="#FEF3C7" opacity="0.3"/>
+  <path d="M 0 320 Q 150 250 300 320 L 300 420 L 0 420 Z" fill="#451A03" opacity="0.8"/>
+  <rect x="0" y="0" width="16" height="420" fill="rgba(0,0,0,0.35)"/>
+  
+  <rect x="36" y="40" width="80" height="22" rx="4" fill="#111111"/>
+  <text x="76" y="55" fill="#ffffff" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="bold" text-anchor="middle">SCI-FI</text>
+  
+  <text x="36" y="140" fill="#ffffff" font-size="34" font-family="'Archivo Black', sans-serif" font-weight="900">DUNE</text>
+  
+  <text x="36" y="180" fill="#FEF3C7" font-size="13" font-family="sans-serif">The Epic Masterpiece</text>
+  <line x1="36" y1="210" x2="260" y2="210" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  
+  <text x="36" y="370" fill="#E5E7EB" font-size="14" font-family="sans-serif" font-weight="bold">Rafe Uddaraj</text>
+  <text x="36" y="390" fill="#FDE68A" font-size="12" font-family="'JetBrains Mono', monospace">Hugo & Nebula Award Winner</text>
+</svg>

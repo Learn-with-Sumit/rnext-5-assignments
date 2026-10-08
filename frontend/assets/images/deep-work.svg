@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626" />
+      <stop offset="100%" stop-color="#450A0A" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="420" fill="url(#g5)" rx="8"/>
+  <rect x="0" y="0" width="16" height="420" fill="rgba(0,0,0,0.35)"/>
+  
+  <rect x="36" y="40" width="100" height="22" rx="4" fill="#111111"/>
+  <text x="86" y="55" fill="#ffffff" font-size="11" font-family="'JetBrains Mono', monospace" font-weight="bold" text-anchor="middle">PRODUCTIVITY</text>
+  
+  <text x="36" y="140" fill="#ffffff" font-size="28" font-family="'Archivo Black', sans-serif" font-weight="900">DEEP</text>
+  <text x="36" y="172" fill="#FECACA" font-size="28" font-family="'Archivo Black', sans-serif" font-weight="900">WORK</text>
+  
+  <text x="36" y="210" fill="#FCA5A5" font-size="13" font-family="sans-serif">Rules for Focused Success</text>
+  <line x1="36" y1="240" x2="260" y2="240" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  
+  <text x="36" y="360" fill="#E5E7EB" font-size="14" font-family="sans-serif" font-weight="bold">Md Salahuddin</text>
+  <text x="36" y="380" fill="#FECACA" font-size="12" font-family="'JetBrains Mono', monospace">Wall Street Journal Bestseller</text>
+</svg>

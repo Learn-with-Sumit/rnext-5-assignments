@@ -1,0 +1,51 @@
+name: Auto Update README Branch Instructions
+
+on:
+  create:
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    name: Sync Branches in README
+    # Only run for branches (ignore tags) or manual triggers
+    if: github.event_name == 'workflow_dispatch' || github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Update README with Branch Instructions
+        env:
+          NEW_BRANCH: ${{ github.event.ref_type == 'branch' && github.event.ref || '' }}
+          REPO_URL: https://github.com/${{ github.repository }}
+        run: |
+          node .github/scripts/update-readme.js
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          if ! git diff --quiet README.md; then
+            echo "Changes detected in README.md. Committing..."
+            git add README.md
+            git commit -m "docs: auto-update branch instructions [skip ci]"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No changes in README.md. Everything is up to date."
+          fi

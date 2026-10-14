@@ -4,8 +4,8 @@
   "description": "RESTful API for BookShelf Assignment 4 - Node.js, Express, SQLite3",
   "main": "server.js",
   "scripts": {
-    "start": "node api.js && node server.js",
-    "dev": "node api.js && nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "express",

@@ -32,7 +32,7 @@ app.use('/api/books', booksRoutes);
 app.use('/api/genres', genresRoutes);
 app.use('/api/reading-list', readingListRoutes);
 
-// Error Handling Middleware
+// Error Handling Middleware.
 app.use(notFound);
 app.use(errorHandler);
 

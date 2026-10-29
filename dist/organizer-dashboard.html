@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Dashboard - Event LWS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+
+    <!-- ORGANIZER HEADER / NAVIGATION BAR -->
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div id="header-inner"
+            class="header-inner max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span
+                    class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+
+            <!-- Nav Links -->
+            <nav
+                class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">Home</a>
+                <a href="index.html#events" class="hover:text-[#d4f831] transition">Explore Events</a>
+                <a href="organizer-dashboard.html" class="text-white hover:text-[#d4f831] transition">Dashboard</a>
+                <a href="manage-events.html" class="hover:text-[#d4f831] transition">Manage Events</a>
+            </nav>
+
+            <!-- Actions (Right) -->
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k"
+                    class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span
+                        class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd
+                        class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+
+                <!-- Create Event CTA -->
+                <a href="create-event.html"
+                    class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d4f831] text-[#0e0f17] font-black text-xs uppercase tracking-wider hover:bg-[#c5ea24] transition shadow-md shadow-[#d4f831]/10">
+                    <span>Create Event</span>
+                    <span>+</span>
+                </a>
+
+                <!-- Organizer Profile Pill -->
+                <a href="manage-events.html"
+                    class="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#171825] border border-white/10 hover:border-[#7c5cfc] text-xs font-bold text-white transition">
+                    <div
+                        class="w-6 h-6 rounded-full bg-[#7c5cfc] text-white flex items-center justify-center text-[10px] font-black">
+                        RC</div>
+                    <span class="hidden sm:inline text-[11px]">Reactive Community</span>
+                </a>
+
+                <!-- Sign Out -->
+                <a href="login.html"
+                    class="p-2 rounded-full bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition"
+                    title="Sign Out">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN ORGANIZER DASHBOARD -->
+    <main
+        class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-12 flex-1 w-full space-y-10">
+
+        <!-- Organizer Header Banner -->
+        <div
+            class="bg-[#171825] border border-white/5 rounded-[2.5rem] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-[#7c5cfc]/20 rounded-full blur-3xl pointer-events-none">
+            </div>
+
+            <div class="flex items-center gap-5 relative">
+                <div
+                    class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#7c5cfc] text-white font-black text-2xl flex items-center justify-center shrink-0 shadow-lg shadow-[#7c5cfc]/30">
+                    RC
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <h1 class="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">Reactive
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">Accelerator Community</span></h1>
+                        <span
+                            class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-[#7c5cfc]/20 text-[#7c5cfc] border border-[#7c5cfc]/30">Verified
+                            Organizer</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">organizer@eventlws.com • Leading tech workshop community in
+                        Bangladesh</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="create-event.html"
+                    class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#d4f831] text-[#0e0f17] font-black text-xs uppercase tracking-wider hover:bg-[#c5ea24] transition shadow-lg shadow-[#d4f831]/15">
+                    <span>+ Create New Event</span>
+                    <span
+                        class="w-5 h-5 rounded-full bg-[#0e0f17] text-[#d4f831] flex items-center justify-center text-[10px]">↗</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 4 Key Metrics Overview Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-6 shadow-xl">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Hosted Events</span>
+                <h3 class="text-3xl sm:text-4xl font-black text-white mt-2">4</h3>
+                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Lifetime Workshops</span>
+            </div>
+
+            <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-6 shadow-xl">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Attendees /
+                    RSVPs</span>
+                <h3 class="text-3xl sm:text-4xl font-black text-[#d4f831] mt-2">126</h3>
+                <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">92% Seat Fill Rate</span>
+            </div>
+
+            <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-6 shadow-xl">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Published Active</span>
+                <h3 class="text-3xl sm:text-4xl font-black text-[#7c5cfc] mt-2">3</h3>
+                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Live & Accept RSVPs</span>
+            </div>
+
+            <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-6 shadow-xl">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Drafts Pending</span>
+                <h3 class="text-3xl sm:text-4xl font-black text-amber-400 mt-2">1</h3>
+                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">In Preparation</span>
+            </div>
+        </div>
+
+        <!-- Hosted Events Table / Management -->
+        <div class="bg-[#171825] border border-white/5 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div
+                class="p-6 sm:p-8 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-black uppercase text-white tracking-wide">Your Hosted Tech Events</h2>
+                    <p class="text-xs text-slate-400 mt-0.5">Overview of active capacity, ticket sales, and participant
+                        rosters</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="manage-events.html"
+                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#12131e] border border-white/10 hover:border-[#d4f831] text-xs font-bold uppercase tracking-wider text-white transition">
+                        <span>Manage All (4)</span>
+                        <span class="text-[#d4f831]">↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Table of Events -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-[#12131e]/70 text-slate-400 uppercase font-black tracking-wider text-[11px]">
+                        <tr>
+                            <th class="p-4 pl-6 sm:pl-8">Event Details</th>
+                            <th class="p-4">Category</th>
+                            <th class="p-4">Date & Venue</th>
+                            <th class="p-4">Seat Capacity</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 pr-6 sm:pr-8 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5 text-slate-300">
+
+                        <!-- Row 1: React 19 -->
+                        <tr class="hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=150&auto=format&fit=crop&q=80"
+                                        alt="Thumb" class="w-12 h-12 rounded-xl object-cover shrink-0">
+                                    <div>
+                                        <a href="event-details.html"
+                                            class="font-bold text-white hover:text-[#d4f831] transition block text-xs sm:text-sm">
+                                            Advanced React 19 Patterns & Next-Gen Architecture
+                                        </a>
+                                        <span class="text-[11px] text-slate-500">ID: #EV-101 • $49.00 Ticket</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                    Dev</span>
+                            </td>
+                            <td class="p-4">
+                                <span class="block font-semibold text-white">Nov 15, 2026</span>
+                                <span class="text-[11px] text-slate-400">Dhanmondi Tech Center, Dhaka</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1 w-32">
+                                    <div class="flex items-center justify-between text-[11px] font-bold">
+                                        <span class="text-[#d4f831]">42 / 50</span>
+                                        <span class="text-slate-400">84%</span>
+                                    </div>
+                                    <div class="w-full bg-[#12131e] h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-[#d4f831] h-full rounded-full" style="width: 84%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black text-[10px] uppercase">
+                                    Published
+                                </span>
+                            </td>
+                            <td class="p-4 pr-6 sm:pr-8 text-right space-x-2">
+                                <a href="event-attendees.html"
+                                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#7c5cfc]/20 hover:bg-[#7c5cfc]/30 text-[#7c5cfc] font-black uppercase text-[10px] transition">
+                                    <span>Attendees (42)</span>
+                                </a>
+                                <a href="manage-events.html"
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 font-bold uppercase text-[10px] transition">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- Row 2: Next.js 15 -->
+                        <tr class="hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=150&auto=format&fit=crop&q=80"
+                                        alt="Thumb" class="w-12 h-12 rounded-xl object-cover shrink-0">
+                                    <div>
+                                        <a href="event-details.html"
+                                            class="font-bold text-white hover:text-[#d4f831] transition block text-xs sm:text-sm">
+                                            Full-Stack Next.js 15 App Router & Server Actions
+                                        </a>
+                                        <span class="text-[11px] text-slate-500">ID: #EV-102 • $59.00 Ticket</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                    Dev</span>
+                            </td>
+                            <td class="p-4">
+                                <span class="block font-semibold text-white">Nov 22, 2026</span>
+                                <span class="text-[11px] text-slate-400">ICT Tower, Agargaon, Dhaka</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1 w-32">
+                                    <div class="flex items-center justify-between text-[11px] font-bold">
+                                        <span class="text-emerald-400">48 / 60</span>
+                                        <span class="text-slate-400">80%</span>
+                                    </div>
+                                    <div class="w-full bg-[#12131e] h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-emerald-400 h-full rounded-full" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black text-[10px] uppercase">
+                                    Published
+                                </span>
+                            </td>
+                            <td class="p-4 pr-6 sm:pr-8 text-right space-x-2">
+                                <a href="event-attendees.html"
+                                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#7c5cfc]/20 hover:bg-[#7c5cfc]/30 text-[#7c5cfc] font-black uppercase text-[10px] transition">
+                                    <span>Attendees (48)</span>
+                                </a>
+                                <a href="manage-events.html"
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 font-bold uppercase text-[10px] transition">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- Row 3: Tailwind CSS v4 -->
+                        <tr class="hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=150&auto=format&fit=crop&q=80"
+                                        alt="Thumb" class="w-12 h-12 rounded-xl object-cover shrink-0">
+                                    <div>
+                                        <a href="event-details.html"
+                                            class="font-bold text-white hover:text-[#d4f831] transition block text-xs sm:text-sm">
+                                            Tailwind CSS v4 & Modern Design System Architecture
+                                        </a>
+                                        <span class="text-[11px] text-slate-500">ID: #EV-103 • $29.00 Ticket</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                    Dev</span>
+                            </td>
+                            <td class="p-4">
+                                <span class="block font-semibold text-white">Dec 01, 2026</span>
+                                <span class="text-[11px] text-slate-400">Pan Pacific Sonargaon, Dhaka</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1 w-32">
+                                    <div class="flex items-center justify-between text-[11px] font-bold">
+                                        <span class="text-cyan-400">36 / 45</span>
+                                        <span class="text-slate-400">80%</span>
+                                    </div>
+                                    <div class="w-full bg-[#12131e] h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-cyan-400 h-full rounded-full" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black text-[10px] uppercase">
+                                    Published
+                                </span>
+                            </td>
+                            <td class="p-4 pr-6 sm:pr-8 text-right space-x-2">
+                                <a href="event-attendees.html"
+                                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#7c5cfc]/20 hover:bg-[#7c5cfc]/30 text-[#7c5cfc] font-black uppercase text-[10px] transition">
+                                    <span>Attendees (36)</span>
+                                </a>
+                                <a href="manage-events.html"
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 font-bold uppercase text-[10px] transition">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- Row 4: TypeScript (Draft) -->
+                        <tr class="hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=150&auto=format&fit=crop&q=80"
+                                        alt="Thumb" class="w-12 h-12 rounded-xl object-cover shrink-0 opacity-60">
+                                    <div>
+                                        <a href="create-event.html"
+                                            class="font-bold text-white hover:text-[#d4f831] transition block text-xs sm:text-sm">
+                                            Mastering TypeScript: Type-Level Wizardry for Frontend Leads
+                                        </a>
+                                        <span class="text-[11px] text-amber-400">Draft Mode • Not visible to public</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                    Dev</span>
+                            </td>
+                            <td class="p-4">
+                                <span class="block font-semibold text-white">Dec 10, 2026</span>
+                                <span class="text-[11px] text-slate-400">Dhanmondi Tech Center, Dhaka</span>
+                            </td>
+                            <td class="p-4">
+                                <span class="text-xs text-slate-400 font-bold">0 / 40 seats</span>
+                            </td>
+                            <td class="p-4">
+                                <span
+                                    class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-black text-[10px] uppercase">
+                                    Draft
+                                </span>
+                            </td>
+                            <td class="p-4 pr-6 sm:pr-8 text-right space-x-2">
+                                <a href="manage-events.html"
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full bg-[#d4f831] text-[#0e0f17] font-black uppercase text-[10px] transition hover:bg-[#c5ea24]">
+                                    Publish
+                                </a>
+                                <a href="create-event.html"
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 font-bold uppercase text-[10px] transition">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t border-white/5 bg-[#0e0f17] py-8 text-slate-400 text-xs">
+        <div
+            class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                    <span
+                        class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                    <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+                </a>
+                <span class="text-slate-500 text-[11px] ml-2">© 2026 EVENT LWS • Reactive Accelerator Platform</span>
+            </div>
+            <div class="flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="manage-events.html" class="hover:text-white transition">Manage Events</a>
+                <a href="create-event.html" class="text-[#d4f831] hover:underline">+ New Event</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal"
+        class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div
+            class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input id="searchInputField" type="text"
+                    placeholder="Search tech workshops, topics, organizers, or venues..."
+                    class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#"
+                    class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+            <div
+                class="px-5 py-3 bg-[#12131e]/50 border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span class="text-[10px] text-slate-500 shrink-0">Tags:</span>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-[#d4f831] text-[#0e0f17] font-black shrink-0">All</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">Web
+                    Dev</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">AI &
+                    ML</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">DevOps</button>
+            </div>
+            <div id="searchResultsList" class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html"
+                    class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=150&auto=format&fit=crop&q=80"
+                        alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                Dev</span>
+                            <span class="text-[11px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4
+                            class="text-xs sm:text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">
+                            Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[11px] text-slate-400 truncate">Reactive Accelerator Community • Dhaka</p>
+                    </div>
+                    <span
+                        class="text-slate-500 group-hover:text-[#d4f831] group-hover:translate-x-1 transition text-sm">➔</span>
+                </a>
+            </div>
+            <div
+                class="px-5 py-2.5 bg-[#12131e] border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Press <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-slate-400 font-mono text-[10px]">ESC</kbd>
+                    to close</span>
+                <span class="text-[#d4f831] font-bold">Portal Search Active</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Registration - Event LWS Tech Events</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+
+    <!-- GUEST HEADER / NAVIGATION BAR -->
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div id="header-inner" class="header-inner max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+
+            <!-- Nav Links (Center) -->
+            <nav class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">Home</a>
+                <a href="index.html#events" class="hover:text-[#d4f831] transition">Browse Events</a>
+                <a href="register.html" class="hover:text-[#d4f831] transition">Attendee Sign Up</a>
+            </nav>
+
+            <!-- Actions (Right) -->
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <span class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+
+                <a href="login.html" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white px-3 py-2 transition">Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN ORGANIZER REGISTRATION FORM -->
+    <main class="flex-1 flex items-center justify-center px-4 py-12 sm:py-16">
+        <div class="max-w-xl w-full bg-[#171825] rounded-[2.5rem] shadow-2xl p-8 sm:p-10 border border-white/5 relative overflow-hidden">
+            <!-- Glow Accent -->
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-[#7c5cfc]/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center mb-8 relative">
+                <a href="index.html" class="flex items-center justify-center gap-1 mb-4 group shrink-0">
+                    <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                    <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+                </a>
+                <div class="inline-block px-3 py-1 rounded-full bg-[#7c5cfc]/10 text-[#7c5cfc] border border-[#7c5cfc]/20 text-[10px] font-black uppercase tracking-wider mb-2">Organizer Registration</div>
+                <h1 class="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">Become a <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">Host</span></h1>
+                <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">Host tech conferences, verify attendees, collect ticket payments, and grow your community</p>
+            </div>
+
+            <!-- Host Perks Box -->
+            <div class="mb-6 p-4 rounded-2xl bg-[#12131e] border border-white/5 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] text-slate-300">
+                <div class="flex items-center gap-2">
+                    <span class="text-[#d4f831] font-black">✦</span>
+                    <span>0% Setup Fee</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[#7c5cfc] font-black">✦</span>
+                    <span>Stripe Checkout</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-black">✦</span>
+                    <span>Live RSVP Rosters</span>
+                </div>
+            </div>
+
+            <form class="space-y-4 relative">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Organization / Team Name *</label>
+                        <input type="text" required placeholder="e.g. Reactive Accelerator Community" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Work Email *</label>
+                        <input type="email" required placeholder="organizer@eventlws.com" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Official Website / Community URL</label>
+                    <input type="url" placeholder="https://learnwithsumit.com" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Organization Bio / Mission</label>
+                    <textarea rows="2" placeholder="Leading tech learning and engineering accelerator in Bangladesh." class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition"></textarea>
+                </div>
+
+                <!-- Password with 4-Color Indicator -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Password *</label>
+                        <input id="orgPassword" type="password" required placeholder="At least 6 characters" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+
+                        <!-- 4-Color Strength Meter (Red, Orange, Yellow, Green) -->
+                        <div class="mt-2.5">
+                            <div class="flex items-center justify-between text-[11px] mb-1.5">
+                                <span class="text-slate-400">Strength:</span>
+                                <span id="strengthText" class="font-black text-slate-500 uppercase text-[10px]">Enter Password</span>
+                            </div>
+                            <div class="grid grid-cols-4 gap-1.5 h-1.5 w-full">
+                                <div id="bar1" class="bg-slate-800 rounded-full transition-all"></div>
+                                <div id="bar2" class="bg-slate-800 rounded-full transition-all"></div>
+                                <div id="bar3" class="bg-slate-800 rounded-full transition-all"></div>
+                                <div id="bar4" class="bg-slate-800 rounded-full transition-all"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Confirm Password *</label>
+                        <input type="password" required placeholder="Re-enter password" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <label class="flex items-start gap-2.5 cursor-pointer text-slate-400 hover:text-white select-none">
+                        <input type="checkbox" required class="w-4 h-4 rounded bg-[#12131e] border-white/10 text-[#7c5cfc] focus:ring-0 mt-0.5">
+                        <span class="text-[11px] leading-tight">I represent this organization and agree to the <a href="#" class="text-[#7c5cfc] underline">Organizer Terms</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-full bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#7c5cfc]/25 mt-3 flex items-center justify-center gap-2">
+                    <span>Register Organization</span>
+                    <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+                        <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                    </span>
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-white/5 text-center space-y-2 text-xs text-slate-400">
+                <p>Looking to attend tech events? <a href="register.html" class="font-bold text-[#d4f831] hover:underline">Attendee Sign Up</a></p>
+                <p>Already an organizer? <a href="login.html" class="font-bold text-[#7c5cfc] hover:underline">Sign In</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t border-white/5 bg-[#0e0f17] py-8 text-slate-400 text-xs">
+        <div class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                    <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                    <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+                </a>
+                <span class="text-slate-500 text-[11px] ml-2">© 2026 EVENT LWS • Reactive Accelerator Platform</span>
+            </div>
+            <div class="flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="login.html" class="hover:text-white transition">Sign In</a>
+                <a href="user-dashboard.html" class="hover:text-white transition">Attendee Portal</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal" class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input id="searchInputField" type="text" placeholder="Search tech workshops, topics, organizers, or venues..." class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#" class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </a>
+            </div>
+            <div class="px-5 py-3 bg-[#12131e]/50 border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span class="text-[10px] text-slate-500 shrink-0">Tags:</span>
+                <button class="px-2.5 py-1 rounded-full bg-[#d4f831] text-[#0e0f17] font-black shrink-0">All</button>
+                <button class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">Web Dev</button>
+                <button class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">AI & ML</button>
+                <button class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">DevOps</button>
+            </div>
+            <div id="searchResultsList" class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=150&auto=format&fit=crop&q=80" alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web Dev</span>
+                            <span class="text-[11px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[11px] text-slate-400 truncate">Reactive Accelerator Community • Dhaka</p>
+                    </div>
+                    <span class="text-slate-500 group-hover:text-[#d4f831] group-hover:translate-x-1 transition text-sm">➔</span>
+                </a>
+            </div>
+            <div class="px-5 py-2.5 bg-[#12131e] border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Press <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-slate-400 font-mono text-[10px]">ESC</kbd> to close</span>
+                <span class="text-[#d4f831] font-bold">Portal Search Active</span>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>

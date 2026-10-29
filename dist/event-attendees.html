@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Attendees - Event LWS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+
+    <!-- ORGANIZER HEADER / NAVIGATION BAR -->
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div id="header-inner"
+            class="header-inner max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span
+                    class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+
+            <!-- Nav Links -->
+            <nav
+                class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">Home</a>
+                <a href="index.html#events" class="hover:text-[#d4f831] transition">Explore Events</a>
+                <a href="organizer-dashboard.html" class="hover:text-[#d4f831] transition">Dashboard</a>
+                <a href="manage-events.html" class="text-white hover:text-[#d4f831] transition">Manage Events</a>
+            </nav>
+
+            <!-- Actions (Right) -->
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k"
+                    class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span
+                        class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd
+                        class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+
+                <!-- Create Event CTA -->
+                <a href="create-event.html"
+                    class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d4f831] text-[#0e0f17] font-black text-xs uppercase tracking-wider hover:bg-[#c5ea24] transition shadow-md shadow-[#d4f831]/10">
+                    <span>+ Create Event</span>
+                </a>
+
+                <!-- Organizer Profile Pill -->
+                <a href="organizer-dashboard.html"
+                    class="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#171825] border border-white/10 hover:border-[#7c5cfc] text-xs font-bold text-white transition">
+                    <div
+                        class="w-6 h-6 rounded-full bg-[#7c5cfc] text-white flex items-center justify-center text-[10px] font-black">
+                        RC</div>
+                    <span class="hidden sm:inline text-[11px]">Reactive Community</span>
+                </a>
+
+                <!-- Sign Out -->
+                <a href="login.html"
+                    class="p-2 rounded-full bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition"
+                    title="Sign Out">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN ATTENDEES CONTENT -->
+    <main class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-12 flex-1 w-full space-y-8">
+        <!-- Event Header Card -->
+        <div
+            class="bg-[#171825] border border-white/5 rounded-[2.5rem] p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+            <div class="space-y-1.5">
+                <a href="manage-events.html"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#d4f831] hover:underline mb-1">
+                    <span>←</span>
+                    <span>Back to Manage Events</span>
+                </a>
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <h1 class="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">Registered <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">Attendees</span>
+                    </h1>
+                    <span
+                        class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">42
+                        Confirmed RSVPs</span>
+                </div>
+                <p class="text-xs text-slate-400">Advanced React 19 Patterns & Next-Gen Architecture • Nov 15, 2026 •
+                    Dhanmondi Tech Center, Dhaka</p>
+            </div>
+
+            <!-- Revenue Badge -->
+            <div
+                class="flex items-center gap-4 bg-[#12131e] px-5 py-3 rounded-2xl border border-white/5 shrink-0 self-end md:self-center">
+                <div>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Total
+                        Collected</span>
+                    <span class="text-xl sm:text-2xl font-black text-[#d4f831]">$2,058.00</span>
+                </div>
+                <div class="h-8 w-px bg-white/10"></div>
+                <div>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Payout
+                        Status</span>
+                    <span class="text-xs font-bold text-emerald-400">Stripe Verified</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+            <div class="relative flex-1 max-w-md">
+                <input id="attendeeSearchInput" type="text" placeholder="Search participant by name, email, or card..."
+                    class="w-full text-xs bg-[#171825] border border-white/10 rounded-full px-4 py-3 pl-10 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] transition">
+                <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button type="button"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-xs font-bold uppercase tracking-wider text-white transition">
+                    <svg class="w-3.5 h-3.5 text-[#d4f831]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span>Export CSV</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Attendees Table Container -->
+        <div class="bg-[#171825] border border-white/5 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-[#12131e]/70 text-slate-400 uppercase font-black tracking-wider text-[11px]">
+                        <tr>
+                            <th class="p-4 pl-6 sm:pl-8">Attendee</th>
+                            <th class="p-4">Email Address</th>
+                            <th class="p-4">Payment & Card</th>
+                            <th class="p-4">Registration Date</th>
+                            <th class="p-4 pr-6 sm:pr-8">Participant Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendeesTableBody" class="divide-y divide-white/5 text-slate-300">
+
+                        <!-- Attendee 1: Akash Ahmed -->
+                        <tr class="attendee-row hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-[#7c5cfc] text-white font-black flex items-center justify-center shrink-0">
+                                        AA
+                                    </div>
+                                    <div>
+                                        <span class="attendee-name font-bold text-white block text-xs sm:text-sm">Akash Ahmed</span>
+                                        <span class="text-[10px] text-slate-500 font-mono">Cardholder: Akash Ahmed</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span class="attendee-email text-slate-300 font-mono text-xs">attendee@eventlws.com</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID $49.00</span>
+                                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+                                        <span class="text-[#7c5cfc] font-black text-[10px]">VISA</span>
+                                        <span>•••• 4242</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-400">Oct 22, 2026</td>
+                            <td class="p-4 pr-6 sm:pr-8 italic text-slate-300 max-w-xs">
+                                "Looking forward to React 19 Actions and Compiler deep dive!"
+                            </td>
+                        </tr>
+
+                        <!-- Attendee 2: Ayesha Siddiqua -->
+                        <tr class="attendee-row hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-[#d4f831] text-[#0e0f17] font-black flex items-center justify-center shrink-0">
+                                        AS
+                                    </div>
+                                    <div>
+                                        <span class="attendee-name font-bold text-white block text-xs sm:text-sm">Ayesha Siddiqua</span>
+                                        <span class="text-[10px] text-slate-500 font-mono">Cardholder: Ayesha Siddiqua</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span class="attendee-email text-slate-300 font-mono text-xs">ayesha.s@example.com</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID $49.00</span>
+                                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+                                        <span class="text-[#d4f831] font-black text-[10px]">MASTERCARD</span>
+                                        <span>•••• 5555</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-400">Oct 22, 2026</td>
+                            <td class="p-4 pr-6 sm:pr-8 italic text-slate-300 max-w-xs">
+                                "Excited for the compiler deep dive."
+                            </td>
+                        </tr>
+
+                        <!-- Attendee 3: Tanvir Hasan -->
+                        <tr class="attendee-row hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-blue-500 text-white font-black flex items-center justify-center shrink-0">
+                                        TH
+                                    </div>
+                                    <div>
+                                        <span class="attendee-name font-bold text-white block text-xs sm:text-sm">Tanvir Hasan</span>
+                                        <span class="text-[10px] text-slate-500 font-mono">Cardholder: Tanvir Hasan</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span class="attendee-email text-slate-300 font-mono text-xs">tanvir.hasan@example.com</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID $49.00</span>
+                                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+                                        <span class="text-[#7c5cfc] font-black text-[10px]">VISA</span>
+                                        <span>•••• 1111</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-400">Oct 22, 2026</td>
+                            <td class="p-4 pr-6 sm:pr-8 italic text-slate-300 max-w-xs">
+                                "Attending from Chittagong!"
+                            </td>
+                        </tr>
+
+                        <!-- Attendee 4: Nafis Rahman -->
+                        <tr class="attendee-row hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-purple-600 text-white font-black flex items-center justify-center shrink-0">
+                                        NR
+                                    </div>
+                                    <div>
+                                        <span class="attendee-name font-bold text-white block text-xs sm:text-sm">Nafis Rahman</span>
+                                        <span class="text-[10px] text-slate-500 font-mono">Cardholder: Nafis Rahman</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span class="attendee-email text-slate-300 font-mono text-xs">nafis.dev@example.com</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID $49.00</span>
+                                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+                                        <span class="text-amber-400 font-black text-[10px]">AMEX</span>
+                                        <span>•••• 0005</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-400">Oct 22, 2026</td>
+                            <td class="p-4 pr-6 sm:pr-8 italic text-slate-300 max-w-xs">
+                                "Need certificate for corporate training reimbursement."
+                            </td>
+                        </tr>
+
+                        <!-- Attendee 5: Priya Sharma -->
+                        <tr class="attendee-row hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-pink-500 text-white font-black flex items-center justify-center shrink-0">
+                                        PS
+                                    </div>
+                                    <div>
+                                        <span class="attendee-name font-bold text-white block text-xs sm:text-sm">Priya Sharma</span>
+                                        <span class="text-[10px] text-slate-500 font-mono">Cardholder: Priya Sharma</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span class="attendee-email text-slate-300 font-mono text-xs">priya.sharma@example.com</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID $49.00</span>
+                                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+                                        <span class="text-[#7c5cfc] font-black text-[10px]">VISA</span>
+                                        <span>•••• 4242</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-400">Oct 22, 2026</td>
+                            <td class="p-4 pr-6 sm:pr-8 italic text-slate-300 max-w-xs">
+                                "UI performance is my top priority."
+                            </td>
+                        </tr>
+
+                        <!-- Attendee 6: Mahmudul Haque -->
+                        <tr class="attendee-row hover:bg-white/[0.02] transition">
+                            <td class="p-4 pl-6 sm:pl-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-teal-500 text-white font-black flex items-center justify-center shrink-0">
+                                        MH
+                                    </div>
+                                    <div>
+                                        <span class="attendee-name font-bold text-white block text-xs sm:text-sm">Mahmudul Haque</span>
+                                        <span class="text-[10px] text-slate-500 font-mono">Cardholder: Mahmudul Haque</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <span class="attendee-email text-slate-300 font-mono text-xs">mahmud.h@example.com</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="space-y-1">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PAID $49.00</span>
+                                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1.5">
+                                        <span class="text-[#d4f831] font-black text-[10px]">MASTERCARD</span>
+                                        <span>•••• 8888</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-400">Oct 22, 2026</td>
+                            <td class="p-4 pr-6 sm:pr-8 italic text-slate-300 max-w-xs">
+                                "Building high concurrency frontend."
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t border-white/5 bg-[#0e0f17] py-8 text-slate-400 text-xs">
+        <div
+            class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                    <span
+                        class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                    <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+                </a>
+                <span class="text-slate-500 text-[11px] ml-2">© 2026 EVENT LWS • Reactive Accelerator Platform</span>
+            </div>
+            <div class="flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="manage-events.html" class="hover:text-white transition">Manage Events</a>
+                <a href="organizer-dashboard.html" class="text-[#d4f831] hover:underline">Dashboard</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal"
+        class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div
+            class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input id="searchInputField" type="text"
+                    placeholder="Search tech workshops, topics, organizers, or venues..."
+                    class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#"
+                    class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+            <div
+                class="px-5 py-3 bg-[#12131e]/50 border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span class="text-[10px] text-slate-500 shrink-0">Tags:</span>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-[#d4f831] text-[#0e0f17] font-black shrink-0">All</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">Web
+                    Dev</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">AI &
+                    ML</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">DevOps</button>
+            </div>
+            <div id="searchResultsList" class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html"
+                    class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=150&auto=format&fit=crop&q=80"
+                        alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                Dev</span>
+                            <span class="text-[11px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4
+                            class="text-xs sm:text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">
+                            Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[11px] text-slate-400 truncate">Reactive Accelerator Community • Dhaka</p>
+                    </div>
+                    <span
+                        class="text-slate-500 group-hover:text-[#d4f831] group-hover:translate-x-1 transition text-sm">➔</span>
+                </a>
+            </div>
+            <div
+                class="px-5 py-2.5 bg-[#12131e] border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Press <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-slate-400 font-mono text-[10px]">ESC</kbd>
+                    to close</span>
+                <span class="text-[#d4f831] font-bold">Portal Search Active</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

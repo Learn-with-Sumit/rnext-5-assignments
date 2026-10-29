@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Event LWS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+        #rsvpModal {
+            display: none;
+        }
+        #rsvpModal:target {
+            display: flex !important;
+        }
+        #bookingSuccessModal {
+            display: none;
+        }
+        #bookingSuccessModal:target {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div id="header-inner" class="header-inner max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+            <nav
+                class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">Home</a>
+                <a href="user-dashboard.html" class="hover:text-[#d4f831] transition">Attendee Dashboard</a>
+                <a href="organizer-dashboard.html" class="hover:text-[#d4f831] transition">Organizer Portal</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k"
+                    class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span
+                        class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd
+                        class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+                <a href="login.html"
+                    class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition">Sign
+                    In</a>
+                <a href="register.html"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white text-[11px] font-bold uppercase tracking-wider transition shadow-lg shadow-[#7c5cfc]/20">
+                    <span>Join Free</span>
+                    <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px]">↗</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seat Booking & Stripe Payment Modal (Pure CSS :target) -->
+    <div id="rsvpModal"
+        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md overflow-y-auto p-4 items-center justify-center transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close modal"></a>
+        <div
+            class="relative bg-[#171825] rounded-[2rem] shadow-2xl max-w-lg w-full p-5 sm:p-6 border border-white/10 my-auto max-h-[92vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+
+            <!-- Subtle Neon Glow Accents -->
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-[#d4f831]/10 rounded-full blur-2xl pointer-events-none">
+            </div>
+            <div
+                class="absolute -bottom-12 -left-12 w-36 h-36 bg-[#7c5cfc]/15 rounded-full blur-2xl pointer-events-none">
+            </div>
+
+            <!-- State 1: Payment Checkout Form -->
+            <div id="bookingFormState">
+                <!-- Header Bar with Title, Amount & Close Button -->
+                <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                    <div class="flex items-center gap-2.5">
+                        <div
+                            class="w-8 h-8 rounded-xl bg-[#d4f831]/10 text-[#d4f831] flex items-center justify-center text-sm font-bold border border-[#d4f831]/20 shrink-0">
+                            💳
+                        </div>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-black uppercase text-white font-display leading-tight">
+                                Confirm Seat Booking
+                            </h3>
+                            <p class="text-[10px] text-slate-400">Stripe 256-bit Encrypted Checkout</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <span id="modalTotalBadge"
+                            class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-[#d4f831]/15 text-[#d4f831] border border-[#d4f831]/30">
+                            Total: $49.00
+                        </span>
+                        <a href="#"
+                            class="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition border border-white/5 text-xs font-bold"
+                            title="Close">
+                            ✕
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Compact Event Strip -->
+                <div
+                    class="mt-3 px-3 py-2 rounded-xl bg-[#0e0f17] border border-white/5 flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 min-w-0">
+                        <span
+                            class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-[#7c5cfc]/20 text-[#7c5cfc] shrink-0">Pass</span>
+                        <span id="modalEventTitle" class="text-[11px] font-bold text-slate-200 truncate">Advanced React 19 Patterns</span>
+                    </div>
+                    <span
+                        class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#d4f831]/10 text-[#d4f831] border border-[#d4f831]/20">
+                        <span>Standard Pass ($49)</span>
+                    </span>
+                </div>
+
+                <!-- Stripe Input Fields Form -->
+                <form id="bookingPaymentForm" class="mt-3 space-y-2.5">
+                    <!-- Row 1: Name on Card & Country (2 columns) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div>
+                            <label for="cardHolder"
+                                class="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                                Name on Card <span class="text-rose-400">*</span>
+                            </label>
+                            <input type="text" id="cardHolder" required value="Akash Ahmed"
+                                class="w-full text-xs bg-[#0e0f17] border border-white/10 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] focus:ring-1 focus:ring-[#d4f831] transition">
+                        </div>
+                        <div>
+                            <label for="billingCountry"
+                                class="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                                Billing Country <span class="text-rose-400">*</span>
+                            </label>
+                            <select id="billingCountry"
+                                class="w-full text-xs bg-[#0e0f17] border border-white/10 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#d4f831] focus:ring-1 focus:ring-[#d4f831] transition">
+                                <option value="BD" selected>Bangladesh</option>
+                                <option value="US">United States</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="CA">Canada</option>
+                                <option value="DE">Germany</option>
+                                <option value="SG">Singapore</option>
+                                <option value="IN">India</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Card Information -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="cardNumber"
+                                class="text-[10px] font-bold uppercase tracking-wider text-slate-300">
+                                Card Information <span class="text-rose-400">*</span>
+                            </label>
+                            <!-- Live Brand Indicator Badges -->
+                            <div class="flex items-center gap-1" id="brandBadges">
+                                <span id="badgeVisa"
+                                    class="px-1 py-0.2 rounded bg-[#0e0f17] border border-[#d4f831]/40 text-[8px] font-black text-[#d4f831] transition">VISA</span>
+                                <span id="badgeMaster"
+                                    class="px-1 py-0.2 rounded bg-[#0e0f17] border border-white/10 text-[8px] font-black text-slate-400 transition">MC</span>
+                                <span id="badgeAmex"
+                                    class="px-1 py-0.2 rounded bg-[#0e0f17] border border-white/10 text-[8px] font-black text-slate-400 transition">AMEX</span>
+                            </div>
+                        </div>
+
+                        <!-- Card Number Input -->
+                        <div class="relative">
+                            <input type="text" id="cardNumber" required maxlength="19"
+                                value="4242  4242  4242  4242"
+                                class="w-full font-mono text-xs bg-[#0e0f17] border border-white/10 rounded-xl px-3 py-2 pl-9 pr-8 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] focus:ring-1 focus:ring-[#d4f831] tracking-wider transition">
+                            <div id="dynamicCardIcon" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#d4f831]">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                </svg>
+                            </div>
+                            <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500"
+                                title="Protected by 256-bit encryption">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: 3-column unified Stripe grid (Expiry, CVC, Postal Code) -->
+                    <div class="grid grid-cols-3 gap-2.5">
+                        <div>
+                            <label for="cardExpiry"
+                                class="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                                Expiry <span class="text-rose-400">*</span>
+                            </label>
+                            <input type="text" id="cardExpiry" required maxlength="5" value="12/28"
+                                class="w-full font-mono text-xs bg-[#0e0f17] border border-white/10 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] focus:ring-1 focus:ring-[#d4f831] tracking-wider transition">
+                        </div>
+                        <div>
+                            <label for="cardCvc"
+                                class="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                                CVC / CVV <span class="text-rose-400">*</span>
+                            </label>
+                            <input type="text" id="cardCvc" required maxlength="4" value="884"
+                                class="w-full font-mono text-xs bg-[#0e0f17] border border-white/10 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] focus:ring-1 focus:ring-[#d4f831] tracking-widest transition">
+                        </div>
+                        <div>
+                            <label for="billingZip"
+                                class="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                                Postal Code <span class="text-rose-400">*</span>
+                            </label>
+                            <input type="text" id="billingZip" required value="1209"
+                                class="w-full text-xs bg-[#0e0f17] border border-white/10 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] focus:ring-1 focus:ring-[#d4f831] transition">
+                        </div>
+                    </div>
+
+                    <!-- Footer & Actions Row -->
+                    <div class="pt-2 border-t border-white/5 flex items-center justify-between gap-3">
+                        <span class="text-[10px] text-slate-400 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span>Powered by Stripe</span>
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <a href="#"
+                                class="px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition">
+                                Cancel
+                            </a>
+                            <a href="#bookingSuccessModal" id="submitPaymentBtn"
+                                class="px-5 py-2.5 rounded-full bg-[#d4f831] hover:bg-[#c5ea24] text-[#0e0f17] font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#d4f831]/15 flex items-center gap-1.5 cursor-pointer">
+                                <span>Pay $49.00 & Confirm</span>
+                                <span class="w-3.5 h-3.5 rounded-full bg-[#0e0f17]/15 flex items-center justify-center text-[10px] font-bold">↗</span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seat Booking Success & Receipt Modal (Pure CSS :target) -->
+    <div id="bookingSuccessModal"
+        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md overflow-y-auto p-4 items-center justify-center transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close confirmation modal"></a>
+        <div
+            class="relative bg-[#171825] rounded-[2rem] shadow-2xl max-w-lg w-full p-6 border border-white/10 my-auto text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+            <div class="flex justify-end">
+                <a href="#" class="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition border border-white/5 text-xs font-bold" title="Close">✕</a>
+            </div>
+            <div
+                class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto text-2xl shadow-lg shadow-emerald-500/10">
+                ✓
+            </div>
+            <div>
+                <span
+                    class="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Payment
+                    Succeeded</span>
+                <h3 class="text-xl font-black uppercase text-white font-display mt-1">Seat Confirmed!</h3>
+                <p class="text-xs text-slate-300 mt-0.5">Your seat is reserved and ticket is confirmed for Event #1.</p>
+            </div>
+
+            <!-- Receipt Summary -->
+            <div class="bg-[#0e0f17] border border-white/5 rounded-2xl p-4 text-left text-xs space-y-2.5">
+                <div class="pb-2.5 border-b border-white/10 flex items-start justify-between gap-3">
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-black uppercase tracking-wider text-[#d4f831] block mb-0.5">Event Pass</span>
+                        <h4 class="text-xs font-bold text-white truncate">Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[10px] text-slate-400 mt-0.5 truncate">Saturday, Nov 15, 2026 • Dhanmondi Tech Center, Dhaka</p>
+                    </div>
+                    <span class="px-2 py-0.5 rounded text-[8px] font-black uppercase bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">PAID & VALID</span>
+                </div>
+
+                <div class="flex justify-between pb-1.5 border-b border-white/5">
+                    <span class="text-slate-400 text-[11px]">Booking Reference</span>
+                    <span class="font-mono text-white font-bold text-[11px]">EP-REG-00042</span>
+                </div>
+                <div class="flex justify-between pb-1.5 border-b border-white/5">
+                    <span class="text-slate-400 text-[11px]">Card Charged</span>
+                    <span class="text-white font-bold font-mono text-[11px]">VISA •••• 4242</span>
+                </div>
+                <div class="flex justify-between pb-1.5 border-b border-white/5">
+                    <span class="text-slate-400 text-[11px]">Cardholder Name</span>
+                    <span class="text-white font-bold text-[11px]">Akash Ahmed</span>
+                </div>
+                <div class="flex justify-between pb-1.5 border-b border-white/5">
+                    <span class="text-slate-400 text-[11px]">Postal Code</span>
+                    <span class="text-white font-bold font-mono text-[11px]">1209</span>
+                </div>
+                <div class="flex justify-between pb-1.5 border-b border-white/5">
+                    <span class="text-slate-400 text-[11px]">Confirmed At</span>
+                    <span class="text-slate-300 font-medium text-[11px]">Nov 15, 2026 (Live Confirmed)</span>
+                </div>
+                <div class="flex justify-between pt-1">
+                    <span class="text-slate-300 text-xs font-bold">Total Paid</span>
+                    <span class="font-black text-[#d4f831] text-xs">$49.00 USD</span>
+                </div>
+            </div>
+
+            <div class="flex gap-2.5 pt-1">
+                <a href="user-dashboard.html"
+                    class="flex-1 py-2.5 rounded-full bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white text-xs font-bold uppercase tracking-wider transition shadow-lg shadow-[#7c5cfc]/20 text-center flex items-center justify-center gap-1.5">
+                    <span>My Bookings ↗</span>
+                </a>
+                <a href="#"
+                    class="flex-1 py-2.5 rounded-full bg-[#0e0f17] border border-white/10 hover:border-white/20 text-white text-xs font-bold uppercase tracking-wider transition text-center flex items-center justify-center">
+                    Done
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 py-10 flex-1 w-full space-y-10">
+        <!-- Top Navigation -->
+        <div class="flex items-center justify-between">
+            <a href="index.html"
+                class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#d4f831] hover:underline">
+                <span>← Back to All Events</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <button title="Bookmark Event"
+                    class="p-3 rounded-full bg-[#171825] border border-white/5 text-slate-300 hover:text-rose-500 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                </button>
+                <button
+                    title="Share Event"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#171825] border border-white/5 text-slate-200 text-xs font-bold uppercase tracking-wider hover:border-[#d4f831] transition">
+                    <svg class="w-3.5 h-3.5 text-[#d4f831]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <span>Share Link</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Banner Image -->
+        <div class="relative h-80 sm:h-96 rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=2400&auto=format&fit=crop&q=95"
+                alt="Banner" class="w-full h-full object-cover">
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-[#0e0f17] via-[#0e0f17]/40 to-transparent flex items-end p-8 sm:p-12">
+                <div>
+                    <span
+                        class="px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#d4f831] text-[#0e0f17] mb-4 inline-block">Web
+                        Development</span>
+                    <h1 class="text-3xl sm:text-5xl font-black uppercase text-white tracking-tight leading-tight">
+                        Advanced React 19 Patterns & Next-Gen Architecture
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Description with Truncation -->
+                <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-8 space-y-4 shadow-xl">
+                    <h2 class="text-xl font-black uppercase text-white">About This Event</h2>
+                    <div class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-3">
+                        <p id="truncatedText">
+                            Welcome to the ultimate deep dive into React 19! In this high-impact intensive workshop, we
+                            will dissect the latest React Compiler mechanics, Server Components integration, concurrent
+                            asset loading, and production-grade state patterns. Designed specifically for ambitious
+                            developers who want to stay ahead of the curve.
+                        </p>
+                        <p id="fullText" class="mt-2 text-slate-300">
+                            We will begin with an in-depth breakdown of React 19 primitives: useActionState,
+                            useOptimistic, and the 새로운 use() hook. Next, we will construct an end-to-end full-stack
+                            dashboard featuring streaming SSR, optimistic cache revalidation, and robust error
+                            boundaries. By the end of this session, you will be equipped to architect resilient,
+                            lightning-fast enterprise web applications.
+                        </p>
+                    </div>
+                    <button id="showMoreBtn"
+                        class="text-xs font-bold uppercase tracking-wider text-[#d4f831] hover:underline">
+                        Show More ↓
+                    </button>
+                </div>
+
+
+                <!-- Discussion & Comments -->
+                <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-8 space-y-6 shadow-xl">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-black uppercase text-white">Discussions & Reviews</h2>
+                        <span id="commentsCountBadge" class="text-xs font-bold text-slate-400">3 Comments</span>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#7c5cfc] text-white font-bold text-xs flex items-center justify-center shrink-0">
+                            ME</div>
+                        <div class="flex-1 space-y-3">
+                            <textarea rows="2" placeholder="Leave a review or question..."
+                                class="w-full text-xs bg-[#0e0f17] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831]"></textarea>
+                            <div class="flex justify-end">
+                                <button
+                                    class="px-5 py-2.5 rounded-full bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white text-xs font-bold uppercase tracking-wider transition">Post
+                                    Comment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="divide-y divide-white/5 pt-4 space-y-4">
+                        <!-- Comment 1: Akash Ahmed -->
+                        <div class="pt-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-[#7c5cfc] text-white font-bold text-xs flex items-center justify-center">
+                                        AA</div>
+                                    <div>
+                                        <h5 class="text-xs font-bold text-white">Akash Ahmed</h5>
+                                        <span class="text-[10px] text-slate-500">Oct 22, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-rose-500 hover:underline">Delete</button>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 pl-11">Will this workshop cover migrating legacy React 17 apps to React 19? Really looking forward to attending!</p>
+                        </div>
+
+                        <!-- Comment 2: Ayesha Siddiqua -->
+                        <div class="pt-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-[#d4f831] text-[#0e0f17] font-bold text-xs flex items-center justify-center">
+                                        AS</div>
+                                    <div>
+                                        <h5 class="text-xs font-bold text-white">Ayesha Siddiqua</h5>
+                                        <span class="text-[10px] text-slate-500">Oct 22, 2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 pl-11">Super excited! Will video recordings and GitHub starter repos be provided after the session?</p>
+                        </div>
+
+                        <!-- Comment 3: Tanvir Hasan -->
+                        <div class="pt-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">
+                                        TH</div>
+                                    <div>
+                                        <h5 class="text-xs font-bold text-white">Tanvir Hasan</h5>
+                                        <span class="text-[10px] text-slate-500">Oct 22, 2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mt-2 pl-11">The venue at Dhanmondi Tech Center is excellent. Easy parking and great Wi-Fi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-6">
+                <div class="bg-[#171825] border border-white/5 rounded-[2rem] p-8 space-y-6 shadow-xl sticky top-28">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Seat
+                            Reservation</span>
+                        <span class="text-xs font-black text-[#d4f831] uppercase">$49.00 <span
+                                class="text-[10px] text-slate-400 font-medium">/ Standard Pass</span></span>
+                    </div>
+
+                    <!-- Seat Capacity Progress -->
+                    <div class="p-5 bg-[#0e0f17]/80 rounded-2xl border border-white/5">
+                        <div class="flex items-center justify-between text-xs mb-2">
+                            <span class="text-slate-400 font-medium">Capacity Filled</span>
+                            <span id="capacityPercentText" class="font-black text-[#d4f831]">84%</span>
+                        </div>
+                        <div class="w-full bg-[#171825] rounded-full h-2 overflow-hidden mb-2">
+                            <div id="capacityProgressBar"
+                                class="bg-[#d4f831] h-2 rounded-full transition-all duration-500" style="width: 84%">
+                            </div>
+                        </div>
+                        <p id="seatsLeftText" class="text-[11px] text-slate-400 text-center">42 / 50 seats booked (8
+                            seats left)</p>
+                    </div>
+
+                    <!-- Booking Action Button Wrapper -->
+                    <div id="bookingActionWrapper">
+                        <a href="#rsvpModal" id="bookSeatCtaBtn"
+                            class="w-full py-4 rounded-full bg-[#d4f831] hover:bg-[#c5ea24] text-[#0e0f17] font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#d4f831]/10 flex items-center justify-center gap-2">
+                            <span>Book Seat & Pay $49</span>
+                            <span>↗</span>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3 pt-6 border-t border-white/5 text-xs text-slate-300">
+                        <div class="flex items-center gap-3">
+                            <span class="text-[#d4f831]">📅</span>
+                            <span>Saturday, Nov 15, 2026 (10:00 AM)</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[#d4f831]">📍</span>
+                            <span>Dhanmondi Tech Center, Dhaka</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-white/5">
+                        <span
+                            class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-3">Host & Organizer</span>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <img src="assets/images/sumit-saha.jpg" alt="Sumit Saha"
+                                    class="w-10 h-10 rounded-full object-cover border border-[#d4f831]/30">
+                                <div>
+                                    <h4 class="text-xs font-bold text-white">Reactive Accelerator Community</h4>
+                                    <span class="text-[10px] text-slate-400">Sumit Saha • Founder</span>
+                                </div>
+                            </div>
+                            <a href="organizer-profile.html" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-[#d4f831] hover:text-[#0e0f17] text-slate-300 text-[11px] font-bold transition flex items-center gap-1">
+                                Profile ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: OUR SPEAKERS (Identical design & layout from index.html) -->
+        <section class="py-10 border-t border-white/5">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+                <!-- Left Block (Cols 1 & 2): Heading top + Sumit Saha & Tapash Adhikary Cards bottom -->
+                <div class="lg:col-span-2 flex flex-col justify-between">
+                    <!-- Section Title & Subtitle at top of Cols 1 & 2 -->
+                    <div class="mb-6 lg:mb-8">
+                        <h2 class="text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
+                            OUR <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">SPEAKERS</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-lg font-normal leading-relaxed">
+                            Our platform is designed to make it easy for you to find and book<br
+                                class="hidden sm:inline">events that match your interests and preferences.
+                        </p>
+                    </div>
+
+                    <!-- Speaker 1 & Speaker 2 at bottom of Cols 1 & 2 -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 mt-auto">
+                        <!-- Speaker 1: SUMIT SAHA -->
+                        <div>
+                            <div
+                                class="aspect-square rounded-[2rem] overflow-hidden bg-[#171825] border border-white/5 flex items-center justify-center group shadow-xl">
+                                <img src="assets/images/sumit-saha.jpg" alt="Sumit Saha"
+                                    class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                            </div>
+                            <div class="mt-3.5">
+                                <h4 class="text-base font-black uppercase text-[#d4f831] tracking-wide">SUMIT SAHA</h4>
+                                <p class="text-xs text-slate-400 mt-0.5">Founder of Learn with Sumit</p>
+                            </div>
+                        </div>
+
+                        <!-- Speaker 2: TAPASH ADHIKARY -->
+                        <div>
+                            <div
+                                class="aspect-square rounded-[2rem] overflow-hidden bg-[#171825] border border-white/5 flex items-center justify-center group shadow-xl">
+                                <img src="assets/images/tapash-adhikary.jpg" alt="Tapash Adhikary"
+                                    class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500">
+                            </div>
+                            <div class="mt-3.5">
+                                <h4 class="text-base font-black uppercase text-[#d4f831] tracking-wide">TAPASH ADHIKARY
+                                </h4>
+                                <p class="text-xs text-slate-400 mt-0.5">Founder of tapaScript</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Block (Col 3): Saad Hasan top + Navigation Buttons bottom -->
+                <div class="lg:col-span-1 flex flex-col justify-between">
+                    <!-- Speaker 3: SAAD HASAN at top of Col 3 -->
+                    <div>
+                        <div
+                            class="aspect-square rounded-[2rem] overflow-hidden bg-[#171825] border border-white/5 flex items-center justify-center group shadow-xl">
+                            <img src="assets/images/saad-hasan.jpg" alt="Saad Hasan"
+                                class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="mt-3.5">
+                            <h4 class="text-base font-black uppercase text-[#d4f831] tracking-wide">SAAD HASAN</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Full Stack Developer</p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Right: Circular Navigation Buttons aligned to bottom -->
+                    <div class="flex items-center justify-end gap-3 mt-6 lg:mt-auto pb-1">
+                        <!-- Prev Arrow Down-Left ↙ button -->
+                        <button type="button" aria-label="Previous Speaker" title="Previous Speaker"
+                            class="w-10 h-10 rounded-full bg-[#171825] hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition border border-white/5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M17 7L7 17M7 17H17M7 17V7" />
+                            </svg>
+                        </button>
+                        <!-- Next Arrow Up-Right ↗ button -->
+                        <button type="button" aria-label="Next Speaker" title="Next Speaker"
+                            class="w-12 h-12 rounded-full bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white flex items-center justify-center transition shadow-lg shadow-[#7c5cfc]/30">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M7 17L17 7M17 7H7M17 7V17" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Toast Notification Container -->
+    <div id="globalToast"
+        class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-[#171825] border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md">
+            <div id="toastIcon"
+                class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold shrink-0">
+                ✓</div>
+            <p id="toastMessage" class="text-xs text-slate-200 font-medium"></p>
+        </div>
+    </div>
+
+    <footer class="mt-auto bg-[#12131e] border-t border-white/5 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10">
+            © 2026 Event LWS • Reactive Accelerator Batch 5 Assignment Project
+        </div>
+    </footer>
+<!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal"
+        class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div
+            class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input id="searchInputField" type="text"
+                    placeholder="Search tech workshops, topics, organizers, or venues..."
+                    class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#"
+                    class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+            <div
+                class="px-5 py-3 bg-[#12131e]/50 border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span class="text-[10px] text-slate-500 shrink-0">Tags:</span>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-[#d4f831] text-[#0e0f17] font-black shrink-0">All</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">Web
+                    Dev</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">AI &
+                    ML</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">DevOps</button>
+            </div>
+            <div id="searchResultsList" class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html"
+                    class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=90"
+                        alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                Dev</span>
+                            <span class="text-[11px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4
+                            class="text-xs sm:text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">
+                            Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[11px] text-slate-400 truncate">Reactive Accelerator Community • Dhaka</p>
+                    </div>
+                    <span
+                        class="text-slate-500 group-hover:text-[#d4f831] group-hover:translate-x-1 transition text-sm">➔</span>
+                </a>
+            </div>
+            <div
+                class="px-5 py-2.5 bg-[#12131e] border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Press <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-slate-400 font-mono text-[10px]">ESC</kbd>
+                    to close</span>
+                <span class="text-[#d4f831] font-bold">Portal Search Active</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

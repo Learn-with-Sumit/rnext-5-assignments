@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Profiles - Event LWS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+
+        /* PURE CSS ORGANIZER TABS */
+        .org-panel {
+            display: none;
+        }
+        body:has(#tab-org-1:checked) #panel-org-1,
+        body:has(#tab-org-2:checked) #panel-org-2,
+        body:has(#tab-org-3:checked) #panel-org-3,
+        body:has(#tab-org-4:checked) #panel-org-4,
+        body:has(#tab-org-5:checked) #panel-org-5 {
+            display: block !important;
+        }
+
+        body:has(#tab-org-1:checked) #btn-org-1,
+        body:has(#tab-org-2:checked) #btn-org-2,
+        body:has(#tab-org-3:checked) #btn-org-3,
+        body:has(#tab-org-4:checked) #btn-org-4,
+        body:has(#tab-org-5:checked) #btn-org-5 {
+            background-color: #d4f831 !important;
+            color: #0e0f17 !important;
+            border-color: #d4f831 !important;
+            font-weight: 900 !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+
+    <!-- Radio Controls for Organizer Switching (Pure CSS) -->
+    <input type="radio" id="tab-org-1" name="orgTab" class="hidden" checked>
+    <input type="radio" id="tab-org-2" name="orgTab" class="hidden">
+    <input type="radio" id="tab-org-3" name="orgTab" class="hidden">
+    <input type="radio" id="tab-org-4" name="orgTab" class="hidden">
+    <input type="radio" id="tab-org-5" name="orgTab" class="hidden">
+
+    <!-- HEADER / NAVIGATION BAR -->
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">HOME</a>
+                <a href="index.html#events" class="hover:text-[#d4f831] transition">EVENTS</a>
+                <a href="organizer-profile.html" class="text-white hover:text-[#d4f831] transition">ORGANIZERS</a>
+                <a href="user-dashboard.html" class="hover:text-[#d4f831] transition">MY BOOKINGS</a>
+                <a href="organizer-dashboard.html" class="hover:text-[#d4f831] transition">ORGANIZER PORTAL</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k"
+                    class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+                <a href="login.html" class="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-xs font-bold uppercase tracking-wider text-slate-300 transition">Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 py-10 flex-1 w-full space-y-10">
+        <!-- Back Link & Title -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#d4f831] hover:underline mb-2">
+                    <span>← Back to All Events</span>
+                </a>
+                <h1 class="text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
+                    VERIFIED <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">ORGANIZERS</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl font-normal">
+                    Browse trusted developer communities, research collectives, and cloud academies hosting premier technology events across Bangladesh.
+                </p>
+            </div>
+
+            <!-- Organizer Selector Pills (Pure CSS via Labels) -->
+            <div class="flex flex-wrap items-center gap-2 bg-[#171825] p-2 rounded-2xl border border-white/5">
+                <label for="tab-org-1" id="btn-org-1" class="px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer transition select-none bg-white/5 text-slate-300 border border-transparent">
+                    Reactive Accelerator
+                </label>
+                <label for="tab-org-2" id="btn-org-2" class="px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer transition select-none bg-white/5 text-slate-300 border border-transparent">
+                    Dhaka AI
+                </label>
+                <label for="tab-org-3" id="btn-org-3" class="px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer transition select-none bg-white/5 text-slate-300 border border-transparent">
+                    DevOps BD
+                </label>
+                <label for="tab-org-4" id="btn-org-4" class="px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer transition select-none bg-white/5 text-slate-300 border border-transparent">
+                    CyberDefenders
+                </label>
+                <label for="tab-org-5" id="btn-org-5" class="px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer transition select-none bg-white/5 text-slate-300 border border-transparent">
+                    NextGen Cloud
+                </label>
+            </div>
+        </div>
+
+        <!-- ================= ORGANIZER 1: REACTIVE ACCELERATOR COMMUNITY ================= -->
+        <div id="panel-org-1" class="org-panel space-y-8">
+            <!-- Profile Banner Card -->
+            <div class="relative bg-[#171825] border border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-96 h-96 bg-[#7c5cfc]/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/5">
+                    <div class="flex items-center gap-5">
+                        <img src="assets/images/sumit-saha.jpg" alt="Reactive Accelerator Community"
+                            class="w-24 h-24 rounded-3xl object-cover border-4 border-[#d4f831]/40 shadow-xl">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white">Reactive Accelerator Community</h2>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#d4f831]/20 text-[#d4f831] border border-[#d4f831]/30">Verified Organizer</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mt-1.5 max-w-xl">
+                                Leading tech learning and engineering accelerator in Bangladesh. Empowering developers through production-grade bootcamps, workshops, and deep-dive technical conferences.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-slate-400">
+                                <span class="flex items-center gap-1.5">✉ organizer@eventlws.com</span>
+                                <span>•</span>
+                                <a href="https://learnwithsumit.com" target="_blank" class="text-[#d4f831] hover:underline flex items-center gap-1 font-bold">🌐 Website ↗</a>
+                                <span>•</span>
+                                <span class="text-slate-400">📍 Dhaka, Bangladesh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Events</span>
+                        <span class="text-2xl font-black text-white">4 Hosted</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Attendees</span>
+                        <span class="text-2xl font-black text-[#d4f831]">126 Registered</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Organizer Rating</span>
+                        <span class="text-2xl font-black text-amber-400">★ 4.9 <span class="text-xs text-slate-500 font-normal">/ 5.0</span></span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Member Since</span>
+                        <span class="text-2xl font-black text-purple-400">2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hosted Events Section -->
+            <div class="space-y-4">
+                <h3 class="text-xl font-black uppercase text-white tracking-tight">Events by Reactive Accelerator Community</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Event 1 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-[#d4f831]/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=90" alt="React 19"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#d4f831] text-[#0e0f17]">Web Development</span>
+                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Published</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Saturday, Nov 15, 2026 (10:00 AM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Advanced React 19 Patterns & Next-Gen Architecture</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Deep dive into React Compiler mechanics, Server Components, and concurrent state handling.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Dhanmondi Tech Center, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$49.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">42/50 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-[#d4f831]/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=90" alt="Next.js"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#d4f831] text-[#0e0f17]">Web Development</span>
+                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Published</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Sunday, Nov 22, 2026 (09:30 AM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Full-Stack Next.js 15 App Router & Server Actions</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Hands-on production deployment with streaming SSR, cache tags, Turbopack, and Auth.js v5.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 ICT Tower, Agargaon, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$59.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">48/60 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-[#d4f831]/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=90" alt="Tailwind"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#d4f831] text-[#0e0f17]">Web Development</span>
+                                <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Published</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Tuesday, Dec 01, 2026 (03:00 PM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Tailwind CSS v4 & Modern Design System Architecture</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Discover the lightning-fast Oxide engine, native cascade layers, and fluid design tokens.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Pan Pacific Sonargaon, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$29.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">36/45 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= ORGANIZER 2: DHAKA AI COLLECTIVE ================= -->
+        <div id="panel-org-2" class="org-panel space-y-8">
+            <div class="relative bg-[#171825] border border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/5">
+                    <div class="flex items-center gap-5">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80" alt="Dhaka AI Collective"
+                            class="w-24 h-24 rounded-3xl object-cover border-4 border-purple-500/40 shadow-xl">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white">Dhaka AI Collective</h2>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-purple-500/20 text-purple-400 border border-purple-500/30">Verified Organizer</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mt-1.5 max-w-xl">
+                                Advancing generative AI, LLM fine-tuning, and machine intelligence research across Bangladesh.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-slate-400">
+                                <span class="flex items-center gap-1.5">✉ ai_collective@eventlws.com</span>
+                                <span>•</span>
+                                <a href="https://dhaka.ai" target="_blank" class="text-[#d4f831] hover:underline flex items-center gap-1 font-bold">🌐 Website ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Events</span>
+                        <span class="text-2xl font-black text-white">4 Hosted</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Attendees</span>
+                        <span class="text-2xl font-black text-[#d4f831]">192 Registered</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Organizer Rating</span>
+                        <span class="text-2xl font-black text-amber-400">★ 4.95 <span class="text-xs text-slate-500 font-normal">/ 5.0</span></span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Focus Area</span>
+                        <span class="text-2xl font-black text-purple-400">AI & LLM</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xl font-black uppercase text-white tracking-tight">Events by Dhaka AI Collective</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Event 5 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-purple-500/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?w=800&auto=format&fit=crop&q=90" alt="Gemini"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-purple-500 text-white">AI & ML</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Friday, Nov 20, 2026 (03:00 PM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Building Agentic Workflows with Gemini & LangGraph</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Multi-agent state machines, cyclical reflection graphs, and production deployment patterns.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Gulshan Convention Center, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$79.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">76/100 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Event 6 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-purple-500/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=90" alt="LLM Fine-tuning"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-purple-500 text-white">AI & ML</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Friday, Nov 27, 2026 (10:00 AM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Practical Fine-Tuning of Open Source LLMs with LoRA</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Master QLoRA, parameter-efficient adaptations, instruction tuning on custom enterprise datasets.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Banani Club Auditorium, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$89.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">54/70 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= ORGANIZER 3: DEVOPS BANGLADESH ================= -->
+        <div id="panel-org-3" class="org-panel space-y-8">
+            <div class="relative bg-[#171825] border border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/5">
+                    <div class="flex items-center gap-5">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80" alt="DevOps Bangladesh"
+                            class="w-24 h-24 rounded-3xl object-cover border-4 border-sky-500/40 shadow-xl">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white">DevOps Bangladesh</h2>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-sky-500/20 text-sky-400 border border-sky-500/30">Verified Organizer</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mt-1.5 max-w-xl">
+                                National community of Site Reliability Engineers, Cloud Architects, and Platform Developers.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-slate-400">
+                                <span class="flex items-center gap-1.5">✉ devops@eventlws.com</span>
+                                <span>•</span>
+                                <a href="https://devopsbd.org" target="_blank" class="text-[#d4f831] hover:underline flex items-center gap-1 font-bold">🌐 Website ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Events</span>
+                        <span class="text-2xl font-black text-white">4 Hosted</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Attendees</span>
+                        <span class="text-2xl font-black text-[#d4f831]">110 Registered</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Organizer Rating</span>
+                        <span class="text-2xl font-black text-amber-400">★ 4.88 <span class="text-xs text-slate-500 font-normal">/ 5.0</span></span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Focus Area</span>
+                        <span class="text-2xl font-black text-sky-400">Kubernetes & SRE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xl font-black uppercase text-white tracking-tight">Events by DevOps Bangladesh</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Event 9 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-sky-500/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&auto=format&fit=crop&q=90" alt="Kubernetes"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-sky-500 text-white">DevOps & Cloud</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Saturday, Nov 28, 2026 (05:00 PM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Zero to Production with Kubernetes & GitOps</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Production cluster provisioning, ArgoCD declarative deployments, Helm charts, and service meshes.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Banani IT Park, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$55.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">32/40 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= ORGANIZER 4: CYBERDEFENDERS BD ================= -->
+        <div id="panel-org-4" class="org-panel space-y-8">
+            <div class="relative bg-[#171825] border border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/5">
+                    <div class="flex items-center gap-5">
+                        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80" alt="CyberDefenders BD"
+                            class="w-24 h-24 rounded-3xl object-cover border-4 border-rose-500/40 shadow-xl">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white">CyberDefenders BD</h2>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-rose-500/20 text-rose-400 border border-rose-500/30">Verified Organizer</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mt-1.5 max-w-xl">
+                                Premier cybersecurity research group, blue team defenders, and ethical hacking collective.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-slate-400">
+                                <span class="flex items-center gap-1.5">✉ security@eventlws.com</span>
+                                <span>•</span>
+                                <a href="https://cyberdefenders.bd" target="_blank" class="text-[#d4f831] hover:underline flex items-center gap-1 font-bold">🌐 Website ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Events</span>
+                        <span class="text-2xl font-black text-white">4 Hosted</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Attendees</span>
+                        <span class="text-2xl font-black text-[#d4f831]">85 Registered</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Organizer Rating</span>
+                        <span class="text-2xl font-black text-amber-400">★ 4.91 <span class="text-xs text-slate-500 font-normal">/ 5.0</span></span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Focus Area</span>
+                        <span class="text-2xl font-black text-rose-400">Security & PenTest</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xl font-black uppercase text-white tracking-tight">Events by CyberDefenders BD</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Event 13 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-rose-500/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=90" alt="Cyber Security"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-rose-500 text-white">Cyber Security</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Saturday, Dec 05, 2026 (09:30 AM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Cloud Security & Penetration Testing Boot Camp</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Hands-on offensive security, AWS IAM privilege escalation, container escapes, and modern SIEM logging.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Uttara Convention Hall, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$99.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">34/50 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= ORGANIZER 5: NEXTGEN CLOUD & MOBILE INSTITUTE ================= -->
+        <div id="panel-org-5" class="org-panel space-y-8">
+            <div class="relative bg-[#171825] border border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/5">
+                    <div class="flex items-center gap-5">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80" alt="NextGen Cloud & Mobile Institute"
+                            class="w-24 h-24 rounded-3xl object-cover border-4 border-cyan-500/40 shadow-xl">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white">NextGen Cloud & Mobile Institute</h2>
+                                <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Verified Organizer</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mt-1.5 max-w-xl">
+                                Fostering cross-platform mobile development, cloud-native systems, and distributed architectures.
+                            </p>
+                            <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-slate-400">
+                                <span class="flex items-center gap-1.5">✉ nextgen@eventlws.com</span>
+                                <span>•</span>
+                                <a href="https://nextgencloud.org" target="_blank" class="text-[#d4f831] hover:underline flex items-center gap-1 font-bold">🌐 Website ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6">
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Events</span>
+                        <span class="text-2xl font-black text-white">4 Hosted</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Total Attendees</span>
+                        <span class="text-2xl font-black text-[#d4f831]">95 Registered</span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Organizer Rating</span>
+                        <span class="text-2xl font-black text-amber-400">★ 4.87 <span class="text-xs text-slate-500 font-normal">/ 5.0</span></span>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-[#0e0f17]/60 border border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Focus Area</span>
+                        <span class="text-2xl font-black text-cyan-400">Flutter & Cloud</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xl font-black uppercase text-white tracking-tight">Events by NextGen Cloud & Mobile Institute</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Event 17 -->
+                    <div class="bg-[#171825] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-cyan-500/50 transition group shadow-xl">
+                        <div>
+                            <div class="relative h-48 rounded-2xl overflow-hidden mb-4 border border-white/5">
+                                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&auto=format&fit=crop&q=90" alt="Flutter"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase bg-cyan-500 text-white">Mobile Development</span>
+                            </div>
+                            <div class="text-[11px] text-[#d4f831] font-bold uppercase mb-1">📅 Saturday, Dec 12, 2026 (04:00 PM)</div>
+                            <h4 class="text-lg font-black text-white group-hover:text-[#d4f831] transition">
+                                <a href="event-details.html">Cross-Platform Mastery: Flutter 3.24 & Riverpod Flow</a>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">
+                                Clean architecture, offline SQLite caching, reactive animations, and App Store submission pipelines.
+                            </p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                                <span>📍 Mohakhali DOHS Community Center, Dhaka</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-black text-[#d4f831]">$45.00</span>
+                                <span class="text-[10px] text-slate-400 ml-1">38/50 Booked</span>
+                            </div>
+                            <a href="event-details.html" class="px-4 py-2 rounded-xl bg-[#d4f831] text-[#0e0f17] text-xs font-black uppercase hover:bg-[#c5ea24] transition">View Event ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto bg-[#12131e] border-t border-white/5 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10">
+            © 2026 Event LWS • Reactive Accelerator Batch 5 Assignment Project
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal"
+        class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div
+            class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <!-- Search Input Bar -->
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input id="searchInputField" type="text"
+                    placeholder="Search tech workshops, topics, organizers, or venues..."
+                    class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#"
+                    class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Pre-rendered Search Results from Database -->
+            <div class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html"
+                    class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=90"
+                        alt="React 19" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web Development</span>
+                            <span class="text-[10px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">
+                            Advanced React 19 Patterns & Next-Gen Architecture
+                        </h4>
+                        <p class="text-xs text-slate-400 truncate">Dhanmondi Tech Center, Dhaka • Reactive Accelerator Community</p>
+                    </div>
+                    <span class="text-xs font-black text-[#d4f831]">$49</span>
+                </a>
+                <a href="event-details.html"
+                    class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?w=500&auto=format&fit=crop&q=90"
+                        alt="Gemini" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#7c5cfc]/20 text-[#7c5cfc]">AI & ML</span>
+                            <span class="text-[10px] text-slate-400">Nov 20, 2026</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">
+                            Building Agentic Workflows with Gemini & LangGraph
+                        </h4>
+                        <p class="text-xs text-slate-400 truncate">Gulshan Convention Center, Dhaka • Dhaka AI Collective</p>
+                    </div>
+                    <span class="text-xs font-black text-[#d4f831]">$79</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

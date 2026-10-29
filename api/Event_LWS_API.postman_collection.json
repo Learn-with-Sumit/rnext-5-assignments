@@ -1,0 +1,912 @@
+{
+	"info": {
+		"_postman_id": "event-lws-api-v1-collection",
+		"name": "Event LWS REST API",
+		"description": "Complete production-ready Postman collection for Event LWS Tech Event Platform.\n\nBackend: Express.js + SQLite3 + JWT + Multer + Stripe Mock.\nDefault Base URL: `http://localhost:5001` (or `http://localhost:5000`)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5001",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refreshToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "eventId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "speakerId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "commentId",
+			"value": "1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "01. Authentication & Profile",
+			"item": [
+				{
+					"name": "Register Attendee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Developer\",\n  \"email\": \"jane.dev@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "register"]
+						},
+						"description": "Register a new attendee account. Automatically returns JWT access & refresh tokens."
+					},
+					"response": []
+				},
+				{
+					"name": "Register Organizer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tech Hub Collective\",\n  \"email\": \"organizer.hub@example.com\",\n  \"password\": \"password123\",\n  \"website\": \"https://techhub.io\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register-organizer",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "register-organizer"]
+						},
+						"description": "Register a new organizer account. Automatically assigns 'organizer' role and returns JWT tokens."
+					},
+					"response": []
+				},
+				{
+					"name": "Login (Attendee)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.accessToken || jsonData.access_token) {",
+									"    var tok = jsonData.accessToken || jsonData.access_token;",
+									"    var ref = jsonData.refreshToken || jsonData.refresh_token;",
+									"    pm.collectionVariables.set('token', tok);",
+									"    if (ref) pm.collectionVariables.set('refreshToken', ref);",
+									"    console.log('Attendee token saved to collection variable {{token}}');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"attendee@eventlws.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Login as pre-seeded Attendee. Postman Test script auto-saves the returned access token into `{{token}}`."
+					},
+					"response": []
+				},
+				{
+					"name": "Login (Organizer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.accessToken || jsonData.access_token) {",
+									"    var tok = jsonData.accessToken || jsonData.access_token;",
+									"    var ref = jsonData.refreshToken || jsonData.refresh_token;",
+									"    pm.collectionVariables.set('token', tok);",
+									"    if (ref) pm.collectionVariables.set('refreshToken', ref);",
+									"    console.log('Organizer token saved to collection variable {{token}}');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"organizer@eventlws.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Login as pre-seeded Organizer. Postman Test script auto-saves the returned access token into `{{token}}`."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.accessToken) {",
+									"    pm.collectionVariables.set('token', jsonData.accessToken);",
+									"    console.log('New access token saved into {{token}}');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/refresh-token",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "refresh-token"]
+						},
+						"description": "Exchange a valid 7-day refresh token for a fresh 1-hour access token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User Profile (Me)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "me"]
+						},
+						"description": "Get current logged-in user details (id, name, email, role, avatar, bio, website)."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alex Rivera\",\n  \"bio\": \"Senior Cloud Architect & Open Source contributor passionate about AI systems.\",\n  \"website\": \"https://alexrivera.dev\",\n  \"avatar\": \"/uploads/profiles/sample-avatar.webp\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "profile"]
+						},
+						"description": "Update logged-in user profile fields."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newPassword456\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/change-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "change-password"]
+						},
+						"description": "Change password for the logged-in user. Validates current password before setting new bcrypt hash."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Public Organizer Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/organizers/2",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "organizers", "2"]
+						},
+						"description": "Fetch public profile of an organizer by ID, along with their published events."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "02. Events Management",
+			"item": [
+				{
+					"name": "List All Events (With Filters & Pagination)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": "Optional: returns `is_bookmarked: true/false` if provided"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events?page=1&limit=6&search=&category=all&venue=all&sort=popular",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (enables pagination object in response)"
+								},
+								{
+									"key": "limit",
+									"value": "6",
+									"description": "Items per page (default: 6)"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Fuzzy search by title, description, or venue"
+								},
+								{
+									"key": "category",
+									"value": "all",
+									"description": "Filter by category (e.g. AI & Machine Learning, Cloud & DevOps, Frontend & Architecture)"
+								},
+								{
+									"key": "venue",
+									"value": "all",
+									"description": "Filter by venue location"
+								},
+								{
+									"key": "sort",
+									"value": "popular",
+									"description": "Sort order: 'popular' (by seats_booked), 'latest' (by created_at), or default (by date_time ASC)"
+								},
+								{
+									"key": "status",
+									"value": "published",
+									"description": "published (default) or draft"
+								}
+							]
+						},
+						"description": "Browse and filter events with live seat capacity percentages and organizer info."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Event Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": "Optional: provides `is_registered`, `registration` payment info, and `is_bookmarked`"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}"]
+						},
+						"description": "Retrieve comprehensive details for an event including speakers, comments, capacity percentage, and user registration receipt."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Event [Organizer Only]",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"NextGen AI & Cloud Summit 2026\",\n  \"description\": \"An intensive workshop exploring autonomous agent architectures, local LLM deployment, and modern multi-cloud pipelines.\",\n  \"category\": \"AI & Machine Learning\",\n  \"date_time\": \"2026-11-20T10:00:00.000Z\",\n  \"venue\": \"San Francisco Innovation Center & Online\",\n  \"total_seats\": 120,\n  \"price\": 79.00,\n  \"banner_url\": \"/uploads/events/ai-summit-banner.webp\",\n  \"status\": \"published\",\n  \"speakers\": [\n    {\n      \"name\": \"Dr. Elena Vance\",\n      \"title\": \"Principal AI Scientist\",\n      \"company\": \"DeepMind Labs\",\n      \"bio\": \"Leading research in multimodal reasoning.\",\n      \"photo_url\": \"/uploads/speakers/elena-vance.webp\"\n    },\n    {\n      \"name\": \"Marcus Vance\",\n      \"title\": \"VP of Infrastructure\",\n      \"company\": \"CloudFlow Systems\",\n      \"bio\": \"Architecting resilient distributed systems.\",\n      \"photo_url\": \"/uploads/speakers/marcus-vance.webp\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events"]
+						},
+						"description": "Create a new event with multiple speakers. Requires `organizer` role."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event [Organizer Only]",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"NextGen AI & Cloud Summit 2026 (Updated)\",\n  \"total_seats\": 150,\n  \"price\": 89.00,\n  \"venue\": \"Moscone West Hall 3 & Virtual Livestream\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}"]
+						},
+						"description": "Update event fields. Only allowed for the organizer who created this event."
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Event Status (Draft / Published) [Organizer Only]",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"draft\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "status"]
+						},
+						"description": "Toggle an event between `published` and `draft` status."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event [Organizer Only]",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}"]
+						},
+						"description": "Delete event permanently. Only allowed for the organizer who created it."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "03. Seat Booking & Stripe Card Payment",
+			"item": [
+				{
+					"name": "Book Seat with Card Payment (Stripe Mock)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"card_holder_name\": \"Jane Developer\",\n  \"card_number\": \"4242 4242 4242 4242\",\n  \"exp_date\": \"12/28\",\n  \"cvc\": \"123\",\n  \"billing_postal_code\": \"94103\",\n  \"amount_paid\": 49.00,\n  \"notes\": \"Looking forward to networking with frontend engineers!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "register"]
+						},
+						"description": "Book a ticket/seat for an event. Validates card inputs, detects card brand (visa/mastercard/amex/discover), saves safe payment receipt, and increments booked seat counter."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel / Withdraw Seat Registration",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "register"]
+						},
+						"description": "Cancel active registration for an event and release the seat."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Bookings (Registered Events)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/registrations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "registrations"]
+						},
+						"description": "Get all events registered by the logged-in attendee, including card brand, last4, amount paid, and digital ticket details."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event Attendees Roster [Organizer Only]",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/attendees",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "attendees"]
+						},
+						"description": "Fetch list of all registered attendees for a hosted event with payment statuses, card brand, last 4 digits, and registration notes. Organizer only."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "04. Bookmarks (Saved Events)",
+			"item": [
+				{
+					"name": "Toggle Bookmark (Add or Remove)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/bookmark",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "bookmark"]
+						},
+						"description": "Toggles event bookmark state. Returns `{ message, is_bookmarked: boolean }`."
+					},
+					"response": []
+				},
+				{
+					"name": "Check Event Bookmark Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/bookmark",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "bookmark"]
+						},
+						"description": "Check whether the logged-in user has bookmarked this event."
+					},
+					"response": []
+				},
+				{
+					"name": "List All Saved Bookmarks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/bookmarks",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "bookmarks"]
+						},
+						"description": "Retrieve all events saved/bookmarked by the current user."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Bookmark (Explicit Delete)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/bookmark",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "bookmark"]
+						},
+						"description": "Remove an event bookmark explicitly."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "05. Comments & Community Discussion",
+			"item": [
+				{
+					"name": "Post a Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"Really excited for the live demos! Will the session recordings be shared afterward?\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/events/{{eventId}}/comments",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "events", "{{eventId}}", "comments"]
+						},
+						"description": "Add a new comment/review to an event."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/comments/{{commentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "comments", "{{commentId}}"]
+						},
+						"description": "Delete a comment. Only the original author can delete their own comment."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "06. Speakers",
+			"item": [
+				{
+					"name": "Get Speakers (All or by Event)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/speakers?event_id={{eventId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "speakers"],
+							"query": [
+								{
+									"key": "event_id",
+									"value": "{{eventId}}",
+									"description": "Filter speakers for a specific event"
+								}
+							]
+						},
+						"description": "Fetch keynote speakers with titles, companies, bios, and photos."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Speaker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Dr. Aris Thorne\",\n  \"title\": \"Principal AI Scientist\",\n  \"company\": \"NeuralFlow Labs\",\n  \"bio\": \"Pioneer in large language model reasoning and low-latency inference systems.\",\n  \"photo_url\": \"/uploads/speakers/sample-speaker.webp\",\n  \"event_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/speakers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "speakers"]
+						},
+						"description": "Create a speaker entry associated with an event."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "07. File Uploads (Multipart Form-Data)",
+			"item": [
+				{
+					"name": "Upload Profile Avatar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "",
+									"description": "Image file (JPEG, PNG, WEBP, GIF, SVG up to 10MB)"
+								},
+								{
+									"key": "userId",
+									"value": "1",
+									"type": "text",
+									"description": "Optional: user ID to automatically update avatar in DB"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/upload/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "upload", "profile"]
+						},
+						"description": "Upload a profile avatar. Saves image into `public/uploads/profiles/` and updates user avatar in DB."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Event Banner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "banner",
+									"type": "file",
+									"src": "",
+									"description": "Image file (JPEG, PNG, WEBP, GIF, SVG up to 10MB)"
+								},
+								{
+									"key": "eventId",
+									"value": "{{eventId}}",
+									"type": "text",
+									"description": "Optional: event ID to automatically update banner_url in DB"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/upload/event",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "upload", "event"]
+						},
+						"description": "Upload an event banner. Saves into `public/uploads/events/` and updates event banner_url in DB."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Speaker Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "",
+									"description": "Speaker photo file"
+								},
+								{
+									"key": "speakerId",
+									"value": "{{speakerId}}",
+									"type": "text",
+									"description": "Optional: speaker ID to update photo_url in DB"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/upload/speaker",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "upload", "speaker"]
+						},
+						"description": "Upload speaker headshot into `public/uploads/speakers/`."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "08. Organizer Dashboard",
+			"item": [
+				{
+					"name": "Get Organizer Dashboard Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/organizer/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "organizer", "dashboard"]
+						},
+						"description": "Returns dashboard analytics: `totalEvents`, `activeEvents`, `draftEvents`, `totalAttendees`, and all hosted events list. Organizer only."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "09. System Health Check",
+			"item": [
+				{
+					"name": "API Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "health"]
+						},
+						"description": "Verify server uptime and connection status."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Tech Event - Event LWS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+
+    <!-- ORGANIZER HEADER / NAVIGATION BAR -->
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div id="header-inner" class="header-inner max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">Home</a>
+                <a href="index.html#events" class="hover:text-[#d4f831] transition">Explore Events</a>
+                <a href="organizer-dashboard.html" class="hover:text-[#d4f831] transition">Dashboard</a>
+                <a href="manage-events.html" class="hover:text-[#d4f831] transition">Manage Events</a>
+            </nav>
+
+            <!-- Actions (Right) -->
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <span class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+
+                <!-- Organizer Profile Pill -->
+                <a href="manage-events.html" class="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#171825] border border-white/10 hover:border-[#7c5cfc] text-xs font-bold text-white transition">
+                    <div class="w-6 h-6 rounded-full bg-[#7c5cfc] text-white flex items-center justify-center text-[10px] font-black">RC</div>
+                    <span class="hidden sm:inline text-[11px]">Reactive Community</span>
+                </a>
+
+                <!-- Sign Out -->
+                <a href="login.html" class="p-2 rounded-full bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition" title="Sign Out">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN FORM CONTENT -->
+    <main class="max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-12 flex-1 w-full space-y-8">
+        <div>
+            <a href="organizer-dashboard.html" class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#d4f831] hover:underline mb-2">
+                <span>←</span>
+                <span>Back to Dashboard</span>
+            </a>
+            <h1 class="text-3xl font-black uppercase text-white tracking-tight">Create New <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">Tech Event</span></h1>
+            <p class="text-xs text-slate-400 mt-1">Publish an upcoming workshop, meetup, or conference for the developer community</p>
+        </div>
+
+        <form id="createEventForm" class="bg-[#171825] border border-white/5 rounded-[2.5rem] p-6 sm:p-10 space-y-6 shadow-2xl relative overflow-hidden">
+            <!-- Glow Accent -->
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-[#d4f831]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Title -->
+            <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Event Title *</label>
+                <input type="text" id="eventTitleInput" required value="Advanced React 19 Patterns & Next-Gen Architecture" placeholder="e.g. Masterclass: System Design & Distributed Services with Go" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] transition">
+            </div>
+
+            <!-- Category, Capacity & Price (3 Columns) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Category *</label>
+                    <select id="eventCategoryInput" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                        <option value="Web Development">Web Development</option>
+                        <option value="AI & Machine Learning">AI & Machine Learning</option>
+                        <option value="DevOps & Cloud">DevOps & Cloud</option>
+                        <option value="Cyber Security">Cyber Security</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Data Engineering">Data Engineering</option>
+                        <option value="Blockchain">Blockchain</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Total Seat Capacity *</label>
+                    <input type="number" id="eventSeatsInput" required min="1" max="1000" value="50" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300">Ticket Price ($ USD) *</label>
+                        <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#d4f831]/10 text-[#d4f831] border border-[#d4f831]/20">Pass Fee</span>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#d4f831] font-black text-sm">$</span>
+                        <input type="number" id="eventPriceInput" required min="0" step="0.01" value="49.00" placeholder="49.00" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 pl-8 text-white font-bold placeholder-slate-500 focus:outline-none focus:border-[#d4f831] transition">
+                    </div>
+                    <span class="text-[10px] text-slate-500 mt-1 block">Set 0 for free attendee passes</span>
+                </div>
+            </div>
+
+            <!-- Date/Time & Venue -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Date & Time *</label>
+                    <input type="datetime-local" id="eventDateTimeInput" required value="2026-11-15T10:00" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Venue / Location *</label>
+                    <select id="eventVenueInput" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                        <option value="Banani Club Auditorium, Dhaka">Banani Club Auditorium, Dhaka</option>
+                        <option value="Banani IT Park, Dhaka">Banani IT Park, Dhaka</option>
+                        <option value="Bashundhara International Convention City, Dhaka">Bashundhara International Convention City, Dhaka</option>
+                        <option value="BASIS Auditorium, Kawran Bazar, Dhaka">BASIS Auditorium, Kawran Bazar, Dhaka</option>
+                        <option value="Dhanmondi Tech Center, Dhaka" selected>Dhanmondi Tech Center, Dhaka</option>
+                        <option value="Gulshan Convention Center, Dhaka">Gulshan Convention Center, Dhaka</option>
+                        <option value="ICT Tower, Agargaon, Dhaka">ICT Tower, Agargaon, Dhaka</option>
+                        <option value="Mohakhali DOHS Community Center, Dhaka">Mohakhali DOHS Community Center, Dhaka</option>
+                        <option value="Mohakhali DOHS, Dhaka">Mohakhali DOHS, Dhaka</option>
+                        <option value="Online / Virtual Platform">Online / Virtual Platform</option>
+                        <option value="Online / Virtual Webinar">Online / Virtual Webinar</option>
+                        <option value="Pan Pacific Sonargaon, Dhaka">Pan Pacific Sonargaon, Dhaka</option>
+                        <option value="Radisson Blu Water Garden, Dhaka">Radisson Blu Water Garden, Dhaka</option>
+                        <option value="Uttara Convention Hall, Dhaka">Uttara Convention Hall, Dhaka</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Event Banner URL & Upload (Backend Folder: public/uploads/events/) -->
+            <div class="p-5 bg-[#12131e] rounded-2xl border border-white/5 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300">
+                            Event Banner Image *
+                        </label>
+                        <span class="text-[10px] text-slate-400">Stores in: <code class="text-[#d4f831] font-mono">public/uploads/events/</code></span>
+                    </div>
+                    <span id="bannerUploadStatus" class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/5 text-slate-400 border border-white/5">
+                        Ready
+                    </span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <input type="file" id="eventBannerFileInput" accept="image/*" class="hidden">
+                    <button type="button" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#d4f831] hover:bg-[#c5ea24] text-[#0e0f17] font-black text-xs uppercase tracking-wider transition shadow-md shadow-[#d4f831]/20">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <span>Upload Banner File</span>
+                    </button>
+                    <span class="text-[11px] text-slate-500">Supports JPG, PNG, WebP up to 10MB</span>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between text-[11px]">
+                        <span class="text-slate-400 font-bold uppercase tracking-wider">Database Image URL</span>
+                        <span id="bannerSavedIndicator" class="text-emerald-400 text-[10px] font-bold hidden">● Synced with Backend</span>
+                    </div>
+                    <input id="bannerInput" type="text" placeholder="/uploads/events/..." value="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&auto=format&fit=crop&q=80" class="w-full text-xs bg-[#0e0f17] border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] font-mono transition">
+                </div>
+
+                <div id="bannerPreviewBox" class="h-44 w-full rounded-2xl overflow-hidden bg-[#0e0f17] border border-white/5 relative group cursor-pointer" title="Click to upload new banner">
+                    <img id="bannerImg" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&auto=format&fit=crop&q=80" alt="Banner Preview" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-white">
+                        <svg class="w-5 h-5 text-[#d4f831]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span class="text-xs font-black uppercase text-[#d4f831]">Change Banner Image</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keynote Speakers & Photo Upload Section (Supports Multiple Speakers) -->
+            <div class="p-6 bg-[#12131e] rounded-3xl border border-white/5 space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/5">
+                    <div>
+                        <div class="flex items-center gap-2.5">
+                            <h3 class="text-xs font-black uppercase tracking-wider text-white">
+                                Keynote Speakers & Photo Upload
+                            </h3>
+                            <span id="speakerCountPill" class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#7c5cfc]/20 text-[#7c5cfc] border border-[#7c5cfc]/30">
+                                2 Speakers Added
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">
+                            Add multiple keynote speakers with photo upload. Uploaded photos are stored in <code class="text-[#7c5cfc] font-mono">public/uploads/speakers/</code>
+                        </p>
+                    </div>
+
+                    <button type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white font-black text-xs uppercase tracking-wider transition shadow-md shadow-[#7c5cfc]/20 self-start sm:self-auto">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                        <span>Add Speaker</span>
+                    </button>
+                </div>
+
+                <!-- Speakers Dynamic List -->
+                <div id="speakersContainer" class="space-y-4">
+
+                <!-- Speaker 1 -->
+                <div class="p-4 sm:p-5 bg-[#0e0f17] rounded-2xl border border-white/10 space-y-4 relative group transition-all" data-speaker-id="1">
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-lg bg-[#7c5cfc]/20 border border-[#7c5cfc]/30 text-[#7c5cfc] font-black text-[11px] flex items-center justify-center">
+                                1
+                            </span>
+                            <span class="text-xs font-black uppercase tracking-wider text-slate-200">
+                                Keynote Speaker #1
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                Verified Speaker
+                            </span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Speaker Name *</label>
+                            <input type="text" required value="Sumit Saha" placeholder="e.g. Sumit Saha" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-[#7c5cfc] transition">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Speaker Role / Company *</label>
+                            <input type="text" required value="Founder of Learn with Sumit" placeholder="e.g. Founder at TechCo" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-[#7c5cfc] transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Keynote Topic / Short Bio (Optional)</label>
+                        <input type="text" value="Tech educator and veteran entrepreneur." placeholder="e.g. Architecting Distributed Services & High Concurrency" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+                    </div>
+                    <div class="p-3.5 bg-[#12131e] rounded-xl border border-white/5 flex flex-col sm:flex-row items-center gap-4">
+                        <div class="w-16 h-16 rounded-xl bg-[#0e0f17] border border-white/10 overflow-hidden shadow-md shrink-0">
+                            <img src="assets/images/sumit-saha.jpg" alt="Sumit Saha" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 w-full space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="text-xs font-bold text-slate-300">Speaker Photo</span>
+                                <span class="text-[10px] text-slate-500 font-mono">assets/images/sumit-saha.jpg</span>
+                            </div>
+                            <input type="text" value="assets/images/sumit-saha.jpg" class="w-full text-[11px] bg-[#0e0f17] border border-white/10 rounded-lg p-2 text-white placeholder-slate-500 font-mono focus:outline-none focus:border-[#7c5cfc]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speaker 2 -->
+                <div class="p-4 sm:p-5 bg-[#0e0f17] rounded-2xl border border-white/10 space-y-4 relative group transition-all" data-speaker-id="2">
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-lg bg-[#7c5cfc]/20 border border-[#7c5cfc]/30 text-[#7c5cfc] font-black text-[11px] flex items-center justify-center">
+                                2
+                            </span>
+                            <span class="text-xs font-black uppercase tracking-wider text-slate-200">
+                                Keynote Speaker #2
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                Verified Speaker
+                            </span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Speaker Name *</label>
+                            <input type="text" required value="Tapash Adhikary" placeholder="e.g. Tapash Adhikary" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-[#7c5cfc] transition">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Speaker Role / Company *</label>
+                            <input type="text" required value="Founder of tapaScript" placeholder="e.g. Founder at TechCo" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-[#7c5cfc] transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Keynote Topic / Short Bio (Optional)</label>
+                        <input type="text" value="Software engineer, creator of ReactPlay & tapaScript." placeholder="e.g. Architecting Distributed Services & High Concurrency" class="w-full text-xs bg-[#12131e] border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#7c5cfc] transition">
+                    </div>
+                    <div class="p-3.5 bg-[#12131e] rounded-xl border border-white/5 flex flex-col sm:flex-row items-center gap-4">
+                        <div class="w-16 h-16 rounded-xl bg-[#0e0f17] border border-white/10 overflow-hidden shadow-md shrink-0">
+                            <img src="assets/images/tapash-adhikary.jpg" alt="Tapash Adhikary" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 w-full space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="text-xs font-bold text-slate-300">Speaker Photo</span>
+                                <span class="text-[10px] text-slate-500 font-mono">assets/images/tapash-adhikary.jpg</span>
+                            </div>
+                            <input type="text" value="assets/images/tapash-adhikary.jpg" class="w-full text-[11px] bg-[#0e0f17] border border-white/10 rounded-lg p-2 text-white placeholder-slate-500 font-mono focus:outline-none focus:border-[#7c5cfc]">
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Add Speaker Button (Dashed Bottom) -->
+                <button type="button" class="w-full py-4 px-4 rounded-2xl border-2 border-dashed border-[#7c5cfc]/30 hover:border-[#7c5cfc] bg-[#7c5cfc]/5 hover:bg-[#7c5cfc]/10 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 group">
+                    <span class="w-5 h-5 rounded-full bg-[#7c5cfc] text-white flex items-center justify-center text-xs font-black group-hover:scale-110 transition">+</span>
+                    <span>Add Another Keynote Speaker</span>
+                </button>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Full Agenda & Description *</label>
+                <textarea id="eventDescriptionInput" rows="6" required placeholder="Detailed workshop syllabus, prerequisites, speaker background, schedule breakdown, and takeaway resources..." class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] transition">In this comprehensive hands-on workshop, participants will master core principles of high-performance architecture, dissect real-world production incident studies, and build scalable modern systems from the ground up.</textarea>
+            </div>
+
+            <!-- Status: Draft vs Published -->
+            <div class="p-5 bg-[#12131e] rounded-2xl border border-white/5 space-y-3">
+                <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-300">Initial Visibility Status *</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl bg-white/5 border border-white/5 cursor-pointer hover:border-[#d4f831] transition">
+                        <input type="radio" name="eventStatus" value="published" checked class="w-4 h-4 text-[#d4f831] focus:ring-0">
+                        <div>
+                            <span class="block text-xs font-bold text-white">Publish Immediately</span>
+                            <span class="text-[10px] text-slate-400">Live on homepage, open for ticket booking</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl bg-white/5 border border-white/5 cursor-pointer hover:border-amber-400 transition">
+                        <input type="radio" name="eventStatus" value="draft" class="w-4 h-4 text-amber-400 focus:ring-0">
+                        <div>
+                            <span class="block text-xs font-bold text-white">Save as Draft</span>
+                            <span class="text-[10px] text-slate-400">Hidden from public until you review and publish</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="flex items-center justify-end gap-4 pt-4 border-t border-white/5">
+                <a href="organizer-dashboard.html" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white transition">
+                    Cancel
+                </a>
+                <button type="submit" id="publishSubmitBtn" class="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#d4f831] hover:bg-[#c5ea24] text-[#0e0f17] font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#d4f831]/20">
+                    <span>Publish Event</span>
+                    <span class="w-5 h-5 rounded-full bg-[#0e0f17] text-[#d4f831] flex items-center justify-center text-[10px]">↗</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t border-white/5 bg-[#0e0f17] py-8 text-slate-400 text-xs">
+        <div class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                    <span class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                    <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+                </a>
+                <span class="text-slate-500 text-[11px] ml-2">© 2026 EVENT LWS • Reactive Accelerator Platform</span>
+            </div>
+            <div class="flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="manage-events.html" class="hover:text-white transition">Manage Events</a>
+                <a href="organizer-dashboard.html" class="text-[#d4f831] hover:underline">Dashboard</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal" class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input id="searchInputField" type="text" placeholder="Search tech workshops, topics, organizers, or venues..." class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#" class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </a>
+            </div>
+            <div class="px-5 py-3 bg-[#12131e]/50 border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span class="text-[10px] text-slate-500 shrink-0">Tags:</span>
+                <button class="px-2.5 py-1 rounded-full bg-[#d4f831] text-[#0e0f17] font-black shrink-0">All</button>
+                <button class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">Web Dev</button>
+                <button class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">AI & ML</button>
+                <button class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">DevOps</button>
+            </div>
+            <div id="searchResultsList" class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=150&auto=format&fit=crop&q=80" alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web Dev</span>
+                            <span class="text-[11px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4 class="text-xs sm:text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[11px] text-slate-400 truncate">Reactive Accelerator Community • Dhaka</p>
+                    </div>
+                    <span class="text-slate-500 group-hover:text-[#d4f831] group-hover:translate-x-1 transition text-sm">➔</span>
+                </a>
+            </div>
+            <div class="px-5 py-2.5 bg-[#12131e] border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Press <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-slate-400 font-mono text-[10px]">ESC</kbd> to close</span>
+                <span class="text-[#d4f831] font-bold">Portal Search Active</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- EVENT CREATION SUCCESS MODAL -->
+    <div id="eventSuccessModal" class="fixed inset-0 z-50 hidden bg-[#0e0f17]/90 backdrop-blur-md p-4 flex items-center justify-center transition-all">
+        <div class="relative w-full max-w-lg bg-[#171825] border border-white/10 rounded-[2.5rem] shadow-2xl p-8 sm:p-10 space-y-6 text-center overflow-hidden">
+            <!-- Glow background -->
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-[#d4f831]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="w-16 h-16 rounded-full bg-[#d4f831]/20 border border-[#d4f831]/30 text-[#d4f831] flex items-center justify-center mx-auto text-2xl font-black">
+                ✓
+            </div>
+            <div>
+                <span class="text-[10px] font-black uppercase tracking-widest text-[#d4f831]">Event Published Successfully</span>
+                <h3 id="modalEventTitle" class="text-xl sm:text-2xl font-black uppercase text-white mt-1">Masterclass: System Design</h3>
+                <p class="text-xs text-slate-400 mt-2">Your event is now live and published in the Event LWS platform with its keynote speakers and ticket price.</p>
+            </div>
+            <div class="p-4 bg-[#12131e] rounded-2xl border border-white/5 grid grid-cols-3 gap-2 text-left">
+                <div>
+                    <span class="block text-[9px] font-bold uppercase text-slate-500">Ticket Price</span>
+                    <span id="modalEventPrice" class="text-xs font-black text-[#d4f831]">$49.00 USD</span>
+                </div>
+                <div>
+                    <span class="block text-[9px] font-bold uppercase text-slate-500">Capacity</span>
+                    <span id="modalEventSeats" class="text-xs font-black text-white">50 Seats</span>
+                </div>
+                <div>
+                    <span class="block text-[9px] font-bold uppercase text-slate-500">Speakers</span>
+                    <span id="modalEventSpeakers" class="text-xs font-black text-[#7c5cfc]">2 Speakers</span>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <a href="manage-events.html" class="w-full sm:w-auto px-6 py-3 rounded-full bg-[#d4f831] hover:bg-[#c5ea24] text-[#0e0f17] font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#d4f831]/20 text-center">
+                    Manage Events
+                </a>
+                <a href="index.html#events" class="w-full sm:w-auto px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider transition border border-white/10 text-center">
+                    Explore Events
+                </a>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>

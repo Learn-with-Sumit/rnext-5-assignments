@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile & Security - Event LWS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0e0f17',
+                            card: '#171825',
+                            cardHover: '#1f2030',
+                            lime: '#d4f831',
+                            limeHover: '#c5ea24',
+                            purple: '#7c5cfc',
+                            purpleHover: '#6c4ce8',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Syne', '"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0e0f17;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        #searchModal {
+            display: none;
+        }
+        #searchModal:target {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0e0f17] text-slate-100 min-h-screen flex flex-col selection:bg-[#d4f831] selection:text-[#0e0f17]">
+
+    <!-- ATTENDEE AUTHENTICATED HEADER -->
+    <header class="border-b border-white/5 bg-[#12131e]/80 backdrop-blur-md sticky top-0 z-40">
+        <div id="header-inner"
+            class="header-inner max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                <span
+                    class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+            </a>
+
+            <!-- Attendee Nav Links -->
+            <nav
+                class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                <a href="index.html" class="hover:text-[#d4f831] transition">Home</a>
+                <a href="index.html#events" class="hover:text-[#d4f831] transition">Browse Events</a>
+                <a href="user-dashboard.html" class="text-white hover:text-[#d4f831] transition">My Bookings</a>
+                <a href="user-dashboard.html#saved" class="hover:text-[#d4f831] transition">Saved Events</a>
+            </nav>
+
+            <!-- Actions (Right) -->
+            <div class="flex items-center gap-3">
+                <a href="#searchModal" accesskey="k"
+                    class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#171825] border border-white/10 hover:border-[#d4f831] text-slate-300 hover:text-white transition shadow-sm group">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-[#d4f831] transition" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span
+                        class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline text-slate-400">Search</span>
+                    <kbd
+                        class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-slate-500 font-mono">⌘K</kbd>
+                </a>
+
+                <!-- Attendee Profile Pill -->
+                <a href="edit-profile.html"
+                    class="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#171825] border border-[#d4f831]/40 text-xs font-bold text-white hover:border-[#d4f831] transition">
+                    <div
+                        class="w-6 h-6 rounded-full bg-[#7c5cfc] text-white flex items-center justify-center text-[10px] font-black">
+                        AA</div>
+                    <span class="hidden sm:inline text-[11px]">Akash Ahmed</span>
+                </a>
+
+                <!-- Sign Out -->
+                <a href="login.html"
+                    class="p-2 rounded-full bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition"
+                    title="Sign Out">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN SETTINGS CONTENT -->
+    <main class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-12 flex-1 w-full space-y-8">
+        <!-- Title & Breadcrumb -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <a href="user-dashboard.html"
+                    class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#d4f831] hover:underline mb-2">
+                    <span>←</span>
+                    <span>Back to Dashboard</span>
+                </a>
+                <h1 class="text-3xl font-black uppercase text-white tracking-tight">Account & <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-[#d4f831]">Security Settings</span></h1>
+                <p class="text-xs text-slate-400 mt-1">Manage your attendee profile information, avatar, and account
+                    password</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span
+                    class="px-3 py-1 rounded-full bg-[#d4f831]/10 text-[#d4f831] border border-[#d4f831]/20 text-[11px] font-black uppercase">Role:
+                    Attendee</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Left Column: Personal Profile -->
+            <div
+                class="lg:col-span-7 bg-[#171825] border border-white/5 rounded-[2.5rem] p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+                <div class="flex items-center justify-between border-b border-white/5 pb-4">
+                    <div>
+                        <h2 class="text-lg font-black uppercase text-white tracking-wide">Personal Details</h2>
+                        <p class="text-xs text-slate-400">Public information displayed on event attendee lists</p>
+                    </div>
+                    <span class="text-xs text-[#d4f831] font-bold">Profile Info</span>
+                </div>
+
+                <!-- Profile Picture Upload Section (Backend Folder: public/uploads/profiles/) -->
+                <div class="p-5 bg-[#12131e] rounded-2xl border border-white/5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300">
+                            Profile Picture / Avatar
+                        </label>
+                        <span id="uploadStatusBadge"
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/5 text-slate-400 border border-white/5 transition-all">
+                            Ready
+                        </span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-5">
+                        <!-- Clickable Avatar Preview with Hover Camera Overlay -->
+                        <div class="relative group cursor-pointer shrink-0"
+                            title="Click to choose a new photo">
+                            <div id="avatarPreview"
+                                class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#7c5cfc] to-[#6c4ce8] text-white font-black text-2xl flex items-center justify-center overflow-hidden border-2 border-white/10 shadow-xl group-hover:border-[#d4f831] transition">
+                                <img id="avatarImg"
+                                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=90"
+                                    alt="Avatar" class="w-full h-full object-cover">
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-black/60 rounded-2xl opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white">
+                                <svg class="w-5 h-5 text-[#d4f831]" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span
+                                    class="text-[9px] font-black uppercase tracking-wider text-[#d4f831] mt-1">Change</span>
+                            </div>
+                        </div>
+
+                        <!-- Upload Actions & Drag-Drop Trigger -->
+                        <div class="space-y-2 flex-1 w-full text-center sm:text-left">
+                            <input type="file" id="avatarFileInput"
+                                accept="image/png, image/jpeg, image/jpg, image/webp" class="hidden">
+
+                            <div class="flex flex-wrap items-center gap-2.5 justify-center sm:justify-start">
+                                <button type="button"
+                                    class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white font-black text-xs uppercase tracking-wider transition shadow-md shadow-[#7c5cfc]/20">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                    </svg>
+                                    <span>Choose New Photo</span>
+                                </button>
+                                <span class="text-[11px] text-slate-500">JPG, PNG, WebP up to 10MB</span>
+                            </div>
+
+                            <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                                <span>Storage folder:</span>
+                                <span
+                                    class="font-mono text-[#d4f831] bg-black/40 px-2 py-0.5 rounded border border-white/5">public/uploads/profiles/</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stored URL in Database / Input Field -->
+                    <div class="space-y-1.5 pt-2 border-t border-white/5">
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="font-bold text-slate-400 uppercase tracking-wider">Database Image URL</span>
+                            <span id="savedIndicator" class="text-emerald-400 text-[10px] font-bold hidden">● Synced
+                                with Database</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input id="avatarUrlInput" type="text" placeholder="/uploads/profiles/..."
+                                value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=90"
+                                class="flex-1 text-xs bg-[#0e0f17] border border-white/10 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#d4f831] font-mono">
+                            <button type="button" title="Copy URL"
+                                class="px-3 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition text-xs font-bold shrink-0">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Full
+                            Name</label>
+                        <input id="fullNameInput" type="text" value="Akash Ahmed"
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Email
+                            Address</label>
+                        <input id="emailInput" type="email" value="attendee@eventlws.com"
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                    </div>
+
+                    <div>
+                        <label
+                            class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Portfolio /
+                            GitHub Website</label>
+                        <input id="websiteInput" type="url" value="https://github.com/akashusr" placeholder="https://..."
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Bio /
+                            Professional Headline</label>
+                        <textarea id="bioInput" rows="3"
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">Frontend developer enthusiastic about modern React ecosystem.</textarea>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="button" id="saveProfileBtn"
+                        class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#7c5cfc] hover:bg-[#6c4ce8] text-white font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#7c5cfc]/20">
+                        <span>Save Changes</span>
+                        <span
+                            class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px]">↗</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Security & 4-Color Dynamic Password Indicator -->
+            <div
+                class="lg:col-span-5 bg-[#171825] border border-white/5 rounded-[2.5rem] p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+                <div class="flex items-center justify-between border-b border-white/5 pb-4">
+                    <div>
+                        <h2 class="text-lg font-black uppercase text-white tracking-wide">Security & Password</h2>
+                        <p class="text-xs text-slate-400">Update your account authentication credentials</p>
+                    </div>
+                    <span class="text-xs text-[#7c5cfc] font-bold">4-Bar Meter</span>
+                </div>
+
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Current
+                            Password</label>
+                        <input type="password" required placeholder="••••••••"
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                    </div>
+
+                    <!-- New Password with 4-Color Indicator -->
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">New
+                            Password</label>
+                        <input id="newPasswordInput" type="password" required placeholder="Enter new strong password"
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+
+                        <!-- 4-Color Dynamic Indicator: Red (লাল), Orange (কমলা), Yellow (হলুদ), Green (সবুজ) -->
+                        <div class="mt-3 p-3.5 bg-[#12131e] rounded-2xl border border-white/5 space-y-2">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-slate-400 font-semibold text-[11px]">Dynamic Strength:</span>
+                                <span id="strengthText" class="font-black text-slate-500 uppercase text-[11px]">Enter
+                                    Password</span>
+                            </div>
+
+                            <!-- 4 Color Progress Bars -->
+                            <div class="grid grid-cols-4 gap-2 h-2 w-full">
+                                <div id="bar1" class="bg-slate-800 rounded-full transition-all duration-300"></div>
+                                <div id="bar2" class="bg-slate-800 rounded-full transition-all duration-300"></div>
+                                <div id="bar3" class="bg-slate-800 rounded-full transition-all duration-300"></div>
+                                <div id="bar4" class="bg-slate-800 rounded-full transition-all duration-300"></div>
+                            </div>
+
+                            <!-- Dynamic Bengali / English Guideline per requirements -->
+                            <div
+                                class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-white/5">
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> Weak
+                                </span>
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Medium
+                                </span>
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span> Strong
+                                </span>
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> Perfect
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Confirm
+                            New Password</label>
+                        <input type="password" required placeholder="Re-type new password"
+                            class="w-full text-xs bg-[#12131e] border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#d4f831] transition">
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit"
+                            class="w-full py-4 rounded-full bg-[#d4f831] hover:bg-[#c5ea24] text-[#0e0f17] font-black text-xs uppercase tracking-wider transition shadow-lg shadow-[#d4f831]/20 flex items-center justify-center gap-2">
+                            <span>Update Password</span>
+                            <span
+                                class="w-5 h-5 rounded-full bg-[#0e0f17] text-[#d4f831] flex items-center justify-center">
+                                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M7 17L17 7M17 7H7M17 7V17" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto border-t border-white/5 bg-[#0e0f17] py-8 text-slate-400 text-xs">
+        <div
+            class="max-w-[1440px] xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-1 group shrink-0">
+                    <span
+                        class="px-2.5 py-1 rounded-2xl bg-[#d4f831] text-[#0e0f17] font-black text-xl tracking-wider group-hover:scale-105 transition">EVENT</span>
+                    <span class="text-[#7c5cfc] font-medium text-xl tracking-tight">LWS</span>
+                </a>
+                <span class="text-slate-500 text-[11px] ml-2">© 2026 EVENT LWS • Reactive Accelerator Platform</span>
+            </div>
+            <div class="flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <a href="index.html" class="hover:text-white transition">Home</a>
+                <a href="user-dashboard.html" class="hover:text-white transition">Attendee Dashboard</a>
+                <a href="organizer-dashboard.html" class="text-[#d4f831] hover:underline">Organizer Portal</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SEARCH MODAL (Pure CSS :target) -->
+    <div id="searchModal"
+        class="fixed inset-0 z-50 bg-[#0e0f17]/85 backdrop-blur-md p-4 items-start justify-center pt-16 sm:pt-24 transition-all">
+        <a href="#" class="fixed inset-0 -z-10" aria-label="Close search modal"></a>
+        <div
+            class="relative w-full max-w-2xl bg-[#171825] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-white/5 flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#d4f831] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input id="searchInputField" type="text"
+                    placeholder="Search tech workshops, topics, organizers, or venues..."
+                    class="w-full bg-transparent text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none">
+                <a href="#"
+                    class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+            <div
+                class="px-5 py-3 bg-[#12131e]/50 border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <span class="text-[10px] text-slate-500 shrink-0">Tags:</span>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-[#d4f831] text-[#0e0f17] font-black shrink-0">All</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">Web
+                    Dev</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">AI &
+                    ML</button>
+                <button
+                    class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 shrink-0">DevOps</button>
+            </div>
+            <div id="searchResultsList" class="p-4 max-h-[350px] overflow-y-auto space-y-2">
+                <a href="event-details.html"
+                    class="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition group">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=150&auto=format&fit=crop&q=80"
+                        alt="Thumb" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-[#d4f831]/10 text-[#d4f831]">Web
+                                Dev</span>
+                            <span class="text-[11px] text-slate-400">Nov 15, 2026</span>
+                        </div>
+                        <h4
+                            class="text-xs sm:text-sm font-bold text-white group-hover:text-[#d4f831] transition truncate">
+                            Advanced React 19 Patterns & Next-Gen Architecture</h4>
+                        <p class="text-[11px] text-slate-400 truncate">Reactive Accelerator Community • Dhaka</p>
+                    </div>
+                    <span
+                        class="text-slate-500 group-hover:text-[#d4f831] group-hover:translate-x-1 transition text-sm">➔</span>
+                </a>
+            </div>
+            <div
+                class="px-5 py-2.5 bg-[#12131e] border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Press <kbd class="px-1.5 py-0.5 rounded bg-white/5 text-slate-400 font-mono text-[10px]">ESC</kbd>
+                    to close</span>
+                <span class="text-[#d4f831] font-bold">Portal Search Active</span>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>

@@ -1,215 +1,484 @@
 <!doctype html>
-
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width,initial-scale=1" name="viewport" />
-    <title>Find Jobs | CareerHub</title>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inbox — Letterform</title>
+  <meta name="description" content="A quieter inbox for the conversations worth keeping." />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+        --color-background: oklch(0.972 0.009 92);
+        --color-foreground: oklch(0.23 0.025 222);
+        --color-card: oklch(1 0 0);
+        --color-card-foreground: oklch(0.23 0.025 222);
+        --color-primary: oklch(0.38 0.075 173);
+        --color-primary-foreground: oklch(0.99 0.003 90);
+        --color-muted: oklch(0.949 0.008 91);
+        --color-muted-foreground: oklch(0.53 0.022 220);
+        --color-accent: oklch(0.93 0.035 166);
+        --color-accent-foreground: oklch(0.3 0.06 174);
+        --color-border: oklch(0.89 0.012 90);
+        --color-input: oklch(0.89 0.012 90);
+        --color-sidebar: oklch(0.988 0.004 92);
+        --color-sidebar-foreground: oklch(0.23 0.025 222);
+        --color-avatar-rose: oklch(0.92 0.055 20);
+        --color-avatar-rose-foreground: oklch(0.42 0.11 20);
+        --color-avatar-sky: oklch(0.91 0.045 226);
+        --color-avatar-sky-foreground: oklch(0.38 0.1 226);
+        --color-avatar-lilac: oklch(0.92 0.045 300);
+        --color-avatar-lilac-foreground: oklch(0.42 0.1 300);
+        --color-avatar-gold: oklch(0.93 0.07 85);
+        --color-avatar-gold-foreground: oklch(0.42 0.11 65);
+        --color-avatar-mint: oklch(0.91 0.06 160);
+        --color-avatar-mint-foreground: oklch(0.36 0.09 165);
+        --font-display: Georgia, "Times New Roman", serif;
+      }
+    </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
-    <header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur">
-        <div class="mx-auto flex min-h-20 max-w-[1320px] items-center justify-between gap-5 px-5 lg:px-10">
-            <a class="flex items-center gap-2 text-[23px] font-extrabold tracking-tight text-emerald-950 no-underline"
-                href="index.html"><span
-                    class="grid size-10 place-items-center rounded-xl bg-emerald-600 text-xl font-black text-white shadow-xs">↗</span><span>Career<span
-                        class="text-emerald-600">Hub</span></span></a>
-            <nav aria-label="Main navigation"
-                class="hidden items-center gap-1.5 rounded-full bg-slate-100/80 p-1 md:flex">
-                <a class="rounded-full px-4 py-2 text-sm font-semibold transition bg-white text-emerald-700 shadow-xs"
-                    href="index.html">Find Jobs</a><a
-                    class="rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-white hover:text-emerald-700 text-slate-600"
-                    href="index.html#jobs">Explore Roles</a>
-            </nav>
-            <div class="flex items-center gap-3">
-                <a class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white no-underline shadow-xs transition hover:bg-emerald-700"
-                    href="index.html#jobs">Explore jobs ↗</a>
-            </div>
+<body class="min-h-screen bg-background text-foreground antialiased">
+  <main class="min-h-screen bg-background text-foreground">
+    <div class="mx-auto flex min-h-screen max-w-[1600px] border-x border-border bg-card shadow-sm">
+      <!-- Sidebar -->
+      <aside
+        class="fixed inset-y-0 left-0 z-30 flex w-[264px] shrink-0 -translate-x-full flex-col border-r border-border bg-sidebar px-5 transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:self-start lg:translate-x-0 lg:overflow-y-auto">
+        <!-- Logo & Mobile Close -->
+        <div class="flex h-[76px] items-center justify-between border-b border-border">
+          <a href="index.html" class="flex items-center gap-2.5" aria-label="Letterform home">
+            <span class="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <img src="icons/mail-white.svg" alt="Letterform Mail Logo" class="size-[17px]" />
+            </span>
+            <span class="font-display text-[22px] leading-none">letterform</span>
+          </a>
+          <button type="button"
+            class="inline-flex size-9 items-center justify-center rounded-md hover:bg-accent text-foreground lg:hidden"
+            aria-label="Close navigation">
+            <img src="icons/x.svg" alt="Close" class="size-4" />
+          </button>
         </div>
-    </header>
-    <main class="min-h-screen bg-slate-50 px-4 py-8 md:px-7">
-        <div class="mx-auto grid max-w-[1320px] gap-6 lg:grid-cols-[275px_minmax(0,1fr)]">
-            <aside
-                class="self-start lg:sticky lg:top-24 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs max-h-[calc(100vh-7rem)] overflow-y-auto">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <h2 class="text-sm font-bold uppercase tracking-[0.14em] text-slate-900">
-                        Filters
-                    </h2>
-                    <button
-                        class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline cursor-pointer"
-                        id="reset-filters" type="button">
-                        Reset All
-                    </button>
-                </div>
-                <section class="border-b border-slate-100 py-4.5 last:border-0">
-                    <h3 class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-                        Job Type
-                    </h3>
-                    <div class="mt-3.5 grid grid-cols-2 gap-x-3 gap-y-3">
-                        <label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-type=""
-                                type="checkbox" value="Full-Time" /><span>Full-Time</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-type=""
-                                type="checkbox" value="Part-Time" /><span>Part-Time</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-type=""
-                                type="checkbox" value="Contractual" /><span>Contractual</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-type=""
-                                type="checkbox" value="Freelance" /><span>Freelance</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-type=""
-                                type="checkbox" value="Internship" /><span>Internship</span></label>
-                    </div>
-                </section>
-                <section class="border-b border-slate-100 py-4.5 last:border-0">
-                    <h3 class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-                        Work Location
-                    </h3>
-                    <div class="mt-3.5 grid grid-cols-2 gap-x-3 gap-y-3">
-                        <label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-work=""
-                                type="checkbox" value="On-site" /><span>On-site</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-work=""
-                                type="checkbox" value="Remote" /><span>Remote</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-work=""
-                                type="checkbox" value="Hybrid" /><span>Hybrid</span></label>
-                    </div>
-                </section>
-                <section class="border-b border-slate-100 py-4.5 last:border-0">
-                    <h3 class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-                        Experience Level
-                    </h3>
-                    <div class="mt-3.5 grid grid-cols-2 gap-x-3 gap-y-3">
-                        <label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-exp=""
-                                type="checkbox" value="Entry Level" /><span>Entry Level</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-exp=""
-                                type="checkbox" value="Mid Level" /><span>Mid Level</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-exp=""
-                                type="checkbox" value="Senior" /><span>Senior</span></label>
-                    </div>
-                </section>
-                <section class="border-b border-slate-100 py-4.5 last:border-0 extra">
-                    <h3 class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-                        Category
-                    </h3>
-                    <div class="mt-3.5 grid grid-cols-2 gap-x-3 gap-y-3">
-                        <label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-cat=""
-                                type="checkbox" value="Engineering" /><span>Engineering</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-cat=""
-                                type="checkbox" value="Design" /><span>Design</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-cat=""
-                                type="checkbox" value="Data" /><span>Data</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-cat=""
-                                type="checkbox" value="Marketing" /><span>Marketing</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-cat=""
-                                type="checkbox" value="Business" /><span>Business</span></label><label
-                            class="flex items-center gap-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 cursor-pointer select-none"><input
-                                class="size-4 rounded accent-emerald-600 cursor-pointer" data-filter-cat=""
-                                type="checkbox" value="Content" /><span>Content</span></label>
-                    </div>
-                </section>
-            </aside>
-            <div class="min-w-0">
-                <section class="rounded-2xl border border-slate-200/80 bg-white p-7 shadow-xs">
-                    <div class="flex items-center gap-2">
-                        <span
-                            class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">✦
-                            Verified Opportunities</span>
-                    </div>
-                    <h1 class="mt-3 text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
-                        Find your dream job here!
-                    </h1>
-                    <p class="mt-1.5 text-sm leading-6 text-slate-500">
-                        Explore our newest curated job opportunities to
-                        discover and apply for top positions.
-                    </p>
-                    <form class="mt-6 flex flex-col gap-3 md:flex-row" id="search-form">
-                        <div
-                            class="grid min-w-0 flex-1 gap-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-50/50 focus-within:border-emerald-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-emerald-500/10 transition md:grid-cols-2">
-                            <label
-                                class="flex items-center gap-3 px-3.5 py-1 md:border-r border-slate-200/80 cursor-text"><svg
-                                    class="size-5 shrink-0 text-slate-400" fill="none" stroke="currentColor"
-                                    stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                </svg><input aria-label="Job title or company"
-                                    class="w-full min-w-0 bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 font-medium"
-                                    id="job-search" placeholder="Search job title or company name..." /></label><label
-                                class="flex items-center gap-3 px-3.5 py-1 cursor-text"><svg
-                                    class="size-5 shrink-0 text-slate-400" fill="none" stroke="currentColor"
-                                    stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                                </svg><input aria-label="Country or city"
-                                    class="w-full min-w-0 bg-transparent py-2.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 font-medium"
-                                    id="location-search" placeholder="Location, country or city..." /></label>
-                        </div>
-                        <button
-                            class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-7 py-3 text-sm font-semibold text-white shadow-xs transition hover:bg-emerald-700 cursor-pointer"
-                            type="submit">
-                            Search
-                        </button>
-                    </form>
-                </section>
-                <div class="my-6 flex flex-wrap items-center justify-between gap-3">
-                    <h2 class="text-base font-bold text-slate-800">
-                        Showing
-                        <strong class="font-extrabold text-emerald-600" id="result-count">156</strong>
-                        available jobs
-                    </h2>
-                    <div class="flex items-center gap-2 text-sm text-slate-500 font-medium">
-                        <span>Sort By:</span>
-                        <div class="relative inline-flex items-center">
-                            <select aria-label="Sort jobs"
-                                class="appearance-none rounded-lg border border-slate-200 bg-white pl-3.5 pr-8 py-2 text-sm font-semibold text-emerald-950 outline-none cursor-pointer hover:border-emerald-300 focus:border-emerald-500 shadow-xs transition"
-                                id="sort-order">
-                                <option value="newest">Newest</option>
-                                <option value="oldest">Oldest</option>
-                                <option value="salary">Top Salary</option>
-                                <option value="az">A–Z</option>
-                            </select>
-                            <svg class="pointer-events-none absolute right-2.5 size-4 text-slate-500" fill="none"
-                                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                <span id="jobs"></span>
-                <div aria-live="polite" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3" data-page="1" id="job-grid">
-                </div>
-                <div class="my-8 flex flex-wrap items-center justify-center gap-2" id="pagination"></div>
 
-            </div>
+        <!-- Compose Button -->
+        <div class="pb-5 pt-5">
+          <button type="button"
+            class="inline-flex h-11 w-full items-center justify-start gap-3 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-none transition-colors hover:bg-primary/90">
+            <img src="icons/pen-line-white.svg" alt="" class="size-4" />
+            <span>Compose</span>
+            <span class="ml-auto text-primary-foreground/70">⌘ K</span>
+          </button>
         </div>
-    </main>
-    <footer class="border-t border-slate-100 bg-white px-6 py-6 text-center text-xs text-slate-400">
-        CareerHub · Assignment 6 · Batch 5 · @learnwithsumit
-    </footer>
+
+        <!-- Navigation Folders -->
+        <nav aria-label="Mail folders" class="space-y-1">
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md bg-accent px-3 text-left text-[13px] font-semibold text-accent-foreground transition-colors">
+            <img src="icons/inbox.svg" alt="" class="size-[17px]" />
+            <span>Inbox</span>
+            <span class="ml-auto text-[11px] font-normal tabular-nums text-muted-foreground">2,481</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/star.svg" alt="" class="size-[17px]" />
+            <span>Starred</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/calendar-days.svg" alt="" class="size-[17px]" />
+            <span>Snoozed</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/send.svg" alt="" class="size-[17px]" />
+            <span>Sent</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/pen-line.svg" alt="" class="size-[17px]" />
+            <span>Drafts</span>
+            <span class="ml-auto text-[11px] font-normal tabular-nums text-muted-foreground">3</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/mail.svg" alt="" class="size-[17px]" />
+            <span>All mail</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/circle-help.svg" alt="" class="size-[17px]" />
+            <span>Spam</span>
+          </a>
+          <a href="index.html"
+            class="flex h-10 w-full items-center gap-3 rounded-md px-3 text-left text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+            <img src="icons/trash-2.svg" alt="" class="size-[17px]" />
+            <span>Trash</span>
+          </a>
+        </nav>
+
+        <!-- Labels Section -->
+        <div class="mt-8">
+          <div class="mb-2 flex items-center justify-between px-3">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              Your labels
+            </span>
+            <button type="button"
+              class="inline-flex size-7 items-center justify-center rounded-md hover:bg-accent text-muted-foreground transition-colors"
+              aria-label="Label options">
+              <img src="icons/ellipsis.svg" alt="Options" class="size-4" />
+            </button>
+          </div>
+          <div class="space-y-1">
+            <a href="index.html"
+              class="flex h-9 w-full items-center gap-3 rounded-md px-3 text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <span class="size-2.5 rounded-[3px] bg-avatar-rose"></span>
+              <span>Personal</span>
+            </a>
+            <a href="index.html"
+              class="flex h-9 w-full items-center gap-3 rounded-md px-3 text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <span class="size-2.5 rounded-[3px] bg-avatar-sky"></span>
+              <span>Work</span>
+            </a>
+            <a href="index.html"
+              class="flex h-9 w-full items-center gap-3 rounded-md px-3 text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <span class="size-2.5 rounded-[3px] bg-avatar-gold"></span>
+              <span>Travel</span>
+            </a>
+            <a href="index.html"
+              class="flex h-9 w-full items-center gap-3 rounded-md px-3 text-[13px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <span class="size-2.5 rounded-[3px] bg-avatar-mint"></span>
+              <span>Family</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- User Footer -->
+        <div class="mt-auto border-t border-border py-4">
+          <div
+            class="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left hover:bg-muted cursor-pointer transition-colors">
+            <img src="avatar/uifaces-cartoon-avatar.jpg" alt="Alex Morgan"
+              class="size-9 shrink-0 rounded-full object-cover border border-border" />
+            <span class="min-w-0 flex-1">
+              <span class="block truncate text-[13px] font-medium">Alex Morgan</span>
+              <span class="block truncate text-[11px] text-muted-foreground">Personal</span>
+            </span>
+            <img src="icons/settings-2.svg" alt="Settings" class="size-4" />
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <section id="inbox" class="flex min-w-0 flex-1 flex-col">
+        <!-- Topbar -->
+        <header
+          class="sticky top-0 z-20 flex min-h-[76px] items-center gap-3 border-b border-border bg-card px-4 sm:px-7">
+          <button type="button"
+            class="inline-flex size-9 shrink-0 items-center justify-center rounded-md hover:bg-accent text-foreground lg:hidden"
+            aria-label="Open navigation">
+            <img src="icons/menu.svg" alt="Menu" class="size-5" />
+          </button>
+          <label class="relative min-w-0 flex-1">
+            <img src="icons/search.svg" alt=""
+              class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 size-[17px]" />
+            <input type="text" placeholder="Search your mail" aria-label="Search your mail"
+              class="flex h-10 w-full rounded-md border border-transparent bg-muted/70 pl-10 pr-3 text-sm shadow-none placeholder:text-muted-foreground/80 focus-visible:border-border focus-visible:bg-card focus-visible:outline-none" />
+          </label>
+          <button type="button"
+            class="hidden h-10 shrink-0 items-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow-none transition-colors hover:bg-primary/90 sm:inline-flex">
+            <img src="icons/pen-line-white.svg" alt="" class="size-[15px]" />
+            <span>Compose</span>
+          </button>
+          <button type="button"
+            class="inline-flex size-10 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-none sm:hidden"
+            aria-label="Compose email">
+            <img src="icons/pen-line-white.svg" alt="" class="size-[17px]" />
+          </button>
+        </header>
+
+        <!-- Subheader -->
+        <div class="flex items-center justify-between gap-4 border-b border-border px-4 py-5 sm:px-7 sm:py-6">
+          <div class="min-w-0">
+            <div class="flex items-baseline gap-2.5">
+              <h1 class="font-display text-[28px] leading-tight sm:text-[32px]">Inbox</h1>
+              <span class="text-[12px] text-muted-foreground">9 messages</span>
+            </div>
+            <p class="mt-1 text-[12px] text-muted-foreground">
+              A little room for what matters.
+            </p>
+          </div>
+          <div class="hidden items-center gap-2 text-[12px] text-muted-foreground sm:flex">
+            <span>1–9 of 2,481</span>
+            <button type="button"
+              class="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent text-foreground transition-colors"
+              aria-label="Newer messages">
+              <img src="icons/chevron-left.svg" alt="Newer" class="size-4" />
+            </button>
+            <button type="button"
+              class="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent text-foreground transition-colors"
+              aria-label="Older messages">
+              <img src="icons/chevron-right.svg" alt="Older" class="size-4" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Message List -->
+        <div class="min-h-0 flex-1 overflow-y-auto">
+          <div class="divide-y divide-border/80">
+            <!-- Message 1: Maya Chen (Links to modal.html) -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 bg-primary/[0.025] px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-avatar-gold-foreground transition-colors"
+                aria-label="Starred">
+                <img src="icons/star-gold.svg" alt="Starred" class="size-[15px]" />
+              </span>
+              <img src="avatar/_0256e555-b19a-4acd-9c96-f7dd49608a35.png" alt="Maya Chen"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-semibold text-foreground">Maya Chen</span>
+                  <span class="shrink-0 text-[11px] font-semibold tabular-nums text-foreground">Today</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-semibold text-foreground">Road trip down the coast</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — Found the loveliest beach spot for our weekend away. Packed the car early this morning…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  Found the loveliest beach spot for our weekend away. Packed the car early this morning…
+                </p>
+              </div>
+              <span class="ml-0.5 size-2 shrink-0 rounded-full bg-primary" aria-label="Unread"></span>
+            </a>
+
+            <!-- Message 2: Oliver Grant -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 bg-primary/[0.025] px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_1da800ad-e18a-49af-941d-b29e897b65ed.png" alt="Oliver Grant"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-semibold text-foreground">Oliver Grant</span>
+                  <span class="shrink-0 text-[11px] font-semibold tabular-nums text-foreground">Today</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-semibold text-foreground">Working outside — sketches
+                    review</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — Set up my laptop on the patio chair today. Reviewing your layout sketches in the afternoon sun…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  Set up my laptop on the patio chair today. Reviewing your layout sketches in the afternoon sun…
+                </p>
+              </div>
+              <span class="ml-0.5 size-2 shrink-0 rounded-full bg-primary" aria-label="Unread"></span>
+            </a>
+
+            <!-- Message 3: Priya Shah -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-avatar-gold-foreground transition-colors">
+                <img src="icons/star-gold.svg" alt="Starred" class="size-[15px]" />
+              </span>
+              <img src="avatar/_258a02a8-b853-4999-9964-52928ce39b51.png" alt="Priya Shah"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Priya Shah</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Yesterday</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">Happy Anniversary celebration &
+                    Sunday lunch</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — Designed this watercolor floral invitation frame for the gathering. Come by around one if you’re
+                    free…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  Designed this watercolor floral invitation frame for the gathering. Come by around one if you’re free…
+                </p>
+              </div>
+            </a>
+
+            <!-- Message 4: Elliot Brooks -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_4c0d35ca-7f0d-432f-8b62-b733c2c2357a.png" alt="Elliot Brooks"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Elliot Brooks</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Yesterday</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">Re: The bookshop on Mercer</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — They’re doing the reading next Thursday after all. I saved us two seats near the…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  They’re doing the reading next Thursday after all. I saved us two seats near the…
+                </p>
+              </div>
+            </a>
+
+            <!-- Message 5: Sofia Alvarez -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_5b66bf30-8df8-4cac-8f24-aabf08f9256f.png" alt="Sofia Alvarez"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Sofia Alvarez</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Nov 13</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">A note from the garden</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — The first tomatoes are finally here. I wish I could send the smell of basil too…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  The first tomatoes are finally here. I wish I could send the smell of basil too…
+                </p>
+              </div>
+            </a>
+
+            <!-- Message 6: Theo Martin -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_681ad43f-10d8-4e5e-b53f-ff62ab704f58.png" alt="Theo Martin"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Theo Martin</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Nov 12</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">Hiking photos from the weekend
+                    ridge</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — Snapped a few shots of the mountains with my phone while we paused at the lookout…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  Snapped a few shots of the mountains with my phone while we paused at the lookout…
+                </p>
+              </div>
+            </a>
+
+            <!-- Message 7: Nina Patel -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_7adebe3a-ddb0-4b76-966a-11d983031306.png" alt="Nina Patel"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Nina Patel</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Nov 11</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">A small thank you</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — The package arrived this morning, and I really wasn’t expecting such a lovely…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  The package arrived this morning, and I really wasn’t expecting such a lovely…
+                </p>
+              </div>
+            </a>
+
+            <!-- Message 8: Jun Park -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_8e943931-409c-4d35-b76f-b63bab2ac90b.png" alt="Jun Park"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Jun Park</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Nov 10</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">Walk by the river this week?</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — The trees are turning gold along the east path. We should catch them before the rain…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  The trees are turning gold along the east path. We should catch them before the rain…
+                </p>
+              </div>
+            </a>
+
+            <!-- Message 9: Clara Wilson -->
+            <a href="modal.html"
+              class="group flex min-h-[80px] cursor-pointer items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:gap-4 sm:px-7">
+              <span
+                class="flex size-5 shrink-0 items-center justify-center rounded-sm text-muted-foreground/50 opacity-0 transition-colors group-hover:opacity-100 hover:text-avatar-gold-foreground">
+                <img src="icons/star.svg" alt="Star" class="size-[15px]" />
+              </span>
+              <img src="avatar/_9b084d13-7417-4a9a-97fc-2e2c1b5dd34b.png" alt="Clara Wilson"
+                class="size-9 shrink-0 rounded-full object-cover" />
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-center justify-between gap-3">
+                  <span class="truncate text-[13px] font-medium text-foreground">Clara Wilson</span>
+                  <span class="shrink-0 text-[11px] tabular-nums text-muted-foreground">Nov 9</span>
+                </div>
+                <div class="mt-1 flex min-w-0 items-baseline gap-1.5">
+                  <span class="truncate text-[13px] font-medium text-foreground/90">Could you take a look at
+                    this?</span>
+                  <span class="hidden min-w-0 truncate text-[12px] text-muted-foreground sm:inline">
+                    — I’ve been working on the new little shop site and would love your first impression…
+                  </span>
+                </div>
+                <p class="mt-1 truncate text-[12px] text-muted-foreground sm:hidden">
+                  I’ve been working on the new little shop site and would love your first impression…
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer
+          class="flex items-center justify-between border-t border-border px-4 py-3.5 text-[11px] text-muted-foreground sm:px-7">
+          <span>Storage · 2.4 GB of 15 GB used</span>
+          <span class="hidden sm:inline">Last synced just now</span>
+        </footer>
+      </section>
+    </div>
+  </main>
 </body>
 
 </html>
